@@ -12,14 +12,13 @@ class NavigationItem:
     module: Module
 
 
+# Official 7 modules defined in HACKAJAL specifications (Fase 9)
 NAVIGATION_ITEMS = (
     NavigationItem("▦", "Dashboard", Module.DASHBOARD),
-    NavigationItem("◉", "Vigilancia epidemiológica", Module.SURVEILLANCE),
-    NavigationItem("＋", "Registro de casos", Module.CASES),
-    NavigationItem("⌖", "Municipios", Module.MUNICIPALITIES),
+    NavigationItem("◉", "Mapa epidemiológico", Module.MAP),
+    NavigationItem("▥", "Estadísticas", Module.STATISTICS),
     NavigationItem("⚑", "Alertas epidemiológicas", Module.ALERTS),
-    NavigationItem("▥", "Reportes y estadísticas", Module.REPORTS),
-    NavigationItem("◷", "Historial", Module.HISTORY),
-    NavigationItem("♙", "Usuarios y permisos", Module.USERS),
-    NavigationItem("⚙", "Configuración", Module.SETTINGS),
+    NavigationItem("📄", "Artículos y notas", Module.CONTENT),
+    NavigationItem("＋", "Carga de datos", Module.DATA_UPLOAD),
+    NavigationItem("📈", "Predicciones", Module.PREDICTIONS),
 )

@@ -129,11 +129,12 @@ class DashboardPage(QWidget):
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
         scroll.setFrameShape(QFrame.Shape.NoFrame)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.content_container = QWidget()
         self.content_layout = QVBoxLayout(self.content_container)
-        self.content_layout.setContentsMargins(28, 24, 28, 30)
-        self.content_layout.setSpacing(20)
+        self.content_layout.setContentsMargins(18, 14, 18, 18)
+        self.content_layout.setSpacing(14)
 
         # 1. Header & Controls
         self._build_header()
@@ -168,20 +169,22 @@ class DashboardPage(QWidget):
     def _build_header(self) -> None:
         header_card = Card()
         layout = QVBoxLayout(header_card)
-        layout.setContentsMargins(22, 18, 22, 18)
-        layout.setSpacing(14)
+        layout.setContentsMargins(16, 12, 16, 12)
+        layout.setSpacing(10)
 
         top_row = QHBoxLayout()
 
         # Institutional Identity
         title_block = QVBoxLayout()
-        title_block.setSpacing(4)
+        title_block.setSpacing(2)
         app_title = QLabel("HACKAJAL · Vigilancia Epidemiológica")
         app_title.setObjectName("pageTitle")
+        app_title.setStyleSheet("font-size: 17px; font-weight: 700; color: #123B4A;")
         self.subtitle_label = QLabel(
             f"Región Costera de Jalisco (14 municipios) · Periodo: Año {self.current_year}"
         )
         self.subtitle_label.setObjectName("muted")
+        self.subtitle_label.setStyleSheet("font-size: 11px; color: #647C8C;")
         title_block.addWidget(app_title)
         title_block.addWidget(self.subtitle_label)
         top_row.addLayout(title_block)
@@ -297,7 +300,7 @@ class DashboardPage(QWidget):
         # Left: Epidemiological Evolution Chart Card
         self.card_trend = Card()
         self.trend_layout = QVBoxLayout(self.card_trend)
-        self.trend_layout.setContentsMargins(18, 16, 18, 16)
+        self.trend_layout.setContentsMargins(14, 12, 14, 12)
         self.trend_title = PanelTitle(
             "Evolución epidemiológica",
             "Casos registrados por mes · Costa Sur y Costa-Sierra Occidental",
@@ -305,13 +308,13 @@ class DashboardPage(QWidget):
         self.trend_layout.addWidget(self.trend_title)
         self.trend_chart_container = QWidget()
         self.trend_chart_layout = QVBoxLayout(self.trend_chart_container)
-        self.trend_chart_layout.setContentsMargins(0, 8, 0, 0)
+        self.trend_chart_layout.setContentsMargins(0, 6, 0, 0)
         self.trend_layout.addWidget(self.trend_chart_container)
 
         # Right: Climate Evolution Chart Card
         self.card_climate = Card()
         self.climate_layout = QVBoxLayout(self.card_climate)
-        self.climate_layout.setContentsMargins(18, 16, 18, 16)
+        self.climate_layout.setContentsMargins(14, 12, 14, 12)
         self.climate_title = PanelTitle(
             "Información climática regional",
             "Temperatura, humedad y precipitación mensual",
@@ -319,7 +322,7 @@ class DashboardPage(QWidget):
         self.climate_layout.addWidget(self.climate_title)
         self.climate_chart_container = QWidget()
         self.climate_chart_layout = QVBoxLayout(self.climate_chart_container)
-        self.climate_chart_layout.setContentsMargins(0, 8, 0, 0)
+        self.climate_chart_layout.setContentsMargins(0, 6, 0, 0)
         self.climate_layout.addWidget(self.climate_chart_container)
 
         self.charts_row.addWidget(self.card_trend, 0, 0)
@@ -340,8 +343,8 @@ class DashboardPage(QWidget):
         # Left: Predictions Panel
         self.card_prediction = Card()
         self.pred_layout = QVBoxLayout(self.card_prediction)
-        self.pred_layout.setContentsMargins(18, 16, 18, 16)
-        self.pred_layout.setSpacing(12)
+        self.pred_layout.setContentsMargins(14, 12, 14, 12)
+        self.pred_layout.setSpacing(10)
 
         pred_header = QHBoxLayout()
         pred_title = QLabel("Predicción epidemiológica")
@@ -361,8 +364,8 @@ class DashboardPage(QWidget):
         # Right: Recent Alerts Panel
         self.card_alerts = Card()
         self.alerts_layout = QVBoxLayout(self.card_alerts)
-        self.alerts_layout.setContentsMargins(18, 16, 18, 16)
-        self.alerts_layout.setSpacing(12)
+        self.alerts_layout.setContentsMargins(14, 12, 14, 12)
+        self.alerts_layout.setSpacing(10)
 
         alerts_header = QHBoxLayout()
         alerts_title = QLabel("Alertas epidemiológicas recientes")

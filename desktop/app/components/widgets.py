@@ -7,10 +7,21 @@ from PySide6.QtWidgets import QFrame, QHBoxLayout, QLabel, QPushButton, QVBoxLay
 
 class NavButton(QPushButton):
     def __init__(self, icon: str, text: str, parent: QWidget | None = None) -> None:
+        self.icon_str = icon
+        self.label_str = text
         super().__init__(f"{icon}   {text}", parent)
         self.setObjectName("navButton")
         self.setCheckable(True)
         self.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.setToolTip(text)
+
+    def set_collapsed(self, collapsed: bool) -> None:
+        if collapsed:
+            self.setText(self.icon_str)
+            self.setStyleSheet("QPushButton#navButton { text-align: center; padding: 10px 0; font-size: 15px; }")
+        else:
+            self.setText(f"{self.icon_str}   {self.label_str}")
+            self.setStyleSheet("")
 
 
 class Card(QFrame):
@@ -23,21 +34,25 @@ class MetricCard(Card):
     def __init__(self, label: str, value: str, note: str, accent: str = "#123B4A") -> None:
         super().__init__()
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(18, 16, 18, 16)
-        layout.setSpacing(6)
-        heading = QLabel(label)
-        heading.setObjectName("metricLabel")
-        value_label = QLabel(value)
-        value_label.setObjectName("metricValue")
-        value_label.setStyleSheet(f"color: {accent}; font-size: 24px; font-weight: 700;")
-        value_label.setWordWrap(True)
-        note_label = QLabel(note)
-        note_label.setObjectName("muted")
-        note_label.setStyleSheet("font-size: 11px;")
-        note_label.setWordWrap(True)
-        layout.addWidget(heading)
-        layout.addWidget(value_label)
-        layout.addWidget(note_label)
+        layout.setContentsMargins(14, 10, 14, 10)
+        layout.setSpacing(3)
+        self.heading = QLabel(label)
+        self.heading.setObjectName("metricLabel")
+        self.heading.setStyleSheet("font-size: 11px; font-weight: 600; color: #647C8C;")
+        self.value_label = QLabel(value)
+        self.value_label.setObjectName("metricValue")
+        self.value_label.setStyleSheet(f"color: {accent}; font-size: 20px; font-weight: 700;")
+        self.value_label.setWordWrap(True)
+        self.note_label = QLabel(note)
+        self.note_label.setObjectName("muted")
+        self.note_label.setStyleSheet("font-size: 10.5px; color: #647C8C;")
+        self.note_label.setWordWrap(True)
+        layout.addWidget(self.heading)
+        layout.addWidget(self.value_label)
+        layout.addWidget(self.note_label)
+
+    def update_value(self, value: str) -> None:
+        self.value_label.setText(value)
 
 
 class WeeklyCard(QFrame):

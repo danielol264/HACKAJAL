@@ -7,10 +7,17 @@ from app.models.user import UserRole
 
 class Module(StrEnum):
     DASHBOARD = "dashboard"
+    MAP = "map"
+    STATISTICS = "statistics"
+    ALERTS = "alerts"
+    CONTENT = "content"
+    DATA_UPLOAD = "data_upload"
+    PREDICTIONS = "predictions"
+
+    # Backward compatibility identifiers
     SURVEILLANCE = "surveillance"
     CASES = "cases"
     MUNICIPALITIES = "municipalities"
-    ALERTS = "alerts"
     REPORTS = "reports"
     HISTORY = "history"
     USERS = "users"
@@ -19,5 +26,15 @@ class Module(StrEnum):
 
 ROLE_MODULES: dict[UserRole, frozenset[Module]] = {
     UserRole.ADMIN: frozenset(Module),
-    UserRole.CONSULTA: frozenset({Module.DASHBOARD, Module.SURVEILLANCE, Module.MUNICIPALITIES, Module.ALERTS, Module.REPORTS}),
+    UserRole.CONSULTA: frozenset({
+        Module.DASHBOARD,
+        Module.MAP,
+        Module.SURVEILLANCE,
+        Module.STATISTICS,
+        Module.REPORTS,
+        Module.ALERTS,
+        Module.CONTENT,
+        Module.PREDICTIONS,
+        Module.MUNICIPALITIES,
+    }),
 }
