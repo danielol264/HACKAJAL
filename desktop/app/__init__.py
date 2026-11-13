@@ -1,0 +1,1 @@
+"""HACKAJAL administrative desktop application."""

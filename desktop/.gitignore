@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+resources/maps/*.html
+.venv/
+.runtime/
+.runtime-cache/
