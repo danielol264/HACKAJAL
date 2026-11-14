@@ -1,6 +1,6 @@
 # Documentación del modelo predictivo de dengue – Región Costa de Jalisco
 
-Proyecto HackaJal, reto "Salud y Bienestar" (equipo Red Mind). Documento escrito el 13 de noviembre de 2026 y basado en el código y los resultados que están en este repositorio.
+Proyecto HackaJal, reto "Salud y Bienestar" (equipo Red Mind). Documento del 13 de noviembre de 2026, basado en el código y los resultados que están en el repositorio.
 
 ## 1. Qué es y para qué sirve
 
@@ -42,7 +42,7 @@ El archivo `datos/Dengue Clima Semanal.csv` trae una fila por municipio y por se
 
 Hechos importantes de los datos:
 - Casos en todo Jalisco por año: 2020 = 16,061; 2021 = 1,428; 2022 = 673; 2023 = 2,679; **2024 = 70,624 (brote muy grande)**; 2025 = 10,454; **2026 = 2,230 (hasta el corte del 03/11/2026)**.
-- **Las semanas con retraso de captura (`posible_rezago` = "SI") no se usan como respuesta correcta** al entrenar ni al evaluar, porque tienen menos casos de los que realmente hubo.
+- **Las semanas con retraso de captura** (`posible_rezago` = "SI") **no se usan como respuesta correcta** al entrenar ni al evaluar, porque tienen menos casos de los que realmente hubo.
 - El archivo también trae columnas de clima (`lluvia_mm`, `temp_max_c`, `temp_min_c`), pero son de estaciones del Norte de Jalisco y no representan a la Costa.
 - Los datos terminan en la semana del 25/10/2026 (el archivo de 2026 tiene corte al 03/11/2026). Las últimas 3 semanas (11, 18 y 25 de octubre) están marcadas como posible retraso de captura. En años anteriores las últimas semanas sí salían más bajas de lo real; en 2026 no se nota esa caída (75, 81 y 81 casos en Jalisco contra unos 70 las semanas anteriores).
 - Cada archivo anual termina antes de fin de año (por la fecha de corte), por eso la serie tiene huecos de algunas semanas entre un año y otro. Por ejemplo, faltan las semanas del 21 y 28 de diciembre de 2025.
@@ -167,11 +167,11 @@ Cada municipio tiene sus propios umbrales, calculados con su historia de casos p
 
 Ejemplos de la Costa (casos esperados por semana, medio / alto): Puerto Vallarta 15 / 30; La Huerta 3 / 7; Cihuatlán 2 / 5; Cuautitlán de García Barragán 2 / 4; el resto 1 / 3. La tabla completa está en `resultados/umbrales_alerta.csv`.
 
-El Product Owner aprobó esta regla de palabra, antes de que la región cambiara del Norte a la Costa. Conviene que la confirme de nuevo con los umbrales de la Costa.
+Los umbrales son una propuesta de trabajo: el Product Owner debe confirmarlos para la Costa.
 
 ## 10. Qué entrega el modelo
 
-Un registro por municipio y por semana (14 municipios × 4 semanas = 56 filas), con el mismo formato del ejemplo del Sprint 1:
+Un registro por municipio y por semana (14 municipios × 4 semanas = 56 filas), con el siguiente formato:
 
 ```json
 { "clave_municipio": "067", "municipio": "Puerto Vallarta", "fecha_inicio_semana": "2026-11-01",
@@ -205,14 +205,14 @@ python codigo/cliente_api.py                   # flujo completo contra la API
 Protecciones agregadas al cliente:
 - **No envía una predicción de un mes que ya pasó** (la API crearía una alerta de un mes pasado). Con los datos actuales el mes predicho es noviembre de 2026, así que pasa; si los datos se quedan sin actualizar, el cliente se detiene y avisa. `--forzar` lo salta solo para pruebas.
 - Si la carga falla, muestra la **fila de Excel** que hay que corregir (índice de la API + 2) y **no envía la predicción**.
-- Los valores enteros (`anio`, `mes`, `casos_dengue`) se envían como enteros aunque haya celdas vacías en la plantilla. (Con la función original, una celda vacía en `casos_dengue` volvía los demás valores decimales como 9.0 y la API simulada del repositorio los rechazaba.)
+- Los valores enteros (`anio`, `mes`, `casos_dengue`) se envían como enteros aunque haya celdas vacías en la plantilla.
 
 Lo que se probó (13 de noviembre de 2026):
 - Contra la **API simulada del repositorio** (`desktop/mock_api`, la misma que usa la aplicación de escritorio): inicio de sesión, carga de plantilla (con datos completos, con celdas vacías, con errores y como .csv), envío de la predicción, contraseña incorrecta y usuario de consulta (recibe 403, como debe).
 - Contra una API simulada propia (`pruebas/api_simulada.py`): los mismos casos y además API apagada.
 - **No se ha probado contra el backend real de Django**: en el repositorio la carpeta `backend/` solo tiene un archivo de relleno.
 
-### La plantilla mensual (`datos/plantilla_carga_mensual.xlsx`)
+### La plantilla mensual (datos/plantilla_carga_mensual.xlsx)
 Hoja `Datos`, una fila por mes para **toda la región** (no por municipio), con las columnas `anio`, `mes`, `casos_dengue`, `temperatura_c`, `humedad_pct` y `precipitacion_mm`. Se sube a `/api/cargas/` para las estadísticas.
 
 **Importante: el modelo no lee esta plantilla.** El modelo trabaja con datos semanales por municipio y la plantilla es mensual y de toda la región; con esa plantilla no se pueden calcular las variables del modelo. Por eso el modelo predice con el archivo semanal `Dengue Clima Semanal.csv`. Ver sección 13.
@@ -230,10 +230,10 @@ Hoja `Datos`, una fila por mes para **toda la región** (no por municipio), con 
 ## 13. Decisiones abiertas
 
 1. **Datos mensuales contra semanales.** La API y la plantilla son mensuales; el modelo es semanal. Hoy el modelo lee el archivo semanal y la plantilla solo alimenta las estadísticas. Si el CTO quiere que el modelo use lo que se cargue en la plantilla, hay que cambiar el modelo (un modelo mensual por región) o conseguir los casos semanales por municipio.
-2. **Qué significa "con clima" en `semanas`.** La especificación de la API (`docs/API_ESCRITORIO.md`) dice que `semanas` son 4 números de casos estimados "con clima" de toda la región. Este modelo no usa clima. Hay que confirmar con el CTO que los 4 valores semanales de casos esperados son lo correcto.
+2. **Qué significa "con clima" en semanas.** La especificación de la API (`docs/API_ESCRITORIO.md`) dice que `semanas` son 4 números de casos estimados "con clima" de toda la región. Este modelo no usa clima. Hay que confirmar con el CTO que los 4 valores semanales de casos esperados son lo correcto.
 3. **Qué mes enviar.** Se envía el mes en el que caen la mayoría de las 4 semanas. Confirmar si la API espera otra cosa (por ejemplo, el mes siguiente al último dato).
 4. **Actualizar los datos.** Cada mes hay que bajar la base de dengue más reciente de la Dirección General de Epidemiología, reconstruir el archivo semanal y reentrenar (sección 16).
-5. **Clima y brigadas** de la Costa (Sprint 2, tarjeta pendiente de decisión del Product Owner).
+5. **Clima y brigadas** de la Costa: decisión pendiente del Product Owner (hacen falta datos de estaciones de la Costa y un historial real de brigadas).
 6. **Corregir las claves de municipios del catálogo.** Siete de las 14 claves del catálogo simulado del repositorio no coinciden con las oficiales de los datos (ver `docs/REVISION_REPOSITORIO.md`), y la tabla del equipo tenía la 107 para Villa Purificación cuando la correcta es 068.
 7. **Confirmar los umbrales** de alerta de la Costa con el Product Owner.
 
@@ -242,7 +242,7 @@ Hoja `Datos`, una fila por mes para **toda la región** (no por municipio), con 
 - `pruebas/pruebas_modelo.py`: **21 pruebas del modelo, las 21 correctas** (10 casos correctos, 5 con municipio inexistente, 6 con datos vacíos). Resultado en `resultados/reporte_pruebas.csv`.
 - `pruebas/probar_contrato_api.py`: **41 pruebas de la API según el contrato real** (`docs/API_ESCRITORIO.md`): 10 casos correctos, 5 de permisos (sin token, token falso, rol consulta), 9 con municipio, enfermedad o alerta inexistente y 17 con datos vacíos o inválidos. Por omisión solo lee; con `--escribir` también prueba las cargas y predicciones (usar solo con la API simulada o una base de pruebas). Contra la **API simulada del repositorio** dio 34 correctas y 7 fallas (resultado en `resultados/reporte_contrato_api_simulada.csv`): el catálogo de municipios tiene 7 claves distintas a las oficiales, acepta municipios inexistentes en `/estadisticas/`, acepta enfermedad inexistente y mes 13 en `/predicciones/`, rechaza casos enviados como `5.0` y se queda colgada con un JSON mal formado. **Falta correrlo contra el backend real.**
 - `pruebas/probar_api.py`: pruebas para una ruta por municipio (`/api/.../{municipio}/`). El contrato actual no tiene esa ruta; se conserva por si el backend la agrega.
-- Errores encontrados y corregidos durante las pruebas: casos en blanco (NaN) rompían la predicción; si faltaba la columna `casos` salía un error técnico en lugar de un mensaje claro.
+- Casos manejados por el modelo: casos en blanco (NaN) y columna `casos` faltante, con mensajes de error claros.
 
 ## 15. Estructura de esta carpeta
 
