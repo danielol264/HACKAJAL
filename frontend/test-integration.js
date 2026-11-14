@@ -243,6 +243,31 @@ async function runTests() {
     assert(false, `Excepción en encuesta: ${err.message}`);
   }
 
+  // --------------------------------------------------------------------------
+  // 7. COMPROBACIÓN VITE_USE_MOCK=false (Uso exclusivo de API real, sin mezclar mocks)
+  // --------------------------------------------------------------------------
+  console.log('\n--- 7. Verificación de VITE_USE_MOCK=false (Sin mezcla de mocks) ---');
+  try {
+    process.env.VITE_USE_MOCK = 'false';
+    let hizoLlamadaReal = false;
+    let mensajeErrorRed = '';
+    try {
+      await apiRequest('alertas-publicas/');
+    } catch (e) {
+      hizoLlamadaReal = true;
+      mensajeErrorRed = e.message;
+    }
+    assert(hizoLlamadaReal === true, 'Con VITE_USE_MOCK=false el cliente ejecuta fetch real a la red');
+    assert(
+      mensajeErrorRed === 'No se pudo conectar con el servidor',
+      'Con backend apagado retorna error de red sin sustituirlo por datos mock'
+    );
+    // Restaurar mock
+    process.env.VITE_USE_MOCK = 'true';
+  } catch (err) {
+    assert(false, `Excepción en verificación de red real: ${err.message}`);
+  }
+
   console.log('\n================================================================');
   console.log(`RESULTADO DE LA AUDITORÍA: ${passedTests}/${totalTests} pruebas pasadas.`);
   console.log('================================================================');
