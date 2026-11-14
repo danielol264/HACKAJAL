@@ -109,7 +109,8 @@ class StatisticsPageTests(unittest.TestCase):
         }
 
         page._on_data_loaded(mock_stats, {}, {}, [], [])
-        self.assertTrue(page.card_chronic.isVisible())
+        # The page is not attached to a displayed window in this unit test.
+        self.assertFalse(page.card_chronic.isHidden())
         self.assertEqual(page.chronic_table.rowCount(), 1)
 
 

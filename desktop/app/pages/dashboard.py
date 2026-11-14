@@ -12,6 +12,7 @@ Sprint 2 implementation:
 from __future__ import annotations
 
 from collections.abc import Callable
+from datetime import date
 from typing import Any
 
 from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, Signal
@@ -113,7 +114,7 @@ class DashboardPage(QWidget):
 
         # State
         self.current_disease = "dengue"
-        self.current_year = 2026
+        self.current_year = date.today().year
         self.is_loading = False
         self.enfermedades_catalog: list[dict[str, Any]] = [
             {"clave": "dengue", "nombre": "Dengue", "tipo": "transmisible"},
@@ -230,7 +231,7 @@ class DashboardPage(QWidget):
         filter_bar.addWidget(QLabel("Año:"))
         self.combo_year = QComboBox()
         self.combo_year.setMinimumWidth(110)
-        for yr in [2026, 2025, 2024]:
+        for yr in range(self.current_year, self.current_year - 3, -1):
             self.combo_year.addItem(str(yr), yr)
         self.combo_year.currentIndexChanged.connect(self._on_year_changed)
         filter_bar.addWidget(self.combo_year)

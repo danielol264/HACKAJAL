@@ -61,3 +61,31 @@ Incluye verificación de:
 - Validación de todos los endpoints de `API_ESCRITORIO.md`.
 - Verificación de roles `admin` y `consulta` (incluyendo restricción 403 en acciones administrativas).
 - Identificación clara de datos simulados mediante encabezados `X-Mock-Data` y marcas `[SIMULADO]`.
+
+## Empaquetado para Windows
+
+El empaquetado de escritorio se hace con PyInstaller en formato de carpeta
+(`onedir`), la modalidad más estable para PySide6-WebEngine. Desde la raíz del
+repositorio, con el entorno virtual creado, ejecutar:
+
+```powershell
+.\desktop\build_windows.ps1
+```
+
+El resultado es `dist\desktop\HACKAJAL\HACKAJAL.exe`. La carpeta completa
+`HACKAJAL` debe distribuirse junta; no se debe mover solo el `.exe`.
+
+Antes de distribuir una versión productiva, crea un archivo `.env` junto al
+ejecutable (o define las variables de entorno del sistema) con:
+
+```ini
+HACKAJAL_MODE=real
+API_URL=https://URL-PROPORCIONADA-POR-BACKEND/api
+FIREBASE_API_KEY=clave-web-de-firebase
+API_TIMEOUT_SECONDS=60
+```
+
+No hay URL de producción ni instalador MSI/Setup definidos en el contrato
+recibido. Mientras no se proporcionen, el ejecutable es distribuible pero no
+debe presentarse como conectado al backend productivo. El modo `mock` se
+reserva para desarrollo y siempre identifica sus datos como simulados.

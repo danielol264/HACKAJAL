@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import os
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -10,10 +11,13 @@ def _load_env_file() -> None:
     """Optionally load key=value pairs from a local .env file without external dependencies."""
     search_dirs = [
         Path.cwd(),
+        # PyInstaller runs modules from its internal bundle. For a distributed
+        # desktop app, keep the deployer-owned configuration beside the .exe.
+        Path(sys.executable).resolve().parent if getattr(sys, "frozen", False) else Path.cwd(),
         Path(__file__).resolve().parents[2],
         Path(__file__).resolve().parents[3],
     ]
-    for directory in search_dirs:
+    for directory in dict.fromkeys(search_dirs):
         env_file = directory / ".env"
         if env_file.is_file():
             try:

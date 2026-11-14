@@ -10,6 +10,7 @@ Implementado con:
 """
 from __future__ import annotations
 
+from datetime import date
 from typing import Any
 
 from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, Signal
@@ -140,9 +141,15 @@ class StatisticsPage(QWidget):
         self.api_client = api_client or ApiClient()
         self.epi_service = epi_service or EpidemiologyService(self.api_client)
 
-        self.current_year = 2026
+        # The API defaults to the current year. Keep the desktop filter aligned
+        # with that contract instead of leaving a historical year hard-coded.
+        self.current_year = date.today().year
         self.current_disease = "dengue"
         self.current_municipality: str | None = None
+        self.disease_types: dict[str, str] = {
+            "dengue": "transmisible",
+            "dm2": "cronica",
+        }
         self.is_loading = False
 
         # Root scrollable layout
@@ -227,7 +234,7 @@ class StatisticsPage(QWidget):
         filter_bar.addSpacing(6)
         filter_bar.addWidget(QLabel("Año:"))
         self.combo_year = QComboBox()
-        for y in [2026, 2025, 2024, 2023, 2022]:
+        for y in range(self.current_year, self.current_year - 5, -1):
             self.combo_year.addItem(str(y), y)
         self.combo_year.currentIndexChanged.connect(self._on_filters_changed)
         filter_bar.addWidget(self.combo_year)
@@ -411,7 +418,11 @@ class StatisticsPage(QWidget):
         self.current_municipality = self.combo_mun.currentData() or None
 
         # Enable/disable municipal filter based on chronic disease
-        is_chronic = self.current_disease == "dm2"
+        is_chronic = self.disease_types.get(self.current_disease) == "cronica"
+        if not is_chronic:
+            # The endpoint explicitly accepts municipio only for chronic
+            # conditions; never carry a stale municipality into dengue queries.
+            self.current_municipality = None
         self.combo_mun.setEnabled(is_chronic)
         self.lbl_municipio.setStyleSheet("color: #123B4A; font-weight: 600;" if is_chronic else "color: #94A3B8;")
 
@@ -471,6 +482,31 @@ class StatisticsPage(QWidget):
                 nom = m.get("nombre", cve)
                 self.combo_mun.addItem(nom, cve)
             self.combo_mun.blockSignals(False)
+
+        if enfermedades:
+            self.disease_types = {
+                str(item.get("clave")): str(item.get("tipo", ""))
+                for item in enfermedades
+                if item.get("clave")
+            }
+            current = self.current_disease
+            self.combo_disease.blockSignals(True)
+            self.combo_disease.clear()
+            for item in enfermedades:
+                clave = str(item.get("clave", ""))
+                nombre = str(item.get("nombre", clave))
+                tipo = str(item.get("tipo", ""))
+                self.combo_disease.addItem(f"{nombre} ({tipo.capitalize()})", clave)
+            index = self.combo_disease.findData(current)
+            self.combo_disease.setCurrentIndex(index if index >= 0 else 0)
+            self.combo_disease.blockSignals(False)
+            self.current_disease = self.combo_disease.currentData() or "dengue"
+
+            is_chronic = self.disease_types.get(self.current_disease) == "cronica"
+            self.combo_mun.setEnabled(is_chronic)
+            self.lbl_municipio.setStyleSheet(
+                "color: #123B4A; font-weight: 600;" if is_chronic else "color: #94A3B8;"
+            )
 
         # 1. Update Metrics Cards
         casos_por_mes = stats.get("casos_por_mes") or []

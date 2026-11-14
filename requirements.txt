@@ -1,0 +1,2 @@
+# Dependencias principales para HACKAJAL
+-r desktop/requirements.txt

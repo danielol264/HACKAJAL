@@ -16,6 +16,7 @@ Implementa:
 """
 from __future__ import annotations
 
+from datetime import date
 from typing import Any
 
 from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, Signal
@@ -137,6 +138,7 @@ class PredictionsPage(QWidget):
         self.epi_service = epi_service or EpidemiologyService(self.api_client)
 
         self.current_enfermedad = "dengue"
+        self.predictable_diseases: set[str] = {"dengue"}
         self.is_loading = False
 
         root = QVBoxLayout(self)
@@ -207,7 +209,6 @@ class PredictionsPage(QWidget):
         layout.addWidget(QLabel("Enfermedad:"))
         self.combo_disease = QComboBox()
         self.combo_disease.addItem("Dengue (Transmisible)", "dengue")
-        self.combo_disease.addItem("Diabetes Mellitus Tipo 2 (Crónica)", "dm2")
         self.combo_disease.currentIndexChanged.connect(self._on_disease_changed)
         layout.addWidget(self.combo_disease)
 
@@ -289,7 +290,7 @@ class PredictionsPage(QWidget):
         form_grid.addWidget(QLabel("Año proyección:"), 0, 0)
         self.spin_anio = QSpinBox()
         self.spin_anio.setRange(2020, 2100)
-        self.spin_anio.setValue(2026)
+        self.spin_anio.setValue(date.today().year)
         form_grid.addWidget(self.spin_anio, 0, 1)
 
         form_grid.addWidget(QLabel("Mes proyección:"), 1, 0)
@@ -382,19 +383,28 @@ class PredictionsPage(QWidget):
     def _on_pred_loaded(self, data: dict[str, Any], enfermedades: list[dict[str, Any]]) -> None:
         self.error_banner.setVisible(False)
 
-        if enfermedades and self.combo_disease.count() <= 2:
+        if enfermedades:
+            # The API contract defines predictions only for transmissible
+            # diseases (currently dengue). Do not offer chronic conditions
+            # here, because they are statistical data only.
+            predictable = [item for item in enfermedades if item.get("tipo") == "transmisible"]
+            self.predictable_diseases = {
+                str(item.get("clave")) for item in predictable if item.get("clave")
+            }
+            if not self.predictable_diseases:
+                self.predictable_diseases = {"dengue"}
             current = self.combo_disease.currentData()
             self.combo_disease.blockSignals(True)
             self.combo_disease.clear()
-            for d in enfermedades:
+            for d in predictable:
                 clave = d.get("clave", "")
                 nombre = d.get("nombre", clave)
                 tipo = d.get("tipo", "")
                 self.combo_disease.addItem(f"{nombre} ({tipo.capitalize()})", clave)
             idx = self.combo_disease.findData(current)
-            if idx >= 0:
-                self.combo_disease.setCurrentIndex(idx)
+            self.combo_disease.setCurrentIndex(idx if idx >= 0 else 0)
             self.combo_disease.blockSignals(False)
+            self.current_enfermedad = self.combo_disease.currentData() or "dengue"
 
         pred = data.get("prediccion")
         self._render_prediction(pred)
@@ -483,6 +493,13 @@ class PredictionsPage(QWidget):
     def _submit_prediction(self) -> None:
         if not (self.user and self.user.role == UserRole.ADMIN):
             QMessageBox.warning(self, "Acceso restringido", "Solo administradores pueden generar predicciones.")
+            return
+        if self.current_enfermedad not in self.predictable_diseases:
+            QMessageBox.warning(
+                self,
+                "Enfermedad no predictiva",
+                "Solo las enfermedades transmisibles disponibles pueden registrarse como predicción.",
+            )
             return
 
         semanas = [

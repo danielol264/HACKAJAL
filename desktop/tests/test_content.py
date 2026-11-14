@@ -80,12 +80,14 @@ class ContentPageTests(unittest.TestCase):
         dialog.edit_titulo.setText("   ")
         dialog.edit_cuerpo.setPlainText("Cuerpo")
         dialog._on_save()
-        self.assertTrue(dialog.error_label.isVisible())
+        # The dialog is intentionally not shown in this unit test; verify the
+        # label state rather than the inherited window visibility.
+        self.assertFalse(dialog.error_label.isHidden())
 
         # Over 200 chars
         dialog.edit_titulo.setText("A" * 201)
         dialog._on_save()
-        self.assertTrue(dialog.error_label.isVisible())
+        self.assertFalse(dialog.error_label.isHidden())
         self.assertIn("200", dialog.error_label.text())
 
 
