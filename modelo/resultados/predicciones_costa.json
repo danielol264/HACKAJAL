@@ -1,0 +1,569 @@
+{
+  "tipo_registro": "PREDICCION_MODELO",
+  "descripcion": "Predicción del modelo de dengue (Gradient Boosting, 1 a 4 semanas). Orienta, no diagnostica.",
+  "ultima_semana_con_datos": "2026-10-25",
+  "semana_origen_prediccion": "2026-10-25",
+  "region": "Costa (14 municipios: Costa-Sierra Occidental + Costa Sur)",
+  "predicciones": [
+    {
+      "clave_municipio": "012",
+      "municipio": "Atenguillo",
+      "fecha_inicio_semana": "2026-11-01",
+      "semana_epi": 45,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "012",
+      "municipio": "Atenguillo",
+      "fecha_inicio_semana": "2026-11-08",
+      "semana_epi": 46,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "012",
+      "municipio": "Atenguillo",
+      "fecha_inicio_semana": "2026-11-15",
+      "semana_epi": 47,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "012",
+      "municipio": "Atenguillo",
+      "fecha_inicio_semana": "2026-11-22",
+      "semana_epi": 48,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "020",
+      "municipio": "Cabo Corrientes",
+      "fecha_inicio_semana": "2026-11-01",
+      "semana_epi": 45,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.3,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "020",
+      "municipio": "Cabo Corrientes",
+      "fecha_inicio_semana": "2026-11-08",
+      "semana_epi": 46,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.3,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "020",
+      "municipio": "Cabo Corrientes",
+      "fecha_inicio_semana": "2026-11-15",
+      "semana_epi": 47,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.2,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "020",
+      "municipio": "Cabo Corrientes",
+      "fecha_inicio_semana": "2026-11-22",
+      "semana_epi": 48,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.2,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "021",
+      "municipio": "Casimiro Castillo",
+      "fecha_inicio_semana": "2026-11-01",
+      "semana_epi": 45,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.1,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "021",
+      "municipio": "Casimiro Castillo",
+      "fecha_inicio_semana": "2026-11-08",
+      "semana_epi": 46,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.1,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "021",
+      "municipio": "Casimiro Castillo",
+      "fecha_inicio_semana": "2026-11-15",
+      "semana_epi": 47,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "021",
+      "municipio": "Casimiro Castillo",
+      "fecha_inicio_semana": "2026-11-22",
+      "semana_epi": 48,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.1,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "022",
+      "municipio": "Cihuatlán",
+      "fecha_inicio_semana": "2026-11-01",
+      "semana_epi": 45,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.1,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "022",
+      "municipio": "Cihuatlán",
+      "fecha_inicio_semana": "2026-11-08",
+      "semana_epi": 46,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.1,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "022",
+      "municipio": "Cihuatlán",
+      "fecha_inicio_semana": "2026-11-15",
+      "semana_epi": 47,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.1,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "022",
+      "municipio": "Cihuatlán",
+      "fecha_inicio_semana": "2026-11-22",
+      "semana_epi": 48,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.1,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "027",
+      "municipio": "Cuautitlán de García Barragán",
+      "fecha_inicio_semana": "2026-11-01",
+      "semana_epi": 45,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.1,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "027",
+      "municipio": "Cuautitlán de García Barragán",
+      "fecha_inicio_semana": "2026-11-08",
+      "semana_epi": 46,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.1,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "027",
+      "municipio": "Cuautitlán de García Barragán",
+      "fecha_inicio_semana": "2026-11-15",
+      "semana_epi": 47,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.1,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "027",
+      "municipio": "Cuautitlán de García Barragán",
+      "fecha_inicio_semana": "2026-11-22",
+      "semana_epi": 48,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.1,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "038",
+      "municipio": "Guachinango",
+      "fecha_inicio_semana": "2026-11-01",
+      "semana_epi": 45,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "038",
+      "municipio": "Guachinango",
+      "fecha_inicio_semana": "2026-11-08",
+      "semana_epi": 46,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "038",
+      "municipio": "Guachinango",
+      "fecha_inicio_semana": "2026-11-15",
+      "semana_epi": 47,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "038",
+      "municipio": "Guachinango",
+      "fecha_inicio_semana": "2026-11-22",
+      "semana_epi": 48,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "043",
+      "municipio": "La Huerta",
+      "fecha_inicio_semana": "2026-11-01",
+      "semana_epi": 45,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.6,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "043",
+      "municipio": "La Huerta",
+      "fecha_inicio_semana": "2026-11-08",
+      "semana_epi": 46,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.4,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "043",
+      "municipio": "La Huerta",
+      "fecha_inicio_semana": "2026-11-15",
+      "semana_epi": 47,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.3,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "043",
+      "municipio": "La Huerta",
+      "fecha_inicio_semana": "2026-11-22",
+      "semana_epi": 48,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.3,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "058",
+      "municipio": "Mascota",
+      "fecha_inicio_semana": "2026-11-01",
+      "semana_epi": 45,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "058",
+      "municipio": "Mascota",
+      "fecha_inicio_semana": "2026-11-08",
+      "semana_epi": 46,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "058",
+      "municipio": "Mascota",
+      "fecha_inicio_semana": "2026-11-15",
+      "semana_epi": 47,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "058",
+      "municipio": "Mascota",
+      "fecha_inicio_semana": "2026-11-22",
+      "semana_epi": 48,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "062",
+      "municipio": "Mixtlán",
+      "fecha_inicio_semana": "2026-11-01",
+      "semana_epi": 45,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "062",
+      "municipio": "Mixtlán",
+      "fecha_inicio_semana": "2026-11-08",
+      "semana_epi": 46,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "062",
+      "municipio": "Mixtlán",
+      "fecha_inicio_semana": "2026-11-15",
+      "semana_epi": 47,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "062",
+      "municipio": "Mixtlán",
+      "fecha_inicio_semana": "2026-11-22",
+      "semana_epi": 48,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "067",
+      "municipio": "Puerto Vallarta",
+      "fecha_inicio_semana": "2026-11-01",
+      "semana_epi": 45,
+      "enfermedad": "dengue",
+      "casos_esperados": 11.9,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "067",
+      "municipio": "Puerto Vallarta",
+      "fecha_inicio_semana": "2026-11-08",
+      "semana_epi": 46,
+      "enfermedad": "dengue",
+      "casos_esperados": 10.9,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "067",
+      "municipio": "Puerto Vallarta",
+      "fecha_inicio_semana": "2026-11-15",
+      "semana_epi": 47,
+      "enfermedad": "dengue",
+      "casos_esperados": 7.8,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "067",
+      "municipio": "Puerto Vallarta",
+      "fecha_inicio_semana": "2026-11-22",
+      "semana_epi": 48,
+      "enfermedad": "dengue",
+      "casos_esperados": 6.3,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "068",
+      "municipio": "Villa Purificación",
+      "fecha_inicio_semana": "2026-11-01",
+      "semana_epi": 45,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "068",
+      "municipio": "Villa Purificación",
+      "fecha_inicio_semana": "2026-11-08",
+      "semana_epi": 46,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "068",
+      "municipio": "Villa Purificación",
+      "fecha_inicio_semana": "2026-11-15",
+      "semana_epi": 47,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "068",
+      "municipio": "Villa Purificación",
+      "fecha_inicio_semana": "2026-11-22",
+      "semana_epi": 48,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "080",
+      "municipio": "San Sebastián del Oeste",
+      "fecha_inicio_semana": "2026-11-01",
+      "semana_epi": 45,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "080",
+      "municipio": "San Sebastián del Oeste",
+      "fecha_inicio_semana": "2026-11-08",
+      "semana_epi": 46,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "080",
+      "municipio": "San Sebastián del Oeste",
+      "fecha_inicio_semana": "2026-11-15",
+      "semana_epi": 47,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "080",
+      "municipio": "San Sebastián del Oeste",
+      "fecha_inicio_semana": "2026-11-22",
+      "semana_epi": 48,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "084",
+      "municipio": "Talpa de Allende",
+      "fecha_inicio_semana": "2026-11-01",
+      "semana_epi": 45,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "084",
+      "municipio": "Talpa de Allende",
+      "fecha_inicio_semana": "2026-11-08",
+      "semana_epi": 46,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "084",
+      "municipio": "Talpa de Allende",
+      "fecha_inicio_semana": "2026-11-15",
+      "semana_epi": 47,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "084",
+      "municipio": "Talpa de Allende",
+      "fecha_inicio_semana": "2026-11-22",
+      "semana_epi": 48,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.0,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "100",
+      "municipio": "Tomatlán",
+      "fecha_inicio_semana": "2026-11-01",
+      "semana_epi": 45,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.2,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "100",
+      "municipio": "Tomatlán",
+      "fecha_inicio_semana": "2026-11-08",
+      "semana_epi": 46,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.2,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "100",
+      "municipio": "Tomatlán",
+      "fecha_inicio_semana": "2026-11-15",
+      "semana_epi": 47,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.2,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    },
+    {
+      "clave_municipio": "100",
+      "municipio": "Tomatlán",
+      "fecha_inicio_semana": "2026-11-22",
+      "semana_epi": 48,
+      "enfermedad": "dengue",
+      "casos_esperados": 0.2,
+      "nivel_riesgo": "bajo",
+      "tipo_registro": "PREDICCION_MODELO"
+    }
+  ]
+}

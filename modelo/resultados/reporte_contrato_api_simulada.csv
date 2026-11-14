@@ -1,0 +1,42 @@
+﻿id,tipo,prueba,resultado,motivo
+A01,correcto,GET /municipios/ público: 14 municipios con clave INEGI y región,FALLA,"Claves que no coinciden con las oficiales: ['14037', '14038', '14043', '14056', '14061', '14062', '14068', '14079', '14080', '14084', '14100', '14101', '14106', '14113']"
+A02,correcto,GET /enfermedades/ público incluye dengue (transmisible),OK,
+A03,correcto,GET /yo/ con usuario administrador devuelve rol admin,OK,
+A04,correcto,GET /yo/ con usuario de consulta devuelve rol consulta,OK,
+A05,correcto,GET /mapa/?enfermedad=dengue con sesión: forma del contrato,OK,
+A06,correcto,GET /estadisticas/?enfermedad=dengue&anio=2026 con sesión: forma del contrato,OK,
+A07,correcto,GET /predicciones/?enfermedad=dengue con sesión: prediccion con 4 semanas o null,OK,
+A08,correcto,POST /cargas/ con filas válidas -> 201 y conteo de creados/actualizados,OK,
+A09,correcto,POST /cargas/ con casos como 5.0 (así los manda pandas con celdas vacías) -> se acepta,FALLA,"Se esperaba 201 y llegó 400: {""0"": {""casos_dengue"": [""Debe ser un entero mayor o igual a 0.""]}}"
+A10,correcto,"POST /predicciones/ con 4 semanas -> 201, total = suma, trae alerta",OK,
+P01,permisos,GET /mapa/ sin token -> 401,OK,
+P02,permisos,GET /alertas/ con token falso -> 401,OK,
+P03,permisos,Usuario de consulta no puede cargar datos (POST /cargas/) -> 403,OK,
+P04,permisos,Usuario de consulta no puede registrar predicciones (POST /predicciones/) -> 403,OK,
+P05,permisos,POST /predicciones/ sin token -> 401,OK,
+N01,inexistente,GET /estadisticas/ con enfermedad inexistente -> 400 con mensaje,OK,
+N02,inexistente,GET /estadisticas/ crónica con municipio inexistente (99999) -> 400,FALLA,"Se esperaba 400/404 y llegó 200: {""filtros"": {""enfermedad"": ""dm2"", ""municipio"": ""99999"", ""anio"": 2026}, ""casos_por_mes"": null, ""clima"
+N03,inexistente,"GET /estadisticas/ con municipio con texto raro (inyección) -> 400, nunca error técnico",FALLA,"Se esperaba 400/404 y llegó 200: {""filtros"": {""enfermedad"": ""dm2"", ""municipio"": ""14067'; DROP TABLE--"", ""anio"": 2026}, ""casos_por_mes"
+N04,inexistente,GET /mapa/ con enfermedad inexistente -> 400,OK,
+N05,inexistente,GET /mapa/ sin el parámetro obligatorio enfermedad -> 400,OK,
+N06,inexistente,GET /estadisticas/ con año que no es número -> 400,OK,
+N07,inexistente,POST /alertas/999999/confirmar/ (alerta inexistente) -> 404,OK,
+N08,inexistente,POST /predicciones/ con enfermedad inexistente -> 400,FALLA,"Se esperaba 400/404 y llegó 201: {""enfermedad"": ""narnia"", ""anio"": 2099, ""mes"": 1, ""semanas"": [1, 1, 1, 1], ""total"": 4.0, ""alerta"": {"""
+N09,inexistente,GET /contenido/999999/ (no existe) -> 404,OK,
+E01,datos vacíos,POST /cargas/ con lista vacía [] -> 400 con mensaje,OK,
+E02,datos vacíos,POST /cargas/ con un objeto en vez de una lista -> 400,OK,
+E03,datos vacíos,POST /cargas/ con fila vacía {} -> 400 (anio y mes son obligatorios),OK,
+E04,datos vacíos,POST /cargas/ con mes 13 -> 400 y la llave es el índice de la fila (0),OK,
+E05,datos vacíos,POST /cargas/ con casos negativos -> 400,OK,
+E06,datos vacíos,POST /cargas/ con casos como texto -> 400,OK,
+E07,datos vacíos,POST /cargas/ con humedad 150 -> 400,OK,
+E08,datos vacíos,POST /cargas/ con año y mes repetidos -> 400,OK,
+E09,datos vacíos,POST /cargas/ todo o nada: una fila buena y una mala -> 400 y la buena NO se guarda,OK,
+E10,datos vacíos,POST /cargas/ con celdas vacías (null) en todo menos año y mes -> 201,OK,
+E11,datos vacíos,"POST /cargas/ con JSON mal formado -> 400, no error del servidor",FALLA,No hubo respuesta: TimeoutError: timed out
+E12,datos vacíos,POST /predicciones/ con solo 3 semanas -> 400,OK,
+E13,datos vacíos,POST /predicciones/ con semanas negativas -> 400,OK,
+E14,datos vacíos,POST /predicciones/ con semanas como texto -> 400,OK,
+E15,datos vacíos,POST /predicciones/ sin el campo semanas -> 400,OK,
+E16,datos vacíos,"POST /predicciones/ con cuerpo vacío {} -> 400 (faltan enfermedad, anio, mes y semanas)",OK,
+E17,datos vacíos,POST /predicciones/ con mes 13 -> 400,FALLA,"Se esperaba 400 y llegó 201: {""enfermedad"": ""dengue"", ""anio"": 2099, ""mes"": 13, ""semanas"": [1, 1, 1, 1], ""total"": 4.0, ""alerta"": {"

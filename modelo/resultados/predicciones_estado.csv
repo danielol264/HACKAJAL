@@ -1,0 +1,501 @@
+﻿clave_municipio,municipio,fecha_inicio_semana,semana_epi,enfermedad,casos_esperados,nivel_riesgo,tipo_registro
+001,Acatic,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+001,Acatic,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+001,Acatic,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+001,Acatic,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+002,Acatlán de Juárez,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+002,Acatlán de Juárez,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+002,Acatlán de Juárez,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+002,Acatlán de Juárez,2026-11-22,48,dengue,0.1,bajo,PREDICCION_MODELO
+003,Ahualulco de Mercado,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+003,Ahualulco de Mercado,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+003,Ahualulco de Mercado,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+003,Ahualulco de Mercado,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+004,Amacueca,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+004,Amacueca,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+004,Amacueca,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+004,Amacueca,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+005,Amatitán,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+005,Amatitán,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+005,Amatitán,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+005,Amatitán,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+006,Ameca,2026-11-01,45,dengue,1.4,medio,PREDICCION_MODELO
+006,Ameca,2026-11-08,46,dengue,0.9,medio,PREDICCION_MODELO
+006,Ameca,2026-11-15,47,dengue,0.8,medio,PREDICCION_MODELO
+006,Ameca,2026-11-22,48,dengue,0.4,bajo,PREDICCION_MODELO
+007,San Juanito de Escobedo,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+007,San Juanito de Escobedo,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+007,San Juanito de Escobedo,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+007,San Juanito de Escobedo,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+008,Arandas,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+008,Arandas,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+008,Arandas,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+008,Arandas,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+009,El Arenal,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+009,El Arenal,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+009,El Arenal,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+009,El Arenal,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+010,Atemajac de Brizuela,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+010,Atemajac de Brizuela,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+010,Atemajac de Brizuela,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+010,Atemajac de Brizuela,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+011,Atengo,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+011,Atengo,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+011,Atengo,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+011,Atengo,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+012,Atenguillo,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+012,Atenguillo,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+012,Atenguillo,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+012,Atenguillo,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+013,Atotonilco el Alto,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+013,Atotonilco el Alto,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+013,Atotonilco el Alto,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+013,Atotonilco el Alto,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+014,Atoyac,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+014,Atoyac,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+014,Atoyac,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+014,Atoyac,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+015,Autlán de Navarro,2026-11-01,45,dengue,2.6,medio,PREDICCION_MODELO
+015,Autlán de Navarro,2026-11-08,46,dengue,1.7,medio,PREDICCION_MODELO
+015,Autlán de Navarro,2026-11-15,47,dengue,1.4,bajo,PREDICCION_MODELO
+015,Autlán de Navarro,2026-11-22,48,dengue,0.6,bajo,PREDICCION_MODELO
+016,Ayotlán,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+016,Ayotlán,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+016,Ayotlán,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+016,Ayotlán,2026-11-22,48,dengue,0.1,bajo,PREDICCION_MODELO
+017,Ayutla,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+017,Ayutla,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+017,Ayutla,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+017,Ayutla,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+018,La Barca,2026-11-01,45,dengue,0.1,bajo,PREDICCION_MODELO
+018,La Barca,2026-11-08,46,dengue,0.1,bajo,PREDICCION_MODELO
+018,La Barca,2026-11-15,47,dengue,0.1,bajo,PREDICCION_MODELO
+018,La Barca,2026-11-22,48,dengue,0.1,bajo,PREDICCION_MODELO
+019,Bolaños,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+019,Bolaños,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+019,Bolaños,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+019,Bolaños,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+020,Cabo Corrientes,2026-11-01,45,dengue,0.3,bajo,PREDICCION_MODELO
+020,Cabo Corrientes,2026-11-08,46,dengue,0.3,bajo,PREDICCION_MODELO
+020,Cabo Corrientes,2026-11-15,47,dengue,0.2,bajo,PREDICCION_MODELO
+020,Cabo Corrientes,2026-11-22,48,dengue,0.2,bajo,PREDICCION_MODELO
+021,Casimiro Castillo,2026-11-01,45,dengue,0.1,bajo,PREDICCION_MODELO
+021,Casimiro Castillo,2026-11-08,46,dengue,0.1,bajo,PREDICCION_MODELO
+021,Casimiro Castillo,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+021,Casimiro Castillo,2026-11-22,48,dengue,0.1,bajo,PREDICCION_MODELO
+022,Cihuatlán,2026-11-01,45,dengue,0.1,bajo,PREDICCION_MODELO
+022,Cihuatlán,2026-11-08,46,dengue,0.1,bajo,PREDICCION_MODELO
+022,Cihuatlán,2026-11-15,47,dengue,0.1,bajo,PREDICCION_MODELO
+022,Cihuatlán,2026-11-22,48,dengue,0.1,bajo,PREDICCION_MODELO
+023,Zapotlán el Grande,2026-11-01,45,dengue,0.1,bajo,PREDICCION_MODELO
+023,Zapotlán el Grande,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+023,Zapotlán el Grande,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+023,Zapotlán el Grande,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+024,Cocula,2026-11-01,45,dengue,0.7,bajo,PREDICCION_MODELO
+024,Cocula,2026-11-08,46,dengue,0.4,bajo,PREDICCION_MODELO
+024,Cocula,2026-11-15,47,dengue,0.4,bajo,PREDICCION_MODELO
+024,Cocula,2026-11-22,48,dengue,0.4,bajo,PREDICCION_MODELO
+025,Colotlán,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+025,Colotlán,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+025,Colotlán,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+025,Colotlán,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+026,Concepción de Buenos Aires,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+026,Concepción de Buenos Aires,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+026,Concepción de Buenos Aires,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+026,Concepción de Buenos Aires,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+027,Cuautitlán de García Barragán,2026-11-01,45,dengue,0.1,bajo,PREDICCION_MODELO
+027,Cuautitlán de García Barragán,2026-11-08,46,dengue,0.1,bajo,PREDICCION_MODELO
+027,Cuautitlán de García Barragán,2026-11-15,47,dengue,0.1,bajo,PREDICCION_MODELO
+027,Cuautitlán de García Barragán,2026-11-22,48,dengue,0.1,bajo,PREDICCION_MODELO
+028,Cuautla,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+028,Cuautla,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+028,Cuautla,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+028,Cuautla,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+029,Cuquío,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+029,Cuquío,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+029,Cuquío,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+029,Cuquío,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+030,Chapala,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+030,Chapala,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+030,Chapala,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+030,Chapala,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+031,Chimaltitán,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+031,Chimaltitán,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+031,Chimaltitán,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+031,Chimaltitán,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+032,Chiquilistlán,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+032,Chiquilistlán,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+032,Chiquilistlán,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+032,Chiquilistlán,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+033,Degollado,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+033,Degollado,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+033,Degollado,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+033,Degollado,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+034,Ejutla,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+034,Ejutla,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+034,Ejutla,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+034,Ejutla,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+035,Encarnación de Díaz,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+035,Encarnación de Díaz,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+035,Encarnación de Díaz,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+035,Encarnación de Díaz,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+036,Etzatlán,2026-11-01,45,dengue,0.1,bajo,PREDICCION_MODELO
+036,Etzatlán,2026-11-08,46,dengue,0.1,bajo,PREDICCION_MODELO
+036,Etzatlán,2026-11-15,47,dengue,0.1,bajo,PREDICCION_MODELO
+036,Etzatlán,2026-11-22,48,dengue,0.1,bajo,PREDICCION_MODELO
+037,El Grullo,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+037,El Grullo,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+037,El Grullo,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+037,El Grullo,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+038,Guachinango,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+038,Guachinango,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+038,Guachinango,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+038,Guachinango,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+039,Guadalajara,2026-11-01,45,dengue,12.5,bajo,PREDICCION_MODELO
+039,Guadalajara,2026-11-08,46,dengue,7.2,bajo,PREDICCION_MODELO
+039,Guadalajara,2026-11-15,47,dengue,6.1,bajo,PREDICCION_MODELO
+039,Guadalajara,2026-11-22,48,dengue,4.0,bajo,PREDICCION_MODELO
+040,Hostotipaquillo,2026-11-01,45,dengue,0.2,bajo,PREDICCION_MODELO
+040,Hostotipaquillo,2026-11-08,46,dengue,0.2,bajo,PREDICCION_MODELO
+040,Hostotipaquillo,2026-11-15,47,dengue,0.1,bajo,PREDICCION_MODELO
+040,Hostotipaquillo,2026-11-22,48,dengue,0.1,bajo,PREDICCION_MODELO
+041,Huejúcar,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+041,Huejúcar,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+041,Huejúcar,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+041,Huejúcar,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+042,Huejuquilla el Alto,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+042,Huejuquilla el Alto,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+042,Huejuquilla el Alto,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+042,Huejuquilla el Alto,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+043,La Huerta,2026-11-01,45,dengue,0.6,bajo,PREDICCION_MODELO
+043,La Huerta,2026-11-08,46,dengue,0.4,bajo,PREDICCION_MODELO
+043,La Huerta,2026-11-15,47,dengue,0.3,bajo,PREDICCION_MODELO
+043,La Huerta,2026-11-22,48,dengue,0.3,bajo,PREDICCION_MODELO
+044,Ixtlahuacán de los Membrillos,2026-11-01,45,dengue,0.2,bajo,PREDICCION_MODELO
+044,Ixtlahuacán de los Membrillos,2026-11-08,46,dengue,0.2,bajo,PREDICCION_MODELO
+044,Ixtlahuacán de los Membrillos,2026-11-15,47,dengue,0.1,bajo,PREDICCION_MODELO
+044,Ixtlahuacán de los Membrillos,2026-11-22,48,dengue,0.1,bajo,PREDICCION_MODELO
+045,Ixtlahuacán del Río,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+045,Ixtlahuacán del Río,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+045,Ixtlahuacán del Río,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+045,Ixtlahuacán del Río,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+046,Jalostotitlán,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+046,Jalostotitlán,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+046,Jalostotitlán,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+046,Jalostotitlán,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+047,Jamay,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+047,Jamay,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+047,Jamay,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+047,Jamay,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+048,Jesús María,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+048,Jesús María,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+048,Jesús María,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+048,Jesús María,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+049,Jilotlán de los Dolores,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+049,Jilotlán de los Dolores,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+049,Jilotlán de los Dolores,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+049,Jilotlán de los Dolores,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+050,Jocotepec,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+050,Jocotepec,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+050,Jocotepec,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+050,Jocotepec,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+051,Juanacatlán,2026-11-01,45,dengue,0.1,bajo,PREDICCION_MODELO
+051,Juanacatlán,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+051,Juanacatlán,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+051,Juanacatlán,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+052,Juchitlán,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+052,Juchitlán,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+052,Juchitlán,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+052,Juchitlán,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+053,Lagos de Moreno,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+053,Lagos de Moreno,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+053,Lagos de Moreno,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+053,Lagos de Moreno,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+054,El Limón,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+054,El Limón,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+054,El Limón,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+054,El Limón,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+055,Magdalena,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+055,Magdalena,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+055,Magdalena,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+055,Magdalena,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+056,Santa María del Oro,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+056,Santa María del Oro,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+056,Santa María del Oro,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+056,Santa María del Oro,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+057,La Manzanilla de la Paz,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+057,La Manzanilla de la Paz,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+057,La Manzanilla de la Paz,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+057,La Manzanilla de la Paz,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+058,Mascota,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+058,Mascota,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+058,Mascota,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+058,Mascota,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+059,Mazamitla,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+059,Mazamitla,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+059,Mazamitla,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+059,Mazamitla,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+060,Mexticacán,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+060,Mexticacán,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+060,Mexticacán,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+060,Mexticacán,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+061,Mezquitic,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+061,Mezquitic,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+061,Mezquitic,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+061,Mezquitic,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+062,Mixtlán,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+062,Mixtlán,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+062,Mixtlán,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+062,Mixtlán,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+063,Ocotlán,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+063,Ocotlán,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+063,Ocotlán,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+063,Ocotlán,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+064,Ojuelos de Jalisco,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+064,Ojuelos de Jalisco,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+064,Ojuelos de Jalisco,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+064,Ojuelos de Jalisco,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+065,Pihuamo,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+065,Pihuamo,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+065,Pihuamo,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+065,Pihuamo,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+066,Poncitlán,2026-11-01,45,dengue,0.1,bajo,PREDICCION_MODELO
+066,Poncitlán,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+066,Poncitlán,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+066,Poncitlán,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+067,Puerto Vallarta,2026-11-01,45,dengue,11.9,bajo,PREDICCION_MODELO
+067,Puerto Vallarta,2026-11-08,46,dengue,10.9,bajo,PREDICCION_MODELO
+067,Puerto Vallarta,2026-11-15,47,dengue,7.8,bajo,PREDICCION_MODELO
+067,Puerto Vallarta,2026-11-22,48,dengue,6.3,bajo,PREDICCION_MODELO
+068,Villa Purificación,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+068,Villa Purificación,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+068,Villa Purificación,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+068,Villa Purificación,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+069,Quitupan,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+069,Quitupan,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+069,Quitupan,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+069,Quitupan,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+070,El Salto,2026-11-01,45,dengue,1.2,bajo,PREDICCION_MODELO
+070,El Salto,2026-11-08,46,dengue,0.8,bajo,PREDICCION_MODELO
+070,El Salto,2026-11-15,47,dengue,0.6,bajo,PREDICCION_MODELO
+070,El Salto,2026-11-22,48,dengue,0.5,bajo,PREDICCION_MODELO
+071,San Cristóbal de la Barranca,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+071,San Cristóbal de la Barranca,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+071,San Cristóbal de la Barranca,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+071,San Cristóbal de la Barranca,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+072,San Diego de Alejandría,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+072,San Diego de Alejandría,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+072,San Diego de Alejandría,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+072,San Diego de Alejandría,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+073,San Juan de los Lagos,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+073,San Juan de los Lagos,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+073,San Juan de los Lagos,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+073,San Juan de los Lagos,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+074,San Julián,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+074,San Julián,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+074,San Julián,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+074,San Julián,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+075,San Marcos,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+075,San Marcos,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+075,San Marcos,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+075,San Marcos,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+076,San Martín de Bolaños,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+076,San Martín de Bolaños,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+076,San Martín de Bolaños,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+076,San Martín de Bolaños,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+077,San Martín Hidalgo,2026-11-01,45,dengue,0.1,bajo,PREDICCION_MODELO
+077,San Martín Hidalgo,2026-11-08,46,dengue,0.1,bajo,PREDICCION_MODELO
+077,San Martín Hidalgo,2026-11-15,47,dengue,0.1,bajo,PREDICCION_MODELO
+077,San Martín Hidalgo,2026-11-22,48,dengue,0.1,bajo,PREDICCION_MODELO
+078,San Miguel el Alto,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+078,San Miguel el Alto,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+078,San Miguel el Alto,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+078,San Miguel el Alto,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+079,Gómez Farías,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+079,Gómez Farías,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+079,Gómez Farías,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+079,Gómez Farías,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+080,San Sebastián del Oeste,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+080,San Sebastián del Oeste,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+080,San Sebastián del Oeste,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+080,San Sebastián del Oeste,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+081,Santa María de los Ángeles,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+081,Santa María de los Ángeles,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+081,Santa María de los Ángeles,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+081,Santa María de los Ángeles,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+082,Sayula,2026-11-01,45,dengue,0.2,bajo,PREDICCION_MODELO
+082,Sayula,2026-11-08,46,dengue,0.2,bajo,PREDICCION_MODELO
+082,Sayula,2026-11-15,47,dengue,0.1,bajo,PREDICCION_MODELO
+082,Sayula,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+083,Tala,2026-11-01,45,dengue,0.4,bajo,PREDICCION_MODELO
+083,Tala,2026-11-08,46,dengue,0.3,bajo,PREDICCION_MODELO
+083,Tala,2026-11-15,47,dengue,0.2,bajo,PREDICCION_MODELO
+083,Tala,2026-11-22,48,dengue,0.2,bajo,PREDICCION_MODELO
+084,Talpa de Allende,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+084,Talpa de Allende,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+084,Talpa de Allende,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+084,Talpa de Allende,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+085,Tamazula de Gordiano,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+085,Tamazula de Gordiano,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+085,Tamazula de Gordiano,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+085,Tamazula de Gordiano,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+086,Tapalpa,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+086,Tapalpa,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+086,Tapalpa,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+086,Tapalpa,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+087,Tecalitlán,2026-11-01,45,dengue,0.1,bajo,PREDICCION_MODELO
+087,Tecalitlán,2026-11-08,46,dengue,0.1,bajo,PREDICCION_MODELO
+087,Tecalitlán,2026-11-15,47,dengue,0.1,bajo,PREDICCION_MODELO
+087,Tecalitlán,2026-11-22,48,dengue,0.1,bajo,PREDICCION_MODELO
+088,Tecolotlán,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+088,Tecolotlán,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+088,Tecolotlán,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+088,Tecolotlán,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+089,Techaluta de Montenegro,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+089,Techaluta de Montenegro,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+089,Techaluta de Montenegro,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+089,Techaluta de Montenegro,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+090,Tenamaxtlán,2026-11-01,45,dengue,0.3,bajo,PREDICCION_MODELO
+090,Tenamaxtlán,2026-11-08,46,dengue,0.3,bajo,PREDICCION_MODELO
+090,Tenamaxtlán,2026-11-15,47,dengue,0.3,bajo,PREDICCION_MODELO
+090,Tenamaxtlán,2026-11-22,48,dengue,0.1,bajo,PREDICCION_MODELO
+091,Teocaltiche,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+091,Teocaltiche,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+091,Teocaltiche,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+091,Teocaltiche,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+092,Teocuitatlán de Corona,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+092,Teocuitatlán de Corona,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+092,Teocuitatlán de Corona,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+092,Teocuitatlán de Corona,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+093,Tepatitlán de Morelos,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+093,Tepatitlán de Morelos,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+093,Tepatitlán de Morelos,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+093,Tepatitlán de Morelos,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+094,Tequila,2026-11-01,45,dengue,0.2,bajo,PREDICCION_MODELO
+094,Tequila,2026-11-08,46,dengue,0.2,bajo,PREDICCION_MODELO
+094,Tequila,2026-11-15,47,dengue,0.2,bajo,PREDICCION_MODELO
+094,Tequila,2026-11-22,48,dengue,0.2,bajo,PREDICCION_MODELO
+095,Teuchitlán,2026-11-01,45,dengue,0.3,bajo,PREDICCION_MODELO
+095,Teuchitlán,2026-11-08,46,dengue,0.2,bajo,PREDICCION_MODELO
+095,Teuchitlán,2026-11-15,47,dengue,0.1,bajo,PREDICCION_MODELO
+095,Teuchitlán,2026-11-22,48,dengue,0.2,bajo,PREDICCION_MODELO
+096,Tizapán el Alto,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+096,Tizapán el Alto,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+096,Tizapán el Alto,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+096,Tizapán el Alto,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+097,Tlajomulco de Zúñiga,2026-11-01,45,dengue,2.1,bajo,PREDICCION_MODELO
+097,Tlajomulco de Zúñiga,2026-11-08,46,dengue,1.5,bajo,PREDICCION_MODELO
+097,Tlajomulco de Zúñiga,2026-11-15,47,dengue,1.4,bajo,PREDICCION_MODELO
+097,Tlajomulco de Zúñiga,2026-11-22,48,dengue,0.7,bajo,PREDICCION_MODELO
+098,San Pedro Tlaquepaque,2026-11-01,45,dengue,9.5,bajo,PREDICCION_MODELO
+098,San Pedro Tlaquepaque,2026-11-08,46,dengue,6.8,bajo,PREDICCION_MODELO
+098,San Pedro Tlaquepaque,2026-11-15,47,dengue,4.7,bajo,PREDICCION_MODELO
+098,San Pedro Tlaquepaque,2026-11-22,48,dengue,4.0,bajo,PREDICCION_MODELO
+099,Tolimán,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+099,Tolimán,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+099,Tolimán,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+099,Tolimán,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+100,Tomatlán,2026-11-01,45,dengue,0.2,bajo,PREDICCION_MODELO
+100,Tomatlán,2026-11-08,46,dengue,0.2,bajo,PREDICCION_MODELO
+100,Tomatlán,2026-11-15,47,dengue,0.2,bajo,PREDICCION_MODELO
+100,Tomatlán,2026-11-22,48,dengue,0.2,bajo,PREDICCION_MODELO
+101,Tonalá,2026-11-01,45,dengue,4.3,bajo,PREDICCION_MODELO
+101,Tonalá,2026-11-08,46,dengue,2.4,bajo,PREDICCION_MODELO
+101,Tonalá,2026-11-15,47,dengue,2.1,bajo,PREDICCION_MODELO
+101,Tonalá,2026-11-22,48,dengue,1.4,bajo,PREDICCION_MODELO
+102,Tonaya,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+102,Tonaya,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+102,Tonaya,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+102,Tonaya,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+103,Tonila,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+103,Tonila,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+103,Tonila,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+103,Tonila,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+104,Totatiche,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+104,Totatiche,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+104,Totatiche,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+104,Totatiche,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+105,Tototlán,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+105,Tototlán,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+105,Tototlán,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+105,Tototlán,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+106,Tuxcacuesco,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+106,Tuxcacuesco,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+106,Tuxcacuesco,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+106,Tuxcacuesco,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+107,Tuxcueca,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+107,Tuxcueca,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+107,Tuxcueca,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+107,Tuxcueca,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+108,Tuxpan,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+108,Tuxpan,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+108,Tuxpan,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+108,Tuxpan,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+109,Unión de San Antonio,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+109,Unión de San Antonio,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+109,Unión de San Antonio,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+109,Unión de San Antonio,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+110,Unión de Tula,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+110,Unión de Tula,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+110,Unión de Tula,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+110,Unión de Tula,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+111,Valle de Guadalupe,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+111,Valle de Guadalupe,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+111,Valle de Guadalupe,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+111,Valle de Guadalupe,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+112,Valle de Juárez,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+112,Valle de Juárez,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+112,Valle de Juárez,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+112,Valle de Juárez,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+113,San Gabriel,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+113,San Gabriel,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+113,San Gabriel,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+113,San Gabriel,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+114,Villa Corona,2026-11-01,45,dengue,0.1,bajo,PREDICCION_MODELO
+114,Villa Corona,2026-11-08,46,dengue,0.1,bajo,PREDICCION_MODELO
+114,Villa Corona,2026-11-15,47,dengue,0.1,bajo,PREDICCION_MODELO
+114,Villa Corona,2026-11-22,48,dengue,0.1,bajo,PREDICCION_MODELO
+115,Villa Guerrero,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+115,Villa Guerrero,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+115,Villa Guerrero,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+115,Villa Guerrero,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+116,Villa Hidalgo,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+116,Villa Hidalgo,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+116,Villa Hidalgo,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+116,Villa Hidalgo,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+117,Cañadas de Obregón,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+117,Cañadas de Obregón,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+117,Cañadas de Obregón,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+117,Cañadas de Obregón,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+118,Yahualica de González Gallo,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+118,Yahualica de González Gallo,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+118,Yahualica de González Gallo,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+118,Yahualica de González Gallo,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+119,Zacoalco de Torres,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+119,Zacoalco de Torres,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+119,Zacoalco de Torres,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+119,Zacoalco de Torres,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+120,Zapopan,2026-11-01,45,dengue,7.0,bajo,PREDICCION_MODELO
+120,Zapopan,2026-11-08,46,dengue,4.9,bajo,PREDICCION_MODELO
+120,Zapopan,2026-11-15,47,dengue,4.3,bajo,PREDICCION_MODELO
+120,Zapopan,2026-11-22,48,dengue,2.8,bajo,PREDICCION_MODELO
+121,Zapotiltic,2026-11-01,45,dengue,0.1,bajo,PREDICCION_MODELO
+121,Zapotiltic,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+121,Zapotiltic,2026-11-15,47,dengue,0.1,bajo,PREDICCION_MODELO
+121,Zapotiltic,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+122,Zapotitlán de Vadillo,2026-11-01,45,dengue,0.2,bajo,PREDICCION_MODELO
+122,Zapotitlán de Vadillo,2026-11-08,46,dengue,0.2,bajo,PREDICCION_MODELO
+122,Zapotitlán de Vadillo,2026-11-15,47,dengue,0.1,bajo,PREDICCION_MODELO
+122,Zapotitlán de Vadillo,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+123,Zapotlán del Rey,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+123,Zapotlán del Rey,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+123,Zapotlán del Rey,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+123,Zapotlán del Rey,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+124,Zapotlanejo,2026-11-01,45,dengue,1.0,medio,PREDICCION_MODELO
+124,Zapotlanejo,2026-11-08,46,dengue,0.7,medio,PREDICCION_MODELO
+124,Zapotlanejo,2026-11-15,47,dengue,0.6,medio,PREDICCION_MODELO
+124,Zapotlanejo,2026-11-22,48,dengue,0.4,bajo,PREDICCION_MODELO
+125,San Ignacio Cerro Gordo,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+125,San Ignacio Cerro Gordo,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+125,San Ignacio Cerro Gordo,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+125,San Ignacio Cerro Gordo,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO

@@ -1,0 +1,22 @@
+﻿id,tipo,caso,esperado,resultado,detalle
+C01,correcto,Municipio por nombre: Puerto Vallarta,"4 filas, semanas 1-4, casos>=0, nivel válido",OK,
+C02,correcto,Municipio por clave '067' y '67',Misma respuesta que por nombre,OK,
+C03,correcto,"Nombre sin acentos y en minúsculas: 'cihuatlan', ' TOMATLAN '",Se reconoce el municipio,OK,
+C04,correcto,Los 125 municipios y 4 horizontes sin vacíos ni negativos,500 filas sin NaN,OK,
+C05,correcto,Región Costa = 14 municipios x 4 semanas,56 filas,OK,
+C06,correcto,Formato igual al mock del sprint 1,8 columnas del contrato,OK,
+C07,correcto,Municipio sin casos históricos (Mixtlán) -> nivel bajo,bajo en 4 semanas,OK,
+C08,correcto,Sensibilidad: brote simulado en Puerto Vallarta (150 casos por semana en las 3 semanas hasta la semana de origen),El nivel sube a medio/alto,OK,
+C09,correcto,Villa Purificación por nombre y por clave real '068',Misma respuesta y pertenece a la Costa,OK,
+C10,correcto,La clave 107 es Tuxcueca (no Villa Purificación) y NO es de la Costa,region_costa = NO,OK,
+E01,municipio inexistente,'Narnia',Error claro (MunicipioNoEncontrado),OK,MunicipioNoEncontrado: El municipio 'Narnia' no existe en el catálogo de Jalisco (125 municipios).
+E02,municipio inexistente,Clave 999 y '000',Error claro (MunicipioNoEncontrado),OK,
+E03,municipio inexistente,Municipio de otro estado: 'Monterrey',Error claro,OK,
+E04,municipio inexistente,"Entrada con caracteres raros: ""Colotlán'; DROP TABLE--"" y '😀'","Error claro, sin caerse",OK,
+E05,municipio inexistente,Municipio vacío / None / solo espacios,ValueError claro,OK,
+V01,datos vacíos,DataFrame sin filas,DatosVacios,OK,
+V02,datos vacíos,None en lugar de datos,DatosVacios,OK,
+V03,datos vacíos,Casos vacíos (NaN) en todo el municipio Puerto Vallarta,"Error claro o predicción válida, nunca NaN",OK,Error controlado: No hay datos de casos suficientes para el municipio 'Puerto Vallarta' en la semana de origen.
+V04,datos vacíos,Sin columnas de clima (el modelo de la Costa no usa clima),"Predicción válida, sin errores",OK,
+V05,datos vacíos,Solo 2 semanas de historial,DatosVacios (historial insuficiente),OK,
+V06,datos vacíos,Faltan columnas (sin 'casos'),"Error claro (ValueError), no KeyError",OK,

@@ -1,0 +1,126 @@
+﻿clave_municipio,municipio,region_costa,umbral_medio,umbral_alto
+001,Acatic,NO,1,3
+002,Acatlán de Juárez,NO,1,4
+003,Ahualulco de Mercado,NO,1,3
+004,Amacueca,NO,1,3
+005,Amatitán,NO,1,3
+006,Ameca,NO,1,7
+007,San Juanito de Escobedo,NO,1,3
+008,Arandas,NO,1,3
+009,El Arenal,NO,1,3
+010,Atemajac de Brizuela,NO,1,3
+011,Atengo,NO,1,3
+012,Atenguillo,SI,1,3
+013,Atotonilco el Alto,NO,1,3
+014,Atoyac,NO,1,3
+015,Autlán de Navarro,NO,2,7
+016,Ayotlán,NO,1,3
+017,Ayutla,NO,1,3
+018,La Barca,NO,2,15
+019,Bolaños,NO,1,3
+020,Cabo Corrientes,SI,1,3
+021,Casimiro Castillo,SI,1,3
+022,Cihuatlán,SI,2,5
+023,Zapotlán el Grande,NO,1,5
+024,Cocula,NO,2,6
+025,Colotlán,NO,1,3
+026,Concepción de Buenos Aires,NO,1,3
+027,Cuautitlán de García Barragán,SI,2,4
+028,Cuautla,NO,1,3
+029,Cuquío,NO,1,3
+030,Chapala,NO,1,3
+031,Chimaltitán,NO,1,3
+032,Chiquilistlán,NO,1,3
+033,Degollado,NO,1,3
+034,Ejutla,NO,1,3
+035,Encarnación de Díaz,NO,1,3
+036,Etzatlán,NO,1,3
+037,El Grullo,NO,1,3
+038,Guachinango,SI,1,3
+039,Guadalajara,NO,37,86
+040,Hostotipaquillo,NO,1,3
+041,Huejúcar,NO,1,3
+042,Huejuquilla el Alto,NO,1,3
+043,La Huerta,SI,3,7
+044,Ixtlahuacán de los Membrillos,NO,1,3
+045,Ixtlahuacán del Río,NO,1,3
+046,Jalostotitlán,NO,1,3
+047,Jamay,NO,1,3
+048,Jesús María,NO,1,3
+049,Jilotlán de los Dolores,NO,1,3
+050,Jocotepec,NO,1,10
+051,Juanacatlán,NO,1,3
+052,Juchitlán,NO,1,3
+053,Lagos de Moreno,NO,1,3
+054,El Limón,NO,1,3
+055,Magdalena,NO,1,3
+056,Santa María del Oro,NO,1,3
+057,La Manzanilla de la Paz,NO,1,3
+058,Mascota,SI,1,3
+059,Mazamitla,NO,1,3
+060,Mexticacán,NO,1,3
+061,Mezquitic,NO,1,3
+062,Mixtlán,SI,1,3
+063,Ocotlán,NO,1,3
+064,Ojuelos de Jalisco,NO,1,3
+065,Pihuamo,NO,1,3
+066,Poncitlán,NO,1,9
+067,Puerto Vallarta,SI,15,30
+068,Villa Purificación,SI,1,3
+069,Quitupan,NO,1,3
+070,El Salto,NO,4,13
+071,San Cristóbal de la Barranca,NO,1,3
+072,San Diego de Alejandría,NO,1,3
+073,San Juan de los Lagos,NO,1,3
+074,San Julián,NO,1,3
+075,San Marcos,NO,1,3
+076,San Martín de Bolaños,NO,1,3
+077,San Martín Hidalgo,NO,1,3
+078,San Miguel el Alto,NO,1,3
+079,Gómez Farías,NO,1,3
+080,San Sebastián del Oeste,SI,1,3
+081,Santa María de los Ángeles,NO,1,3
+082,Sayula,NO,1,3
+083,Tala,NO,1,3
+084,Talpa de Allende,SI,1,3
+085,Tamazula de Gordiano,NO,1,4
+086,Tapalpa,NO,1,3
+087,Tecalitlán,NO,1,3
+088,Tecolotlán,NO,1,3
+089,Techaluta de Montenegro,NO,1,3
+090,Tenamaxtlán,NO,1,3
+091,Teocaltiche,NO,1,3
+092,Teocuitatlán de Corona,NO,1,3
+093,Tepatitlán de Morelos,NO,1,3
+094,Tequila,NO,1,5
+095,Teuchitlán,NO,1,3
+096,Tizapán el Alto,NO,1,3
+097,Tlajomulco de Zúñiga,NO,8,26
+098,San Pedro Tlaquepaque,NO,20,89
+099,Tolimán,NO,1,3
+100,Tomatlán,SI,1,3
+101,Tonalá,NO,10,20
+102,Tonaya,NO,1,3
+103,Tonila,NO,1,3
+104,Totatiche,NO,1,3
+105,Tototlán,NO,1,3
+106,Tuxcacuesco,NO,1,3
+107,Tuxcueca,NO,1,3
+108,Tuxpan,NO,1,4
+109,Unión de San Antonio,NO,1,3
+110,Unión de Tula,NO,1,3
+111,Valle de Guadalupe,NO,1,3
+112,Valle de Juárez,NO,1,3
+113,San Gabriel,NO,1,3
+114,Villa Corona,NO,1,3
+115,Villa Guerrero,NO,1,3
+116,Villa Hidalgo,NO,1,3
+117,Cañadas de Obregón,NO,1,3
+118,Yahualica de González Gallo,NO,1,3
+119,Zacoalco de Torres,NO,1,5
+120,Zapopan,NO,20,50
+121,Zapotiltic,NO,1,3
+122,Zapotitlán de Vadillo,NO,1,3
+123,Zapotlán del Rey,NO,1,3
+124,Zapotlanejo,NO,1,3
+125,San Ignacio Cerro Gordo,NO,1,3

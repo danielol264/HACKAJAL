@@ -1,0 +1,57 @@
+﻿clave_municipio,municipio,fecha_inicio_semana,semana_epi,enfermedad,casos_esperados,nivel_riesgo,tipo_registro
+012,Atenguillo,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+012,Atenguillo,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+012,Atenguillo,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+012,Atenguillo,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+020,Cabo Corrientes,2026-11-01,45,dengue,0.3,bajo,PREDICCION_MODELO
+020,Cabo Corrientes,2026-11-08,46,dengue,0.3,bajo,PREDICCION_MODELO
+020,Cabo Corrientes,2026-11-15,47,dengue,0.2,bajo,PREDICCION_MODELO
+020,Cabo Corrientes,2026-11-22,48,dengue,0.2,bajo,PREDICCION_MODELO
+021,Casimiro Castillo,2026-11-01,45,dengue,0.1,bajo,PREDICCION_MODELO
+021,Casimiro Castillo,2026-11-08,46,dengue,0.1,bajo,PREDICCION_MODELO
+021,Casimiro Castillo,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+021,Casimiro Castillo,2026-11-22,48,dengue,0.1,bajo,PREDICCION_MODELO
+022,Cihuatlán,2026-11-01,45,dengue,0.1,bajo,PREDICCION_MODELO
+022,Cihuatlán,2026-11-08,46,dengue,0.1,bajo,PREDICCION_MODELO
+022,Cihuatlán,2026-11-15,47,dengue,0.1,bajo,PREDICCION_MODELO
+022,Cihuatlán,2026-11-22,48,dengue,0.1,bajo,PREDICCION_MODELO
+027,Cuautitlán de García Barragán,2026-11-01,45,dengue,0.1,bajo,PREDICCION_MODELO
+027,Cuautitlán de García Barragán,2026-11-08,46,dengue,0.1,bajo,PREDICCION_MODELO
+027,Cuautitlán de García Barragán,2026-11-15,47,dengue,0.1,bajo,PREDICCION_MODELO
+027,Cuautitlán de García Barragán,2026-11-22,48,dengue,0.1,bajo,PREDICCION_MODELO
+038,Guachinango,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+038,Guachinango,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+038,Guachinango,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+038,Guachinango,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+043,La Huerta,2026-11-01,45,dengue,0.6,bajo,PREDICCION_MODELO
+043,La Huerta,2026-11-08,46,dengue,0.4,bajo,PREDICCION_MODELO
+043,La Huerta,2026-11-15,47,dengue,0.3,bajo,PREDICCION_MODELO
+043,La Huerta,2026-11-22,48,dengue,0.3,bajo,PREDICCION_MODELO
+058,Mascota,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+058,Mascota,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+058,Mascota,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+058,Mascota,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+062,Mixtlán,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+062,Mixtlán,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+062,Mixtlán,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+062,Mixtlán,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+067,Puerto Vallarta,2026-11-01,45,dengue,11.9,bajo,PREDICCION_MODELO
+067,Puerto Vallarta,2026-11-08,46,dengue,10.9,bajo,PREDICCION_MODELO
+067,Puerto Vallarta,2026-11-15,47,dengue,7.8,bajo,PREDICCION_MODELO
+067,Puerto Vallarta,2026-11-22,48,dengue,6.3,bajo,PREDICCION_MODELO
+068,Villa Purificación,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+068,Villa Purificación,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+068,Villa Purificación,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+068,Villa Purificación,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+080,San Sebastián del Oeste,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+080,San Sebastián del Oeste,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+080,San Sebastián del Oeste,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+080,San Sebastián del Oeste,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+084,Talpa de Allende,2026-11-01,45,dengue,0.0,bajo,PREDICCION_MODELO
+084,Talpa de Allende,2026-11-08,46,dengue,0.0,bajo,PREDICCION_MODELO
+084,Talpa de Allende,2026-11-15,47,dengue,0.0,bajo,PREDICCION_MODELO
+084,Talpa de Allende,2026-11-22,48,dengue,0.0,bajo,PREDICCION_MODELO
+100,Tomatlán,2026-11-01,45,dengue,0.2,bajo,PREDICCION_MODELO
+100,Tomatlán,2026-11-08,46,dengue,0.2,bajo,PREDICCION_MODELO
+100,Tomatlán,2026-11-15,47,dengue,0.2,bajo,PREDICCION_MODELO
+100,Tomatlán,2026-11-22,48,dengue,0.2,bajo,PREDICCION_MODELO
