@@ -1,14 +1,245 @@
-import{useState}from'react';import{Title,Demo,Stat,Card,Chart,AlertCard}from'../components/UI';import{municipalities,history,otherDiseases,alerts}from'../data/demoData';
-const partial='2026 es un periodo parcial con corte al 27 de octubre de 2026.';
-const statData=[['✓','Confirmados','2,203','Registros históricos 2020–2026'],['?','Probables','9,029','Pendientes de confirmación'],['—','Descartados','4,235','No son casos confirmados'],['⌖','Municipios','14','Costa Sur y Costa-Sierra Occidental']];
-function HistoryBars(){const max=5390;return <div className="history-bars" aria-label="Gráfica anual de casos históricos">{history.map(d=><div className="year-group" key={d.year}><div className="bar-stack"><i className="discarded" style={{height:`${d.discarded/max*145}px`}} title={`Descartados: ${d.discarded}`}/><i className="probable" style={{height:`${d.probable/max*145}px`}} title={`Probables: ${d.probable}`}/><i className="confirmed" style={{height:`${d.confirmed/max*145}px`}} title={`Confirmados: ${d.confirmed}`}/></div><b>{d.year}</b></div>)}</div>}
-function NeutralMap({selected,onSelect}){return <div className="neutral-map"><div className="region-label coast">Costa Sur</div><div className="region-label sierra">Costa-Sierra<br/>Occidental</div><div className="neutral-map-grid">{municipalities.map(m=><button key={m.name} className={`${m.region==='Costa Sur'?'coast':'sierra'} ${selected?.name===m.name?'selected':''}`} onClick={()=>onSelect?.(m)}>{m.name}</button>)}</div><small>Vista territorial esquemática. Geometrías municipales pendientes de integrar.</small></div>}
-export function Home({go}){const[chosen,setChosen]=useState(municipalities[0]);return <><section className="hero dengue-hero"><div><span>JALISCO · COSTA SUR Y COSTA-SIERRA OCCIDENTAL</span><h1>Vigilancia epidemiológica del dengue</h1><p>Información para proteger la salud de nuestras comunidades.</p><div className="hero-meta"><b>14 municipios monitoreados</b><b>Histórico disponible: 2020–2026</b></div><button className="primary" onClick={()=>go('municipios')}>Consultar municipios</button></div><aside className="surveillance-visual"><div className="radar"><i/><i/><i/><b>⌖</b></div><p>Seguimiento territorial<br/><strong>sin predicciones activas</strong></p></aside></section><section className="section compact"><div className="stats four">{statData.map(x=><Stat key={x[1]} icon={x[0]} label={x[1]} value={x[2]} text={x[3]}/>)}</div><p className="micro-note">Registros históricos acumulados del conjunto analizado, 2020–2026. Corte de 2026 parcial.</p></section><section className="section"><Title eyebrow="RESULTADOS HISTÓRICOS DESTACADOS" title="Datos para comprender el comportamiento acumulado." text="Estos resultados no indican un nivel de riesgo actual."/><div className="featured-results"><article><span>PUERTO VALLARTA</span><strong>1,100</strong><p>confirmados históricos</p></article><article><span>SAN SEBASTIÁN DEL OESTE</span><strong>904.4</strong><p>confirmados acumulados por cada 100,000 habitantes</p></article><article><span>LA HUERTA</span><strong>855.6</strong><p>confirmados acumulados por cada 100,000 habitantes</p></article><article><span>CUAUTITLÁN DE GARCÍA BARRAGÁN</span><strong>800.2</strong><p>confirmados acumulados por cada 100,000 habitantes</p></article></div></section><section className="section coverage"><div><Title eyebrow="COBERTURA TERRITORIAL" title="Consulta los 14 municipios incluidos." text="Selecciona un municipio para conocer los datos históricos disponibles."/><button className="secondary" onClick={()=>go('mapa')}>Abrir mapa territorial</button></div><NeutralMap selected={chosen} onSelect={setChosen}/></section><section className="section quick-actions"><Card icon="⚑" title="Alertas epidemiológicas" text="Consulta avisos validados e información preventiva." action="Ver alertas" onClick={()=>go('alertas')}/><Card icon="◌" title="Prevención del dengue" text="Medidas simples para evitar criaderos y picaduras." action="Ver recomendaciones" onClick={()=>go('prevencion')}/></section></>}
-export function Epidemiology(){return <section className="section"><Title eyebrow="SITUACIÓN EPIDEMIOLÓGICA" title="Dengue: información histórica disponible." text="La plataforma no presenta predicciones ni niveles de riesgo actuales mientras el modelo esté en preparación."/><div className="stats four">{statData.slice(0,3).map(x=><Stat key={x[1]} icon={x[0]} label={x[1]} value={x[2]} text={x[3]}/>)}</div><section className="prediction-state"><span>PRÓXIMAMENTE</span><h2>Predicción de dengue por municipio</h2><p>El modelo para estimar casos confirmados a 1, 2, 3 y 4 semanas aún no ha sido entrenado ni validado.</p><div><b>Municipio</b><b>Horizonte 1–4 semanas</b><b>Casos estimados e intervalo</b><b>Calidad de datos</b></div><small>Información no disponible hasta contar con validación epidemiológica.</small></section><section className="other-diseases"><h2>Otras enfermedades: información de referencia</h2><div className="grid three">{otherDiseases.map(d=><Card key={d[0]} icon="i" title={d[0]} text={<><b>{d[1]}</b><br/>{d[2]}</>}/>)}</div></section></section>}
-export function Municipality(){const[query,setQuery]=useState('');const list=municipalities.filter(m=>m.name.toLowerCase().includes(query.toLowerCase()));return <section className="section"><Title eyebrow="MUNICIPIOS" title="Información disponible por territorio." text="Busca un municipio de las regiones Costa Sur y Costa-Sierra Occidental."/><div className="selector"><label htmlFor="municipality">Buscar municipio</label><input id="municipality" value={query} onChange={e=>setQuery(e.target.value)} placeholder="Escribe el nombre del municipio"/></div><div className="municipality-list">{list.map(m=><article key={m.name}><div><h2>{m.name}</h2><span>{m.region}</span></div><p><b>Población Censo 2020:</b> Información no disponible</p><p><b>Confirmados históricos:</b> {m.confirmed||'Información no disponible'}</p><button className="secondary" onClick={()=>setQuery(m.name)}>Ver ficha</button>{query===m.name&&<div className="municipality-detail"><b>Información histórica disponible</b><p>{m.confirmed||m.rate||'No hay información municipal desglosada disponible para este indicador.'}</p><p>No se muestra un nivel de riesgo actual porque no existen resultados validados.</p></div>}</article>)}</div></section>}
-export function RiskMap(){const[selected,setSelected]=useState(municipalities[0]);return <section className="section"><Title eyebrow="MAPA TERRITORIAL" title="Los municipios incluidos en el seguimiento." text="La vista identifica regiones y municipios; no representa niveles de riesgo ni resultados predictivos."/><NeutralMap selected={selected} onSelect={setSelected}/><div className="map-info"><span>MUNICIPIO SELECCIONADO</span><h2>{selected.name}</h2><p><b>Región:</b> {selected.region}</p><p><b>Información histórica:</b> {selected.confirmed||selected.rate||'Información no disponible'}</p><small>Las geometrías municipales oficiales se integrarán cuando estén disponibles en el repositorio o mediante la fuente validada.</small></div></section>}
-export function History(){return <section className="section"><Title eyebrow="HISTORIAL DEL DENGUE" title="Registros por año y estatus." text="Los registros confirmados, probables y descartados se muestran por separado."/><article className="history-chart"><div><h2>Registros anuales, 2020–2026</h2><p>Confirmados, probables y descartados.</p></div><HistoryBars/><div className="history-legend"><span className="confirmed">Confirmados</span><span className="probable">Probables</span><span className="discarded">Descartados</span></div></article><div className="data"><b>i</b><p><strong>Corte parcial 2026.</strong><br/>{partial} No debe compararse directamente con años completos.</p></div><div className="grid charts"><Chart title="Comparación entre municipios" sub="Información municipal desagregada pendiente de integración" bar/><article className="why"><h2>Cómo interpretar los datos</h2><p>Un caso probable no equivale a un caso confirmado. Los descartados se muestran para mantener la transparencia del conjunto analizado.</p></article></div></section>}
-export function Alerts(){return <section className="section"><Title eyebrow="ALERTAS" title="Avisos claros y validados." text="Las predicciones no se convierten automáticamente en alertas oficiales."/><div className="alert-list">{alerts.map(a=><AlertCard key={a.title} alert={{...a,level:'low',municipality:a.kind}}/>)}</div><div className="data"><b>i</b><p><strong>Información insuficiente.</strong><br/>Cuando no haya un aviso validado, mostraremos este estado en lugar de inventar una alerta.</p></div></section>}
-export function Prevention(){return <><section className="pre-hero"><div><span>PREVENCIÓN DEL DENGUE</span><h1>Acciones simples que protegen a tu comunidad.</h1><p>Revisa tu casa cada semana y elimina lugares donde el mosquito pueda reproducirse.</p></div><b>◌</b></section><section className="section"><div className="grid three">{[['Elimina criaderos','Lava, tapa, voltea y tira recipientes con agua.','⌂'],['Evita picaduras','Usa repelente y ropa que cubra brazos y piernas.','☂'],['Identifica síntomas','Fiebre, dolor de cabeza o malestar: busca orientación profesional.','i'],['Acude a un centro de salud','No te automediques si presentas señales de alarma.','+'],['Señales de alarma','Busca atención urgente ante dolor abdominal intenso, vómito persistente o sangrado.','!']].map(x=><article className="pre-card" key={x[0]}><i>{x[2]}</i><h2>{x[0]}</h2><p>{x[1]}</p></article>)}</div></section></>}
-export function HealthCenters(){return <section className="section"><Title eyebrow="CENTROS DE SALUD" title="Directorio en preparación." text="Los establecimientos y datos de contacto se mostrarán únicamente cuando sean verificados por una fuente institucional."/><div className="empty">Información no disponible por el momento.</div></section>}
-export function About(){return <section className="section"><Title eyebrow="ACERCA DEL SISTEMA" title="Información pública para la prevención." text="Proyecto ciudadano de vigilancia epidemiológica del dengue en 14 municipios de Jalisco."/></section>}
+import { useState } from 'react';
+import { Title, Stat, Card, Chart } from '../components/UI';
+import { municipalities, history, otherDiseases } from '../data/demoData';
+
+// Re-exports de páginas conectadas a la API oficial
+export { default as Alerts } from './Alerts';
+export { default as Prevention } from './HealthInfo';
+export { default as ContentDetail } from './ContentDetail';
+export { default as Home } from './Home';
+
+const partial = '2026 es un periodo parcial con corte al 27 de octubre de 2026.';
+const statData = [
+  ['✓', 'Confirmados', '2,203', 'Registros históricos 2020–2026'],
+  ['?', 'Probables', '9,029', 'Pendientes de confirmación'],
+  ['—', 'Descartados', '4,235', 'No son casos confirmados'],
+  ['⌖', 'Municipios', '14', 'Costa Sur y Costa-Sierra Occidental'],
+];
+
+function HistoryBars() {
+  const max = 5390;
+  return (
+    <div className="history-bars" aria-label="Gráfica anual de casos históricos">
+      {history.map((d) => (
+        <div className="year-group" key={d.year}>
+          <div className="bar-stack">
+            <i className="discarded" style={{ height: `${(d.discarded / max) * 145}px` }} title={`Descartados: ${d.discarded}`} />
+            <i className="probable" style={{ height: `${(d.probable / max) * 145}px` }} title={`Probables: ${d.probable}`} />
+            <i className="confirmed" style={{ height: `${(d.confirmed / max) * 145}px` }} title={`Confirmados: ${d.confirmed}`} />
+          </div>
+          <b>{d.year}</b>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function NeutralMap({ selected, onSelect }) {
+  return (
+    <div className="neutral-map">
+      <div className="region-label coast">Costa Sur</div>
+      <div className="region-label sierra">Costa-Sierra<br />Occidental</div>
+      <div className="neutral-map-grid">
+        {municipalities.map((m) => (
+          <button
+            key={m.name}
+            className={`${m.region === 'Costa Sur' ? 'coast' : 'sierra'} ${selected?.name === m.name ? 'selected' : ''}`}
+            onClick={() => onSelect?.(m)}
+          >
+            {m.name}
+          </button>
+        ))}
+      </div>
+      <small>Vista territorial esquemática de los 14 municipios monitoreados.</small>
+    </div>
+  );
+}
+
+export function Epidemiology() {
+  return (
+    <section className="section">
+      <Title
+        eyebrow="SITUACIÓN EPIDEMIOLÓGICA"
+        title="Dengue: información histórica disponible."
+        text="La plataforma no presenta predicciones ni niveles de riesgo actuales mientras el modelo esté en preparación."
+      />
+      <div className="stats four">
+        {statData.slice(0, 3).map((x) => (
+          <Stat key={x[1]} icon={x[0]} label={x[1]} value={x[2]} text={x[3]} />
+        ))}
+      </div>
+      <section className="prediction-state">
+        <span>PRÓXIMAMENTE</span>
+        <h2>Predicción de dengue por región</h2>
+        <p>El modelo predictivo regional de casos a 4 semanas es evaluado periódicamente por organizaciones de salud. Cuando se confirme un aviso oficial, se publica en el apartado de Alertas.</p>
+        <div>
+          <b>Región Costera</b>
+          <b>Horizonte 1–4 semanas</b>
+          <b>Validación en curso</b>
+        </div>
+        <small>Las alertas oficiales se emiten únicamente tras la confirmación de las autoridades de salud.</small>
+      </section>
+      <section className="other-diseases">
+        <h2>Otras enfermedades: información de referencia</h2>
+        <div className="grid three">
+          {otherDiseases.map((d) => (
+            <Card key={d[0]} icon="i" title={d[0]} text={<><b>{d[1]}</b><br />{d[2]}</>} />
+          ))}
+        </div>
+      </section>
+    </section>
+  );
+}
+
+export function Municipality() {
+  const [query, setQuery] = useState('');
+  const list = municipalities.filter((m) => m.name.toLowerCase().includes(query.toLowerCase()));
+  return (
+    <section className="section">
+      <Title
+        eyebrow="MUNICIPIOS MONITOREADOS"
+        title="Información por territorio."
+        text="Consulta los 14 municipios de las regiones Costa Sur y Costa-Sierra Occidental."
+      />
+      <div className="selector">
+        <label htmlFor="municipality">Buscar municipio</label>
+        <input
+          id="municipality"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Escribe el nombre del municipio (ej. Puerto Vallarta, Cihuatlán...)"
+        />
+      </div>
+      <div className="municipality-list">
+        {list.map((m) => (
+          <article key={m.name}>
+            <div>
+              <h2>{m.name}</h2>
+              <span>{m.region}</span>
+            </div>
+            <p><b>Población Censo 2020:</b> Información de referencia</p>
+            <p><b>Confirmados históricos:</b> {m.confirmed || 'Información no disponible'}</p>
+            <button className="secondary" onClick={() => setQuery(m.name)}>Ver ficha</button>
+            {query === m.name && (
+              <div className="municipality-detail">
+                <b>Información histórica acumulada</b>
+                <p>{m.confirmed || m.rate || 'No hay información municipal desglosada disponible para este indicador.'}</p>
+                <p>No se muestra un nivel de riesgo actual porque las alertas epidemiológicas oficiales se evalúan a nivel regional.</p>
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+export function RiskMap() {
+  const [selected, setSelected] = useState(municipalities[0]);
+  return (
+    <section className="section">
+      <Title
+        eyebrow="MAPA TERRITORIAL"
+        title="Los municipios incluidos en el seguimiento."
+        text="La vista identifica regiones y municipios de la franja costera de Jalisco; no representa niveles de riesgo arbitrarios."
+      />
+      <NeutralMap selected={selected} onSelect={setSelected} />
+      <div className="map-info">
+        <span>MUNICIPIO SELECCIONADO</span>
+        <h2>{selected.name}</h2>
+        <p><b>Región:</b> {selected.region}</p>
+        <p><b>Información histórica:</b> {selected.confirmed || selected.rate || 'Información no disponible'}</p>
+        <small>Vigilancia epidemiológica para Costa Sur y Costa-Sierra Occidental.</small>
+      </div>
+    </section>
+  );
+}
+
+export function History() {
+  return (
+    <section className="section">
+      <Title
+        eyebrow="HISTORIAL DEL DENGUE"
+        title="Registros por año y estatus."
+        text="Los registros confirmados, probables y descartados se muestran por separado."
+      />
+      <article className="history-chart">
+        <div>
+          <h2>Registros anuales, 2020–2026</h2>
+          <p>Confirmados, probables y descartados.</p>
+        </div>
+        <HistoryBars />
+        <div className="history-legend">
+          <span className="confirmed">Confirmados</span>
+          <span className="probable">Probables</span>
+          <span className="discarded">Descartados</span>
+        </div>
+      </article>
+      <div className="data">
+        <b>i</b>
+        <p>
+          <strong>Corte parcial 2026.</strong><br />
+          {partial} No debe compararse directamente con años completos.
+        </p>
+      </div>
+      <div className="grid charts">
+        <Chart title="Distribución de casos por enfermedad" sub="Dengue y padecimientos crónicos prioritarios" bar />
+        <article className="why">
+          <h2>Cómo interpretar los datos</h2>
+          <p>Un caso probable no equivale a un caso confirmado. Los descartados se muestran para mantener la transparencia del conjunto analizado.</p>
+        </article>
+      </div>
+    </section>
+  );
+}
+
+export function HealthCenters() {
+  return (
+    <section className="section">
+      <Title
+        eyebrow="CENTROS DE SALUD"
+        title="Directorio en preparación."
+        text="Los establecimientos y datos de contacto se mostrarán únicamente cuando sean verificados por una fuente institucional."
+      />
+      <div className="empty">Información institucional en proceso de validación. En caso de emergencia médica, acude al centro de salud u hospital más cercano.</div>
+    </section>
+  );
+}
+
+export function About() {
+  return (
+    <section className="section">
+      <Title
+        eyebrow="ACERCA DEL PROYECTO"
+        title="Portal Público de Vigilancia y Salud — HackaJal"
+        text="Sistema de información preventiva y vigilancia epidemiológica para la población de la región costera de Jalisco."
+      />
+      <div className="summary" style={{ marginBottom: '24px' }}>
+        <h2>Vigilancia comunitaria y salud preventiva</h2>
+        <p>
+          Este portal web comunica alertas epidemiológicas oficiales, artículos y recomendaciones preventivas para el cuidado de la salud en 14 municipios de Jalisco (regiones Costa Sur y Costa-Sierra Occidental).
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '8px', marginTop: '16px' }}>
+          <div>
+            <b>Región de cobertura:</b> Costa Sur y Costa-Sierra Occidental (14 municipios monitoreados).
+          </div>
+          <div>
+            <b>Enfermedad prioritaria:</b> Dengue (modelo predictivo y alertas confirmadas).
+          </div>
+          <div>
+            <b>Información preventiva:</b> Medidas de prevención para Dengue, Diabetes tipo 2, Hipertensión arterial y Obesidad.
+          </div>
+          <div>
+            <b>Participación comunitaria:</b> Encuesta de salud anónima y voluntaria para monitoreo social.
+          </div>
+        </div>
+      </div>
+      <div className="data">
+        <b>i</b>
+        <p>
+          <strong>Privacidad y ética:</strong> La plataforma opera sin inicio de sesión y no solicita datos personales como nombres, teléfonos o correos. El portal cumple con las especificaciones técnicas del contrato API_WEB.md.
+        </p>
+      </div>
+    </section>
+  );
+}
