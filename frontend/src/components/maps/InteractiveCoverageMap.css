@@ -1,0 +1,1371 @@
+/* ==========================================================================
+   HACKAJAL — INTERACTIVE COVERAGE MAP STYLES
+   Estética institucional, tecnológica, moderna y de alta jerarquía visual.
+   ========================================================================== */
+
+/* Variables locales del mapa */
+:root {
+  --map-teal: #087b7e;
+  --map-teal-hover: #0ca1a5;
+  --map-teal-active: #055456;
+  --map-teal-light: #e8f5f4;
+  --map-teal-surface: #f4faf9;
+  --map-sierra: #1f6b8c;
+  --map-sierra-hover: #2985ad;
+  --map-sierra-light: #eaf2f7;
+  --map-dark: #20313b;
+  --map-text-sub: #5f747e;
+  --map-border: #d4e5e4;
+  --map-border-light: #e6f1f0;
+  --map-alert: #d97706;
+  --map-alert-bg: #fffbeb;
+  --map-radius: 12px;
+  --map-shadow: 0 4px 18px rgba(18, 55, 62, 0.07);
+}
+
+/* --------------------------------------------------------------------------
+   1. SECCIÓN PRINCIPAL Y ENCABEZADOS
+   -------------------------------------------------------------------------- */
+.interactive-coverage-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.coverage-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.section-eyebrow {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: var(--map-teal);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.section-heading {
+  margin: 0 0 8px;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--map-dark);
+  letter-spacing: -0.8px;
+}
+
+.section-description {
+  margin: 0;
+  font-size: 15px;
+  color: var(--map-text-sub);
+  max-width: 580px;
+  line-height: 1.6;
+}
+
+/* Barra de métricas superiores (KPI Bar) */
+.coverage-kpi-bar {
+  display: flex;
+  gap: 16px;
+  background: #ffffff;
+  padding: 12px 20px;
+  border-radius: var(--map-radius);
+  border: 1px solid var(--map-border);
+  box-shadow: var(--map-shadow);
+}
+
+.kpi-item {
+  display: flex;
+  flex-direction: column;
+  padding: 0 12px;
+  border-right: 1px solid var(--map-border-light);
+}
+
+.kpi-item:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.kpi-number {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--map-teal);
+  line-height: 1.1;
+}
+
+.kpi-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--map-text-sub);
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   2. BARRA DE HERRAMIENTAS, FILTROS Y BUSCADOR
+   -------------------------------------------------------------------------- */
+.coverage-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 14px 18px;
+  background: #ffffff;
+  border: 1px solid var(--map-border);
+  border-radius: var(--map-radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+/* Tabs de regiones */
+.region-filter-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--map-border);
+  background: #fbfdfd;
+  color: var(--map-text-sub);
+  transition: all 0.2s ease;
+}
+
+.filter-tab:hover {
+  background: var(--map-teal-light);
+  color: var(--map-teal);
+  border-color: #b8dedc;
+}
+
+.filter-tab.active {
+  background: var(--map-teal);
+  color: #ffffff;
+  border-color: var(--map-teal);
+}
+
+.tab-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.tab-indicator.coast {
+  background: var(--map-teal);
+}
+
+.filter-tab.active .tab-indicator.coast {
+  background: #ffffff;
+}
+
+.tab-indicator.sierra {
+  background: var(--map-sierra);
+}
+
+.filter-tab.active .tab-indicator.sierra {
+  background: #ffffff;
+}
+
+/* Buscador de municipios */
+.municipality-search-wrapper {
+  position: relative;
+  min-width: 290px;
+}
+
+.search-input-box {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  font-size: 13px;
+  color: #8da2ab;
+  pointer-events: none;
+}
+
+.search-field {
+  width: 100%;
+  padding: 9px 32px 9px 34px;
+  font-size: 13px;
+  border: 1px solid var(--map-border);
+  border-radius: 8px;
+  background: #f9fbfb;
+  color: var(--map-dark);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-field:focus {
+  outline: none;
+  border-color: var(--map-teal);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(8, 123, 126, 0.12);
+}
+
+.search-clear-btn {
+  position: absolute;
+  right: 10px;
+  border: none;
+  background: transparent;
+  color: #889ea6;
+  font-size: 13px;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.search-dropdown-results {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  max-height: 240px;
+  overflow-y: auto;
+  background: #ffffff;
+  border: 1px solid var(--map-border);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(18, 55, 62, 0.12);
+  z-index: 20;
+}
+
+.dropdown-item {
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  border-bottom: 1px solid var(--map-border-light);
+  background: transparent;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item:hover {
+  background: var(--map-teal-light);
+}
+
+.dropdown-item strong {
+  font-size: 13px;
+  color: var(--map-dark);
+}
+
+.dropdown-item span {
+  font-size: 11px;
+  color: var(--map-text-sub);
+}
+
+.dropdown-empty {
+  padding: 14px;
+  font-size: 12px;
+  color: var(--map-text-sub);
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   3. GRID PRINCIPAL (MAPA + PANEL LATERAL)
+   -------------------------------------------------------------------------- */
+.coverage-main-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 0.85fr;
+  gap: 24px;
+  align-items: start;
+  position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   4. LIENZO DEL MAPA INTERACTIVO (SVG)
+   -------------------------------------------------------------------------- */
+.map-canvas-container {
+  position: relative;
+  background: linear-gradient(135deg, #f3f8f7 0%, #fbfdfc 60%, #eaf3f2 100%);
+  border: 1px solid var(--map-border);
+  border-radius: var(--map-radius);
+  box-shadow: var(--map-shadow);
+  overflow: hidden;
+  min-height: 580px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.interactive-svg-canvas {
+  width: 100%;
+  height: auto;
+  max-height: 640px;
+  display: block;
+  user-select: none;
+}
+
+/* Controles flotantes de zoom */
+.map-controls-floating {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid var(--map-border);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(18, 55, 62, 0.08);
+  overflow: hidden;
+  z-index: 10;
+}
+
+.control-btn {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: none;
+  background: #ffffff;
+  color: var(--map-dark);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  border-bottom: 1px solid var(--map-border-light);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.control-btn:last-child {
+  border-bottom: none;
+}
+
+.control-btn:hover {
+  background: var(--map-teal-light);
+  color: var(--map-teal);
+}
+
+.control-btn.reset {
+  font-size: 15px;
+}
+
+/* Marca de agua / Fuente cartográfica */
+.map-watermark {
+  position: absolute;
+  bottom: 46px;
+  right: 16px;
+  font-size: 10px;
+  color: #79919b;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(212, 229, 228, 0.6);
+}
+
+/* --------------------------------------------------------------------------
+   5. ESTILOS DE LOS POLÍGONOS MUNICIPALES (SVG PATHS)
+   -------------------------------------------------------------------------- */
+.municipality-polygon {
+  cursor: pointer;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  transition: fill 0.25s ease, stroke 0.25s ease, stroke-width 0.25s ease, opacity 0.25s ease, filter 0.25s ease;
+  outline: none;
+}
+
+/* Región Costa Sur */
+.municipality-polygon.region-costa {
+  fill: #087b7e;
+  fill-opacity: 0.32;
+  stroke: #076d6f;
+  stroke-width: 1.2px;
+}
+
+/* Región Costa-Sierra Occidental */
+.municipality-polygon.region-sierra {
+  fill: #1f6b8c;
+  fill-opacity: 0.30;
+  stroke: #185874;
+  stroke-width: 1.2px;
+}
+
+/* Estado Hover */
+.municipality-polygon:hover,
+.municipality-polygon.is-hovered {
+  fill-opacity: 0.65;
+  stroke: #033f40;
+  stroke-width: 2.2px;
+  filter: url(#mun-shadow-hover);
+}
+
+.municipality-polygon.region-sierra:hover,
+.municipality-polygon.region-sierra.is-hovered {
+  fill-opacity: 0.60;
+  stroke: #0e3b4f;
+  stroke-width: 2.2px;
+}
+
+/* Estado Seleccionado */
+.municipality-polygon.is-selected {
+  fill-opacity: 0.85 !important;
+  stroke: #022c2d !important;
+  stroke-width: 3.2px !important;
+  filter: url(#mun-shadow-selected) !important;
+}
+
+/* Estado enfocado con teclado (WCAG Accesibilidad) */
+.municipality-polygon:focus-visible {
+  stroke: #002b2e;
+  stroke-width: 3.5px;
+  outline: 3px solid #ffbf47;
+  outline-offset: 2px;
+}
+
+/* Municipios atenuados por filtro de región */
+.municipality-polygon.is-dimmed {
+  fill-opacity: 0.08 !important;
+  stroke-opacity: 0.35 !important;
+  stroke-width: 0.9px !important;
+}
+
+/* Indicador de alerta activa */
+.municipality-polygon.has-alert {
+  stroke: #b45309;
+}
+
+/* --------------------------------------------------------------------------
+   6. MARCADORES Y ETIQUETAS DE TEXTO
+   -------------------------------------------------------------------------- */
+.municipality-marker-group {
+  transition: opacity 0.25s ease;
+}
+
+.municipality-marker-group.marker-dimmed {
+  opacity: 0.25;
+}
+
+.marker-core-dot {
+  fill: #087b7e;
+  stroke: #ffffff;
+  stroke-width: 1.5px;
+  transition: r 0.2s ease, fill 0.2s ease;
+}
+
+.municipality-marker-group.marker-hovered .marker-core-dot,
+.municipality-marker-group.marker-selected .marker-core-dot {
+  fill: #033d3f;
+  stroke-width: 2px;
+}
+
+.marker-pulse-ring {
+  fill: none;
+  stroke: #087b7e;
+  stroke-width: 2px;
+  animation: radarPulse 2s cubic-bezier(0.2, 0.8, 0.4, 1) infinite;
+}
+
+.marker-pulse-ring.alert-pulse {
+  stroke: var(--map-alert);
+}
+
+@keyframes radarPulse {
+  0% {
+    r: 6;
+    opacity: 0.9;
+  }
+  100% {
+    r: 22;
+    opacity: 0;
+  }
+}
+
+.municipality-label-text {
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  fill: #1e3538;
+  text-anchor: middle;
+  pointer-events: none;
+  /* Contorno blanco de alto contraste para máxima legibilidad sobre cualquier fondo */
+  paint-order: stroke fill;
+  stroke: #ffffff;
+  stroke-width: 3.5px;
+  stroke-linejoin: round;
+  letter-spacing: -0.2px;
+  transition: font-size 0.2s ease, fill 0.2s ease;
+}
+
+.municipality-marker-group.marker-hovered .municipality-label-text,
+.municipality-marker-group.marker-selected .municipality-label-text {
+  font-size: 11.5px;
+  fill: #04383a;
+  stroke-width: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   7. LEYENDA DEL MAPA
+   -------------------------------------------------------------------------- */
+.coverage-map-legend {
+  position: absolute;
+  bottom: 12px;
+  left: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(4px);
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--map-border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  z-index: 5;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.legend-color-box {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+}
+
+.legend-color-box.coast {
+  background: rgba(8, 123, 126, 0.45);
+  border-color: #087b7e;
+}
+
+.legend-color-box.sierra {
+  background: rgba(31, 107, 140, 0.40);
+  border-color: #1f6b8c;
+}
+
+.legend-dot-alert {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--map-alert);
+}
+
+.legend-text {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--map-dark);
+}
+
+/* Overlay de carga */
+.map-loading-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.85);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  z-index: 15;
+  color: var(--map-teal);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.map-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #cfe6e5;
+  border-top-color: var(--map-teal);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* --------------------------------------------------------------------------
+   8. TOOLTIP INFORMATIVO FLOTANTE
+   -------------------------------------------------------------------------- */
+.municipality-tooltip {
+  position: absolute;
+  transform: translate(-50%, -115%);
+  pointer-events: none;
+  background: #ffffff;
+  border: 1px solid var(--map-border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  box-shadow: 0 10px 25px rgba(18, 55, 62, 0.16);
+  z-index: 30;
+  min-width: 210px;
+  max-width: 280px;
+  animation: tooltipFadeIn 0.18s ease-out;
+}
+
+.municipality-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #ffffff;
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -105%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -115%);
+  }
+}
+
+.tooltip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--map-border-light);
+}
+
+.tooltip-title {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--map-dark);
+}
+
+.tooltip-cve {
+  display: block;
+  font-size: 10px;
+  color: #7b919b;
+  margin-top: 2px;
+}
+
+.tooltip-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.tooltip-badge.coast {
+  background: #e0f2f0;
+  color: #0b696b;
+}
+
+.tooltip-badge.sierra {
+  background: #e7eff5;
+  color: #1a5670;
+}
+
+.tooltip-body {
+  padding: 8px 0;
+}
+
+.tooltip-status-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--map-teal);
+  margin-bottom: 4px;
+}
+
+.tooltip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--map-teal);
+}
+
+.tooltip-pending-text {
+  margin: 0;
+  font-size: 11px;
+  color: var(--map-text-sub);
+  line-height: 1.4;
+}
+
+.tooltip-pending-text em {
+  font-style: normal;
+  color: #647d87;
+}
+
+.tooltip-historical-note {
+  margin-top: 6px;
+  padding: 4px 6px;
+  background: #f4faf9;
+  border-radius: 4px;
+  font-size: 10px;
+  color: #385d63;
+}
+
+.tooltip-alert-flag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  padding: 4px 6px;
+  background: var(--map-alert-bg);
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #9a4d06;
+}
+
+.tooltip-hint {
+  padding-top: 6px;
+  border-top: 1px solid var(--map-border-light);
+  font-size: 9px;
+  color: #8c9fa8;
+}
+
+/* --------------------------------------------------------------------------
+   9. PANEL CONTEXTUAL DE DETALLES (MUNICIPALITY DETAILS)
+   -------------------------------------------------------------------------- */
+.municipality-details {
+  background: #ffffff;
+  border: 1px solid var(--map-border);
+  border-radius: var(--map-radius);
+  box-shadow: var(--map-shadow);
+  padding: 24px;
+  min-height: 580px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estado Vacío del panel */
+.municipality-details.empty-state {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 36px 24px;
+}
+
+.details-empty-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--map-teal-light);
+  display: grid;
+  place-items: center;
+  margin-bottom: 16px;
+}
+
+.details-empty-title {
+  margin: 0 0 8px;
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--map-dark);
+}
+
+.details-empty-text {
+  margin: 0 0 24px;
+  font-size: 13px;
+  color: var(--map-text-sub);
+  line-height: 1.6;
+  max-width: 320px;
+}
+
+.details-quick-selection {
+  margin-bottom: 28px;
+  width: 100%;
+}
+
+.quick-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #7d939c;
+  margin-bottom: 10px;
+}
+
+.quick-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.quick-chip {
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  background: #f3f9f8;
+  border: 1px solid #cce5e3;
+  color: #27565b;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.quick-chip:hover {
+  background: var(--map-teal);
+  color: #ffffff;
+  border-color: var(--map-teal);
+}
+
+.details-meta-card {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: 100%;
+  padding: 16px;
+  background: #f7fbfb;
+  border: 1px solid var(--map-border-light);
+  border-radius: 10px;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.meta-val {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--map-teal);
+}
+
+.meta-lbl {
+  font-size: 9px;
+  color: #687f89;
+  margin-top: 3px;
+}
+
+/* Estado Activo del panel */
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--map-border);
+  margin-bottom: 20px;
+}
+
+.details-region-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 9px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.details-region-badge.coast {
+  background: #def1ef;
+  color: #0b686b;
+}
+
+.details-region-badge.sierra {
+  background: #e2edf3;
+  color: #1c566e;
+}
+
+.details-title {
+  margin: 0 0 4px;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--map-dark);
+}
+
+.details-cve {
+  font-size: 12px;
+  color: var(--map-text-sub);
+}
+
+.details-close-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--map-border);
+  background: #ffffff;
+  color: #708691;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.details-close-btn:hover {
+  background: #f2f6f7;
+  color: var(--map-dark);
+}
+
+.details-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.details-section {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--map-border-light);
+}
+
+.details-section:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.section-title {
+  margin: 0 0 12px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #556c75;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.section-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--map-teal);
+}
+
+.details-grid {
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.details-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.details-row dt {
+  color: var(--map-text-sub);
+}
+
+.details-row dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--map-dark);
+  text-align: right;
+}
+
+.status-monitored {
+  color: #0b797b !important;
+}
+
+/* Indicadores epidemiológicos */
+.epi-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.metric-box {
+  background: #f7faf9;
+  border: 1px solid var(--map-border-light);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-label {
+  font-size: 10px;
+  color: #697f88;
+}
+
+.metric-value {
+  font-size: 17px;
+  color: var(--map-dark);
+  margin-top: 4px;
+}
+
+.metric-value.highlight {
+  color: var(--map-teal);
+}
+
+.metric-value.date {
+  font-size: 13px;
+}
+
+.epi-pending-notice {
+  background: #f9fbfb;
+  border: 1px solid #dce9e8;
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.pending-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #2b6165;
+  background: #e2f1f0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.pending-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #087b7e;
+}
+
+.pending-desc {
+  margin: 0;
+  font-size: 12px;
+  color: #5e747d;
+  line-height: 1.55;
+}
+
+.historical-reference {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #e1eded;
+}
+
+.historical-reference strong {
+  display: block;
+  font-size: 11px;
+  color: #3d6065;
+  margin-bottom: 3px;
+}
+
+.historical-reference p {
+  margin: 0;
+  font-size: 11px;
+  color: #4b666e;
+}
+
+/* Alertas en el panel */
+.details-alerts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.details-alert-card {
+  background: #fffdf7;
+  border: 1px solid #f2e3be;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.alert-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.alert-badge {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #92400e;
+  background: #fef3c7;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.alert-date {
+  font-size: 10px;
+  color: #92400e;
+}
+
+.alert-disease {
+  display: block;
+  font-size: 13px;
+  color: #78350f;
+  margin-bottom: 4px;
+}
+
+.alert-msg {
+  margin: 0 0 8px;
+  font-size: 11px;
+  color: #78350f;
+  line-height: 1.45;
+}
+
+.alert-action-link {
+  border: none;
+  background: transparent;
+  color: #b45309;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.no-alerts-text {
+  margin: 0;
+  font-size: 12px;
+  color: #276749;
+  background: #f0fff4;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #c6f6d5;
+}
+
+/* Botones de acción en panel */
+.details-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.details-action-btn {
+  width: 100%;
+  margin: 0;
+  padding: 10px 14px;
+  font-size: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   10. VARIANTE "HERO PREVIEW" (PARA LA SECCIÓN SUPERIOR)
+   -------------------------------------------------------------------------- */
+.coverage-map-hero-preview {
+  background: #ffffff;
+  border: 1px solid var(--map-border);
+  border-radius: var(--map-radius);
+  box-shadow: 0 10px 30px rgba(18, 55, 62, 0.08);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-preview-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--map-teal-light);
+  border: 1px solid #c4e4e2;
+  color: #0b696c;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--map-teal);
+  box-shadow: 0 0 0 0 rgba(8, 123, 126, 0.7);
+  animation: pulseAnim 2s infinite;
+}
+
+@keyframes pulseAnim {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(8, 123, 126, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(8, 123, 126, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(8, 123, 126, 0);
+  }
+}
+
+.hero-svg-wrapper {
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  margin: 4px 0 14px;
+}
+
+.hero-map-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hero-path {
+  cursor: pointer;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  transition: all 0.2s ease;
+}
+
+.hero-path.coast {
+  fill: #087b7e;
+  fill-opacity: 0.35;
+  stroke: #076d6f;
+  stroke-width: 1.5px;
+}
+
+.hero-path.sierra {
+  fill: #1f6b8c;
+  fill-opacity: 0.30;
+  stroke: #185874;
+  stroke-width: 1.5px;
+}
+
+.hero-path:hover,
+.hero-path.selected {
+  fill-opacity: 0.8;
+  stroke: #033f40;
+  stroke-width: 2.5px;
+}
+
+.hero-dot {
+  fill: #087b7e;
+  stroke: #ffffff;
+  stroke-width: 1px;
+}
+
+.hero-preview-footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid var(--map-border-light);
+  text-align: center;
+}
+
+.hero-preview-counts strong {
+  display: block;
+  font-size: 13px;
+  color: var(--map-dark);
+}
+
+.hero-preview-counts span {
+  font-size: 11px;
+  color: var(--map-text-sub);
+}
+
+.hero-explore-btn {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: var(--map-teal);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.hero-explore-btn:hover {
+  background: var(--map-teal-hover);
+}
+
+/* --------------------------------------------------------------------------
+   11. ADAPTACIÓN RESPONSIVA (TABLETS Y MÓVILES)
+   -------------------------------------------------------------------------- */
+@media (max-width: 960px) {
+  .coverage-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .coverage-kpi-bar {
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .coverage-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .map-canvas-container {
+    min-height: 480px;
+  }
+
+  .municipality-details {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .interactive-coverage-section {
+    padding: 32px 16px;
+  }
+
+  .section-heading {
+    font-size: 26px;
+  }
+
+  .coverage-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .region-filter-tabs {
+    justify-content: center;
+  }
+
+  .municipality-search-wrapper {
+    min-width: 100%;
+  }
+
+  .coverage-map-legend {
+    position: static;
+    margin: 8px 12px;
+    justify-content: center;
+  }
+
+  .map-watermark {
+    bottom: 12px;
+  }
+
+  .map-canvas-container {
+    min-height: 400px;
+  }
+
+  .municipality-label-text {
+    font-size: 9px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   12. ACCESIBILIDAD — PREFERS-REDUCED-MOTION
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .marker-pulse-ring,
+  .pulse-dot {
+    animation: none !important;
+  }
+
+  .municipality-polygon,
+  .control-btn,
+  .filter-tab,
+  #map-viewport-group {
+    transition: none !important;
+  }
+}

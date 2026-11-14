@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Title, Stat, Card, AlertCard, LoadingState, ErrorState } from '../components/UI';
 import { municipalities, history } from '../data/demoData';
 import { useAlertas } from '../hooks/useAlertas';
+import InteractiveCoverageMap from '../components/maps/InteractiveCoverageMap';
 
 // Subcomponentes de visualización contextual histórica
 function HistoryBars() {
@@ -71,10 +72,7 @@ export default function Home({ go }) {
             <button className="secondary" onClick={() => go('encuesta')}>Participar en la encuesta</button>
           </div>
         </div>
-        <aside className="surveillance-visual">
-          <div className="radar"><i /><i /><i /><b>⌖</b></div>
-          <p>Seguimiento territorial<br /><strong>Costa de Jalisco</strong></p>
-        </aside>
+        <InteractiveCoverageMap variant="hero" onSelect={setChosen} go={go} />
       </section>
 
       {/* Sección 4.1: Alertas Públicas Vigentes (GET /alertas-publicas/) */}
@@ -137,17 +135,8 @@ export default function Home({ go }) {
         </div>
       </section>
 
-      <section className="section coverage">
-        <div>
-          <Title
-            eyebrow="COBERTURA TERRITORIAL"
-            title="Consulta los 14 municipios incluidos."
-            text="Selecciona un municipio para conocer la delimitación territorial."
-          />
-          <button className="secondary" onClick={() => go('mapa')}>Abrir mapa territorial</button>
-        </div>
-        <NeutralMap selected={chosen} onSelect={setChosen} />
-      </section>
+      {/* Sección protagonista de Cobertura Territorial Oficial e Interactiva */}
+      <InteractiveCoverageMap variant="full" onSelect={setChosen} go={go} />
 
       <section className="section quick-actions">
         <Card

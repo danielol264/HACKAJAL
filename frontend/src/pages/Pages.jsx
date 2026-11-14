@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Title, Stat, Card, Chart } from '../components/UI';
 import { municipalities, history, otherDiseases } from '../data/demoData';
+import InteractiveCoverageMap from '../components/maps/InteractiveCoverageMap';
 
 // Re-exports de páginas conectadas a la API oficial
 export { default as Alerts } from './Alerts';
@@ -134,24 +135,13 @@ export function Municipality() {
   );
 }
 
-export function RiskMap() {
-  const [selected, setSelected] = useState(municipalities[0]);
+export function RiskMap({ go, id }) {
   return (
-    <section className="section">
-      <Title
-        eyebrow="MAPA TERRITORIAL"
-        title="Los municipios incluidos en el seguimiento."
-        text="La vista identifica regiones y municipios de la franja costera de Jalisco; no representa niveles de riesgo arbitrarios."
-      />
-      <NeutralMap selected={selected} onSelect={setSelected} />
-      <div className="map-info">
-        <span>MUNICIPIO SELECCIONADO</span>
-        <h2>{selected.name}</h2>
-        <p><b>Región:</b> {selected.region}</p>
-        <p><b>Información histórica:</b> {selected.confirmed || selected.rate || 'Información no disponible'}</p>
-        <small>Vigilancia epidemiológica para Costa Sur y Costa-Sierra Occidental.</small>
-      </div>
-    </section>
+    <InteractiveCoverageMap
+      variant="full"
+      go={go}
+      initialSelectedId={id}
+    />
   );
 }
 

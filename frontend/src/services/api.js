@@ -1,6 +1,6 @@
 // Cliente HTTP centralizado para el Portal Web HACKAJAL
 // Cumple estrictamente con el contrato oficial API_WEB.md
-import { API_URL, USE_MOCK } from '../config/env.js';
+import { API_URL, USE_MOCK, isMockMode, getApiUrl } from '../config/env.js';
 import {
   MOCK_ALERTAS,
   MOCK_CONTENIDO,
@@ -115,11 +115,12 @@ export async function apiRequest(ruta, { method = 'GET', body = null, headers = 
   const rutaNormalizada = normalizarRuta(ruta);
 
   // Si está explícitamente configurado el modo mock para desarrollo local offline
-  if (USE_MOCK) {
+  if (isMockMode()) {
     return await responderMock(rutaNormalizada, { method, body });
   }
 
-  const url = `${API_URL}/${rutaNormalizada}`;
+  const baseUrl = getApiUrl();
+  const url = `${baseUrl}/${rutaNormalizada}`;
 
   const init = {
     method,
