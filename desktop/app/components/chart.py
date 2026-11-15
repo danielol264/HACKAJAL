@@ -13,8 +13,8 @@ MONTH_NAMES = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "O
 class EmptyTrendChart(FigureCanvas):
     """An intentionally data-free chart until validated API data is available."""
 
-    def __init__(self, message: str = "Sin datos epidemiológicos validados", submessage: str = "La evolución se mostrará al conectar la API institucional.") -> None:
-        figure = Figure(figsize=(5, 2.7), tight_layout=True)
+    def __init__(self, message: str = "Sin datos epidemiológicos validados", submessage: str = "La gráfica aparece cuando haya datos.") -> None:
+        figure = Figure(figsize=(5, 2.7), dpi=80, tight_layout=True)  # dpi 80: letras proporcionadas en pantallas de laptop
         super().__init__(figure)
         axis = figure.add_subplot(111)
         axis.set_facecolor("#FFFFFF")
@@ -31,7 +31,7 @@ class HistoricalTrendChart(FigureCanvas):
     """Historical confirmed cases plus a forecast area placeholder."""
 
     def __init__(self, points: list[tuple[int, int]]) -> None:
-        figure = Figure(figsize=(5, 2.7), tight_layout=True)
+        figure = Figure(figsize=(5, 2.7), dpi=80, tight_layout=True)  # dpi 80: letras proporcionadas en pantallas de laptop
         super().__init__(figure)
         axis = figure.add_subplot(111)
         figure.patch.set_facecolor("#FFFFFF")
@@ -52,7 +52,7 @@ class HistoricalTrendChart(FigureCanvas):
 
 class MunicipalDistributionChart(FigureCanvas):
     def __init__(self, points: list[tuple[str, int]]) -> None:
-        figure = Figure(figsize=(5, 2.1), tight_layout=True)
+        figure = Figure(figsize=(5, 2.1), dpi=80, tight_layout=True)  # dpi 80: letras proporcionadas en pantallas de laptop
         super().__init__(figure)
         axis = figure.add_subplot(111)
         figure.patch.set_facecolor("#FFFFFF")
@@ -77,7 +77,7 @@ class EpidemiologicalTrendChart(FigureCanvas):
     """
 
     def __init__(self, casos_por_mes: list[dict[str, Any]] | None, anio: int) -> None:
-        figure = Figure(figsize=(6, 3.2), tight_layout=True)
+        figure = Figure(figsize=(6, 3.2), dpi=80, tight_layout=True)  # dpi 80: letras proporcionadas en pantallas de laptop
         super().__init__(figure)
         figure.patch.set_facecolor("#FFFFFF")
         axis = figure.add_subplot(111)
@@ -133,14 +133,14 @@ class EpidemiologicalTrendChart(FigureCanvas):
         if missing_months:
             # Subtle note at top
             axis.set_title(
-                f"Evolución mensual {anio} ({len(valid_months)} de 12 meses registrados · Meses sin dato omitidos)",
+                f"{anio} · {len(valid_months)} de 12 meses con datos",
                 fontsize=9,
                 color="#647C8C",
                 loc="left",
                 pad=10,
             )
         else:
-            axis.set_title(f"Evolución mensual {anio} (Todos los meses registrados)", fontsize=9, color="#647C8C", loc="left", pad=10)
+            axis.set_title(f"{anio} · 12 meses con datos", fontsize=9, color="#647C8C", loc="left", pad=10)
 
         axis.set_xticks(months)
         axis.set_xticklabels(MONTH_NAMES, fontsize=8.5, color="#183447")
@@ -160,7 +160,7 @@ class ClimateEvolutionChart(FigureCanvas):
     """
 
     def __init__(self, clima_por_mes: list[dict[str, Any]] | None, anio: int) -> None:
-        figure = Figure(figsize=(6, 3.2), tight_layout=True)
+        figure = Figure(figsize=(6, 3.2), dpi=80, tight_layout=True)  # dpi 80: letras proporcionadas en pantallas de laptop
         super().__init__(figure)
         figure.patch.set_facecolor("#FFFFFF")
         ax1 = figure.add_subplot(111)

@@ -70,3 +70,11 @@ yarn-error.log*
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# ---------- Modelo ----------
+# credenciales de servicio (nunca se suben)
+*.json.key
+*credenciales*.json
+llave*.json
+# copia del último archivo cargado desde la app de escritorio
+modelo/datos/datos_semanales_cargados.csv

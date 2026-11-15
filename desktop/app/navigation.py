@@ -12,13 +12,14 @@ class NavigationItem:
     module: Module
 
 
-# Official 7 modules defined in HACKAJAL specifications (Fase 9)
+# Íconos monocromáticos (no emoji) para que se vean igual en cualquier Windows
 NAVIGATION_ITEMS = (
-    NavigationItem("▦", "Dashboard", Module.DASHBOARD),
-    NavigationItem("◉", "Mapa epidemiológico", Module.MAP),
+    NavigationItem("▦", "Inicio", Module.DASHBOARD),
+    NavigationItem("◉", "Mapa", Module.MAP),
     NavigationItem("▥", "Estadísticas", Module.STATISTICS),
-    NavigationItem("⚑", "Alertas epidemiológicas", Module.ALERTS),
-    NavigationItem("📄", "Artículos y notas", Module.CONTENT),
-    NavigationItem("＋", "Carga de datos", Module.DATA_UPLOAD),
-    NavigationItem("📈", "Predicciones", Module.PREDICTIONS),
+    NavigationItem("⚑", "Alertas", Module.ALERTS),
+    NavigationItem("≡", "Artículos y avisos", Module.CONTENT),
+    NavigationItem("⇪", "Carga de datos", Module.DATA_UPLOAD),
+    NavigationItem("↗", "Predicciones", Module.PREDICTIONS),
+    NavigationItem("◎", "Usuarios", Module.USERS),  # solo admin (ROLE_MODULES)
 )

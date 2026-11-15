@@ -34,7 +34,7 @@ from PySide6.QtWidgets import (
 )
 
 from app.components.chart import ClimateEvolutionChart, EpidemiologicalTrendChart
-from app.components.widgets import AlertBadge, Card, EmptyStateWidget, MetricCard, PanelTitle, WeeklyCard
+from app.components.widgets import AlertBadge, Card, EmptyStateWidget, GridReflow, MetricCard, PanelTitle, WeeklyCard
 from app.core.config import config
 from app.core.exceptions import ApiError, ApiRequestError
 from app.models.user import User, UserRole
@@ -130,7 +130,7 @@ class DashboardPage(QWidget):
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
         scroll.setFrameShape(QFrame.Shape.NoFrame)
-        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
 
         self.content_container = QWidget()
         self.content_layout = QVBoxLayout(self.content_container)
@@ -156,6 +156,11 @@ class DashboardPage(QWidget):
         # 5. Lower row (Predictions + Recent alerts)
         self._build_lower_section()
 
+        # Se reacomodan solas según el ancho de la ventana
+        self._reflow_metrics = GridReflow(self, self.metrics_layout, 230, 3)
+        GridReflow(self, self.charts_row, 560, 2)
+        GridReflow(self, self.lower_row, 560, 2)
+
         scroll.setWidget(self.content_container)
         root.addWidget(scroll)
 
@@ -178,11 +183,11 @@ class DashboardPage(QWidget):
         # Institutional Identity
         title_block = QVBoxLayout()
         title_block.setSpacing(2)
-        app_title = QLabel("HACKAJAL · Vigilancia Epidemiológica")
+        app_title = QLabel("Resumen")
         app_title.setObjectName("pageTitle")
         app_title.setStyleSheet("font-size: 17px; font-weight: 700; color: #123B4A;")
         self.subtitle_label = QLabel(
-            f"Región Costera de Jalisco (14 municipios) · Periodo: Año {self.current_year}"
+            f"Región Costa de Jalisco (14 municipios) · {self.current_year}"
         )
         self.subtitle_label.setObjectName("muted")
         self.subtitle_label.setStyleSheet("font-size: 11px; color: #647C8C;")
@@ -192,27 +197,10 @@ class DashboardPage(QWidget):
 
         top_row.addStretch()
 
-        # User and Mode info
-        info_block = QVBoxLayout()
-        info_block.setAlignment(Qt.AlignmentFlag.AlignRight)
-        info_block.setSpacing(4)
-        user_badge = QLabel(f"{self.user.nombre} · {self.user.organizacion}")
-        user_badge.setStyleSheet("font-size: 12px; font-weight: 600; color: #123B4A;")
-        info_block.addWidget(user_badge)
-
-        role_row = QHBoxLayout()
-        role_row.addStretch()
-        role_lbl = QLabel(f"Rol: {self.user.role.value.upper()}")
-        role_lbl.setStyleSheet("font-size: 11px; color: #647C8C;")
-        role_row.addWidget(role_lbl)
-
         if config.is_mock:
-            demo_badge = QLabel("● MODO DEMO / SIMULADO")
+            demo_badge = QLabel("Datos de prueba")
             demo_badge.setObjectName("demoBadge")
-            role_row.addWidget(demo_badge)
-        info_block.addLayout(role_row)
-
-        top_row.addLayout(info_block)
+            top_row.addWidget(demo_badge, 0, Qt.AlignmentFlag.AlignTop)
         layout.addLayout(top_row)
 
         # Filter bar
@@ -222,7 +210,7 @@ class DashboardPage(QWidget):
         # Disease Filter
         filter_bar.addWidget(QLabel("Enfermedad:"))
         self.combo_disease = QComboBox()
-        self.combo_disease.setMinimumWidth(220)
+        self.combo_disease.setMinimumWidth(180)
         self.combo_disease.currentIndexChanged.connect(self._on_disease_changed)
         filter_bar.addWidget(self.combo_disease)
 
@@ -230,7 +218,7 @@ class DashboardPage(QWidget):
         filter_bar.addSpacing(10)
         filter_bar.addWidget(QLabel("Año:"))
         self.combo_year = QComboBox()
-        self.combo_year.setMinimumWidth(110)
+        self.combo_year.setMinimumWidth(90)
         for yr in range(self.current_year, self.current_year - 3, -1):
             self.combo_year.addItem(str(yr), yr)
         self.combo_year.currentIndexChanged.connect(self._on_year_changed)
@@ -239,7 +227,7 @@ class DashboardPage(QWidget):
         filter_bar.addStretch()
 
         # Refresh button
-        self.btn_refresh = QPushButton("↻ Actualizar información")
+        self.btn_refresh = QPushButton("Actualizar")
         self.btn_refresh.setObjectName("refreshButton")
         self.btn_refresh.setCursor(Qt.CursorShape.PointingHandCursor)
         self.btn_refresh.clicked.connect(self.refresh_data)
@@ -252,7 +240,7 @@ class DashboardPage(QWidget):
         self.status_banner = QFrame()
         self.status_banner.setVisible(False)
         self.status_banner.setStyleSheet("""
-            QFrame {
+            .QFrame {
                 background-color: #FEF2F2;
                 border: 1px solid #FECACA;
                 border-radius: 8px;
@@ -276,7 +264,7 @@ class DashboardPage(QWidget):
         self.loading_bar = QFrame()
         self.loading_bar.setVisible(False)
         self.loading_bar.setStyleSheet("""
-            QFrame {
+            .QFrame {
                 background-color: #E0F2FE;
                 border: 1px solid #BAE6FD;
                 border-radius: 8px;
@@ -285,7 +273,7 @@ class DashboardPage(QWidget):
         """)
         load_layout = QHBoxLayout(self.loading_bar)
         load_layout.setContentsMargins(14, 6, 14, 6)
-        self.loading_label = QLabel("⟳ Cargando datos epidemiológicos desde la API...")
+        self.loading_label = QLabel("Cargando información…")
         self.loading_label.setStyleSheet("color: #0369A1; font-weight: 600; font-size: 12px;")
         load_layout.addWidget(self.loading_label)
         self.content_layout.addWidget(self.loading_bar)
@@ -303,8 +291,8 @@ class DashboardPage(QWidget):
         self.trend_layout = QVBoxLayout(self.card_trend)
         self.trend_layout.setContentsMargins(14, 12, 14, 12)
         self.trend_title = PanelTitle(
-            "Evolución epidemiológica",
-            "Casos registrados por mes · Costa Sur y Costa-Sierra Occidental",
+            "Casos por mes",
+            "Costa Sur y Costa-Sierra Occidental",
         )
         self.trend_layout.addWidget(self.trend_title)
         self.trend_chart_container = QWidget()
@@ -317,7 +305,7 @@ class DashboardPage(QWidget):
         self.climate_layout = QVBoxLayout(self.card_climate)
         self.climate_layout.setContentsMargins(14, 12, 14, 12)
         self.climate_title = PanelTitle(
-            "Información climática regional",
+            "Clima",
             "Temperatura, humedad y precipitación mensual",
         )
         self.climate_layout.addWidget(self.climate_title)
@@ -348,9 +336,9 @@ class DashboardPage(QWidget):
         self.pred_layout.setSpacing(10)
 
         pred_header = QHBoxLayout()
-        pred_title = QLabel("Predicción epidemiológica")
+        pred_title = QLabel("Predicción")
         pred_title.setStyleSheet("font-size: 15px; font-weight: 700; color: #123B4A;")
-        pred_badge = QLabel("MODELO PREDICTIVO · CASOS ESTIMADOS (NO CONFIRMADOS)")
+        pred_badge = QLabel("Estimado")
         pred_badge.setObjectName("predictionBadge")
         pred_header.addWidget(pred_title)
         pred_header.addStretch()
@@ -369,12 +357,12 @@ class DashboardPage(QWidget):
         self.alerts_layout.setSpacing(10)
 
         alerts_header = QHBoxLayout()
-        alerts_title = QLabel("Alertas epidemiológicas recientes")
+        alerts_title = QLabel("Alertas recientes")
         alerts_title.setStyleSheet("font-size: 15px; font-weight: 700; color: #123B4A;")
         alerts_header.addWidget(alerts_title)
         alerts_header.addStretch()
 
-        self.btn_go_alerts = QPushButton("Consultar módulo de alertas ➔")
+        self.btn_go_alerts = QPushButton("Ver alertas")
         self.btn_go_alerts.setObjectName("secondaryButton")
         self.btn_go_alerts.setCursor(Qt.CursorShape.PointingHandCursor)
         if self.on_navigate_to_alerts:
@@ -427,11 +415,11 @@ class DashboardPage(QWidget):
     def _on_error_occurred(self, message: str, status: int) -> None:
         self.status_banner.setVisible(True)
         if status == 401:
-            self.status_label.setText("Sesión expirada o no autorizada (HTTP 401). Contacta al administrador.")
+            self.status_label.setText("Tu sesión expiró. Vuelve a iniciar sesión.")
             if self.api_client.on_unauthorized:
                 self.api_client.on_unauthorized()
         elif status == 403:
-            self.status_label.setText("No tienes permisos suficientes para acceder a esta información (HTTP 403).")
+            self.status_label.setText("Tu usuario no tiene permiso para ver esta información.")
         else:
             self.status_label.setText(f"Error al consultar la API: {message}")
 
@@ -454,7 +442,7 @@ class DashboardPage(QWidget):
 
         # Update subtitle label
         self.subtitle_label.setText(
-            f"Región Costera de Jalisco (14 municipios) · Periodo: Año {self.current_year}"
+            f"Región Costa de Jalisco (14 municipios) · {self.current_year}"
         )
 
         # 2. Update Statistical Cards
@@ -498,6 +486,7 @@ class DashboardPage(QWidget):
                 accent=card_info.get("accent", "#123B4A"),
             )
             self.metrics_layout.addWidget(card_widget, row, col)
+        self._reflow_metrics.apply()
 
     def _render_charts(self, casos_por_mes: list[dict[str, Any]] | None, clima_por_mes: list[dict[str, Any]] | None) -> None:
         # Clear previous trend chart
@@ -542,7 +531,7 @@ class DashboardPage(QWidget):
         anio = prediccion.get("anio", self.current_year)
         creado_por = prediccion.get("creado_por", "Sistema")
 
-        info_lbl = QLabel(f"Proyección estimada para el mes {mes}/{anio} · Generado por: {creado_por}")
+        info_lbl = QLabel(f"Predicción para {mes}/{anio} · {creado_por}")
         info_lbl.setObjectName("muted")
         info_lbl.setStyleSheet("font-size: 11px; margin-bottom: 6px;")
         self.pred_content_layout.addWidget(info_lbl)
@@ -559,7 +548,7 @@ class DashboardPage(QWidget):
         # Total highlight
         total_card = QFrame()
         total_card.setStyleSheet("""
-            QFrame {
+            .QFrame {
                 background-color: #F0FDF4;
                 border: 1px solid #BBF7D0;
                 border-radius: 8px;
@@ -570,7 +559,7 @@ class DashboardPage(QWidget):
         t_layout.setContentsMargins(12, 8, 12, 8)
         t_lbl = QLabel(f"Total estimado mensual: {total:.2f} casos")
         t_lbl.setStyleSheet("font-size: 14px; font-weight: 700; color: #15803D;")
-        t_note = QLabel("Modelo predictivo con variables meteorológicas")
+        t_note = QLabel("Costa de Jalisco")
         t_note.setStyleSheet("font-size: 11px; color: #166534;")
         t_layout.addWidget(t_lbl)
         t_layout.addStretch()

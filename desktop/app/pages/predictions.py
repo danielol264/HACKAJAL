@@ -17,12 +17,13 @@ Implementa:
 from __future__ import annotations
 
 from datetime import date
+from pathlib import Path
 from typing import Any
 
 from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, Signal
 from PySide6.QtWidgets import (
     QComboBox,
-    QDoubleSpinBox,
+    QFileDialog,
     QFrame,
     QGridLayout,
     QHBoxLayout,
@@ -31,16 +32,16 @@ from PySide6.QtWidgets import (
     QPushButton,
     QScrollArea,
     QSizePolicy,
-    QSpinBox,
     QSplitter,
     QVBoxLayout,
     QWidget,
 )
 
-from app.components.widgets import Card, EmptyStateWidget, MetricCard, PanelTitle, WeeklyCard
+from app.components.widgets import Card, EmptyStateWidget, MetricCard, PanelTitle, SplitterReflow, WeeklyCard
 from app.core.exceptions import ApiError, ApiRequestError
 from app.models.user import User, UserRole
 from app.services.api.client import ApiClient
+from app.services import model_runner
 from app.services.epidemiology_service import EpidemiologyService
 
 
@@ -122,6 +123,26 @@ class PredictionsWorker(QRunnable):
                 pass
 
 
+class ModelSignals(QObject):
+    done = Signal(dict)
+    failed = Signal(str)
+
+
+class ModelWorker(QRunnable):
+    def __init__(self, ruta_datos: Path) -> None:
+        super().__init__()
+        self.ruta_datos = ruta_datos
+        self.signals = ModelSignals()
+
+    def run(self) -> None:
+        try:
+            resultado = model_runner.predecir(self.ruta_datos)
+        except Exception as error:  # noqa: BLE001 — se muestra en pantalla
+            self.signals.failed.emit(str(error))
+        else:
+            self.signals.done.emit(resultado)
+
+
 class PredictionsPage(QWidget):
     """Epidemiological predictions and model execution page."""
 
@@ -180,6 +201,7 @@ class PredictionsPage(QWidget):
         splitter.setStretchFactor(0, 6)
         splitter.setStretchFactor(1, 4)
         root.addWidget(splitter, 1)
+        SplitterReflow(self, splitter, 1000)  # en ventanas angostas, el panel del modelo baja
 
         self._render_empty()
 
@@ -194,10 +216,12 @@ class PredictionsPage(QWidget):
 
         title_box = QVBoxLayout()
         title_box.setSpacing(2)
-        title = QLabel("Predicción Epidemiológica Regional")
+        title = QLabel("Predicciones")
         title.setObjectName("pageTitle")
         title.setStyleSheet("font-size: 16px; font-weight: 700; color: #123B4A;")
-        sub = QLabel("Modelación estadística de 4 semanas para la región costera de Jalisco · Casos estimados (no confirmados)")
+        sub = QLabel("Casos estimados de dengue para las próximas 4 semanas en la Costa")
+        sub.setWordWrap(True)
+        sub.setMinimumWidth(300)
         sub.setObjectName("muted")
         sub.setStyleSheet("font-size: 11px; color: #647C8C;")
         title_box.addWidget(title)
@@ -212,7 +236,7 @@ class PredictionsPage(QWidget):
         self.combo_disease.currentIndexChanged.connect(self._on_disease_changed)
         layout.addWidget(self.combo_disease)
 
-        self.btn_refresh = QPushButton("↻ Actualizar")
+        self.btn_refresh = QPushButton("Actualizar")
         self.btn_refresh.setCursor(Qt.CursorShape.PointingHandCursor)
         self.btn_refresh.clicked.connect(self.refresh_prediction)
         layout.addWidget(self.btn_refresh)
@@ -222,17 +246,17 @@ class PredictionsPage(QWidget):
     def _build_banners(self, parent_layout: QVBoxLayout) -> None:
         self.loading_bar = QFrame()
         self.loading_bar.setVisible(False)
-        self.loading_bar.setStyleSheet("background-color: #E0F2FE; border: 1px solid #BAE6FD; border-radius: 8px; padding: 6px;")
+        self.loading_bar.setStyleSheet(".QFrame { background-color: #E0F2FE; border: 1px solid #BAE6FD; border-radius: 8px; padding: 6px; }")
         l_layout = QHBoxLayout(self.loading_bar)
         l_layout.setContentsMargins(12, 6, 12, 6)
-        lbl = QLabel("⟳ Consultando modelo predictivo desde la API...")
+        lbl = QLabel("Cargando predicción…")
         lbl.setStyleSheet("color: #0369A1; font-weight: 600; font-size: 12px;")
         l_layout.addWidget(lbl)
         parent_layout.addWidget(self.loading_bar)
 
         self.error_banner = QFrame()
         self.error_banner.setVisible(False)
-        self.error_banner.setStyleSheet("background-color: #FEF2F2; border: 1px solid #FECACA; border-radius: 8px; padding: 6px;")
+        self.error_banner.setStyleSheet(".QFrame { background-color: #FEF2F2; border: 1px solid #FECACA; border-radius: 8px; padding: 6px; }")
         e_layout = QHBoxLayout(self.error_banner)
         e_layout.setContentsMargins(12, 6, 12, 6)
         self.error_label = QLabel()
@@ -242,7 +266,7 @@ class PredictionsPage(QWidget):
 
         self.success_banner = QFrame()
         self.success_banner.setVisible(False)
-        self.success_banner.setStyleSheet("background-color: #F0FDF4; border: 1px solid #86EFAC; border-radius: 8px; padding: 8px;")
+        self.success_banner.setStyleSheet(".QFrame { background-color: #F0FDF4; border: 1px solid #86EFAC; border-radius: 8px; padding: 8px; }")
         s_layout = QHBoxLayout(self.success_banner)
         s_layout.setContentsMargins(12, 6, 12, 6)
         self.success_label = QLabel()
@@ -253,89 +277,82 @@ class PredictionsPage(QWidget):
     def _build_admin_panel(self) -> None:
         is_admin = self.user and self.user.role == UserRole.ADMIN
 
-        p_title = QLabel("Generar / Registrar Predicción (POST /predicciones/)")
+        p_title = QLabel("Ejecutar modelo predictivo")
         p_title.setStyleSheet("font-size: 13.5px; font-weight: 700; color: #123B4A;")
         self.admin_layout.addWidget(p_title)
 
-        # Technical ML Model Status Notice
         notice = QFrame()
-        notice.setStyleSheet("background-color: #FEF3C7; border: 1px solid #FCD34D; border-radius: 6px; padding: 8px;")
+        notice.setStyleSheet(".QFrame { background-color: #E0F2FE; border: 1px solid #BAE6FD; border-radius: 6px; padding: 8px; }")
         nl = QVBoxLayout(notice)
         nl.setContentsMargins(8, 6, 8, 6)
-        nl.setSpacing(2)
-        n_head = QLabel("ℹ Estado de Conexión del Modelo de Machine Learning:")
-        n_head.setStyleSheet("color: #92400E; font-weight: 700; font-size: 11px;")
         n_body = QLabel(
-            "El repositorio no incluye actualmente pesos binarios de un modelo entrenado (.pkl / .h5). "
-            "Este módulo valida y permite registrar las 4 semanas oficiales directamente en el backend "
-            "cuando el modelo ejecute su inferencia en el servidor o localmente."
+            "El modelo predice las próximas 4 semanas para los 14 municipios "
+            "de la Costa a partir de los datos <b>semanales por municipio</b>. El resultado se envía a la API y, si supera "
+            "al mismo mes del año anterior, se genera una alerta pendiente de revisión."
         )
         n_body.setWordWrap(True)
-        n_body.setStyleSheet("color: #78350F; font-size: 10.5px;")
-        nl.addWidget(n_head)
+        n_body.setStyleSheet("color: #075985; font-size: 11px;")
         nl.addWidget(n_body)
         self.admin_layout.addWidget(notice)
 
         if not is_admin:
-            cons_lbl = QLabel("🔒 Rol de Consulta: Solo Administradores pueden registrar nuevas predicciones.")
+            cons_lbl = QLabel("Solo los administradores pueden ejecutar el modelo.")
             cons_lbl.setStyleSheet("color: #94A3B8; font-size: 11px; font-style: italic; margin-top: 8px;")
             self.admin_layout.addWidget(cons_lbl)
             self.admin_layout.addStretch()
             return
 
-        # Input controls for Admin
-        form_grid = QGridLayout()
-        form_grid.setSpacing(8)
+        datos_lbl = QLabel("Datos semanales del modelo:")
+        datos_lbl.setStyleSheet("font-size: 11.5px; font-weight: 600; color: #123B4A; margin-top: 6px;")
+        self.admin_layout.addWidget(datos_lbl)
+        self.ruta_elegida: Path | None = None  # None = el último archivo cargado en "Carga de datos"
+        self.lbl_archivo = QLabel()
+        self.lbl_archivo.setWordWrap(True)
+        self.lbl_archivo.setStyleSheet("font-size: 11px; color: #334155; background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 5px; padding: 6px;")
+        self.admin_layout.addWidget(self.lbl_archivo)
+        self._mostrar_archivo()
+        btn_archivo = QPushButton("Cambiar archivo…")
+        btn_archivo.setCursor(Qt.CursorShape.PointingHandCursor)
+        btn_archivo.clicked.connect(self._elegir_archivo)
+        self.admin_layout.addWidget(btn_archivo)
 
-        form_grid.addWidget(QLabel("Año proyección:"), 0, 0)
-        self.spin_anio = QSpinBox()
-        self.spin_anio.setRange(2020, 2100)
-        self.spin_anio.setValue(date.today().year)
-        form_grid.addWidget(self.spin_anio, 0, 1)
-
-        form_grid.addWidget(QLabel("Mes proyección:"), 1, 0)
-        self.spin_mes = QSpinBox()
-        self.spin_mes.setRange(1, 12)
-        self.spin_mes.setValue(12)
-        form_grid.addWidget(self.spin_mes, 1, 1)
-
-        self.admin_layout.addLayout(form_grid)
-
-        # 4 Weeks Spinners
-        weeks_lbl = QLabel("Casos estimados por semana (exactamente 4 valores >= 0):")
-        weeks_lbl.setStyleSheet("font-size: 11.5px; font-weight: 600; color: #123B4A; margin-top: 6px;")
-        self.admin_layout.addWidget(weeks_lbl)
-
-        self.spin_w1 = QDoubleSpinBox()
-        self.spin_w2 = QDoubleSpinBox()
-        self.spin_w3 = QDoubleSpinBox()
-        self.spin_w4 = QDoubleSpinBox()
-
-        for sp, default_v in zip([self.spin_w1, self.spin_w2, self.spin_w3, self.spin_w4], [1.20, 1.96, 0.80, 0.50]):
-            sp.setRange(0.0, 99999.0)
-            sp.setDecimals(2)
-            sp.setValue(default_v)
-
-        w_grid = QGridLayout()
-        w_grid.addWidget(QLabel("Semana 1:"), 0, 0)
-        w_grid.addWidget(self.spin_w1, 0, 1)
-        w_grid.addWidget(QLabel("Semana 2:"), 1, 0)
-        w_grid.addWidget(self.spin_w2, 1, 1)
-        w_grid.addWidget(QLabel("Semana 3:"), 2, 0)
-        w_grid.addWidget(self.spin_w3, 2, 1)
-        w_grid.addWidget(QLabel("Semana 4:"), 3, 0)
-        w_grid.addWidget(self.spin_w4, 3, 1)
-        self.admin_layout.addLayout(w_grid)
-
-        # Submit button
-        self.btn_submit_pred = QPushButton("⚡ Registrar Predicción Oficial")
+        self.btn_submit_pred = QPushButton("▶ Ejecutar modelo y generar predicción")
         self.btn_submit_pred.setObjectName("actionButton")
         self.btn_submit_pred.setCursor(Qt.CursorShape.PointingHandCursor)
-        self.btn_submit_pred.setStyleSheet("background-color: #123B4A; color: white; border-radius: 6px; padding: 8px 16px; font-weight: 700; margin-top: 10px;")
+        self.btn_submit_pred.setStyleSheet(
+            "QPushButton { background-color: #123B4A; color: white; border-radius: 6px; padding: 10px 16px; font-weight: 700; margin-top: 10px; }"
+            " QPushButton:disabled { background-color: #94A3B8; color: #E2E8F0; }"
+        )
         self.btn_submit_pred.clicked.connect(self._submit_prediction)
         self.admin_layout.addWidget(self.btn_submit_pred)
 
+        self.lbl_modelo = QLabel()
+        self.lbl_modelo.setWordWrap(True)
+        self.lbl_modelo.setStyleSheet("font-size: 11px; color: #647C8C;")
+        self.admin_layout.addWidget(self.lbl_modelo)
+
         self.admin_layout.addStretch()
+
+    @property
+    def ruta_datos(self) -> Path:
+        return self.ruta_elegida or model_runner.datos_del_modelo()
+
+    def _mostrar_archivo(self) -> None:
+        if self.ruta_elegida:
+            origen = "elegido a mano"
+        elif self.ruta_datos == model_runner.DATOS_CARGADOS:
+            origen = "último cargado en Carga de datos"
+        else:
+            origen = "datos originales del modelo"
+        self.lbl_archivo.setText(f"{self.ruta_datos.name}  ({origen})")
+
+    def _elegir_archivo(self) -> None:
+        ruta, _ = QFileDialog.getOpenFileName(
+            self, "Datos semanales por municipio", str(self.ruta_datos.parent), "Archivos CSV (*.csv)"
+        )
+        if ruta:
+            self.ruta_elegida = Path(ruta)
+            self._mostrar_archivo()
 
     # -------------------------------------------------------------------------
     # Actions & Rendering
@@ -346,6 +363,8 @@ class PredictionsPage(QWidget):
         self.refresh_prediction()
 
     def refresh_prediction(self) -> None:
+        if hasattr(self, "lbl_archivo"):
+            self._mostrar_archivo()  # pudo cambiar al cargar un archivo nuevo
         if self.is_loading:
             return
         self.is_loading = True
@@ -367,16 +386,18 @@ class PredictionsPage(QWidget):
     def _on_worker_finished(self) -> None:
         self.is_loading = False
         self.btn_refresh.setEnabled(True)
+        if hasattr(self, "btn_submit_pred"):
+            self.btn_submit_pred.setEnabled(True)
         self.loading_bar.setVisible(False)
 
     def _on_error_occurred(self, message: str, status: int) -> None:
         self.error_banner.setVisible(True)
         if status == 401:
-            self.error_label.setText("Sesión expirada o no autorizada (HTTP 401).")
+            self.error_label.setText("Tu sesión expiró. Vuelve a iniciar sesión.")
             if self.api_client.on_unauthorized:
                 self.api_client.on_unauthorized()
         elif status == 403:
-            self.error_label.setText("No tienes permiso para consultar o generar predicciones (HTTP 403).")
+            self.error_label.setText("Tu usuario no tiene permiso para ver predicciones.")
         else:
             self.error_label.setText(f"Error de comunicación con la API: {message}")
 
@@ -441,11 +462,11 @@ class PredictionsPage(QWidget):
 
         # Header Title
         title_box = QFrame()
-        title_box.setStyleSheet("background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px;")
+        title_box.setStyleSheet(".QFrame { background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px; }")
         tl = QVBoxLayout(title_box)
         tl.setContentsMargins(10, 8, 10, 8)
 
-        t_lbl = QLabel(f"Proyección Oficial: Periodo Mes {mes} / {anio}")
+        t_lbl = QLabel(f"Predicción para {mes:02d}/{anio}" if isinstance(mes, int) else f"Predicción para {mes}/{anio}")
         t_lbl.setStyleSheet("font-size: 16px; font-weight: 700; color: #123B4A;")
         sub_lbl = QLabel(f"Enfermedad: {self.current_enfermedad.upper()} · Creado por: <b>{creado_por}</b> ({creada_en})")
         sub_lbl.setStyleSheet("font-size: 11px; color: #647C8C;")
@@ -454,7 +475,7 @@ class PredictionsPage(QWidget):
         self.disp_content_layout.addWidget(title_box)
 
         # 4 Weeks Grid
-        weeks_lbl = QLabel("Estimación semanal proyectada con variables meteorológicas:")
+        weeks_lbl = QLabel("Casos estimados por semana")
         weeks_lbl.setStyleSheet("font-size: 12px; font-weight: 600; color: #123B4A; margin-top: 4px;")
         self.disp_content_layout.addWidget(weeks_lbl)
 
@@ -468,21 +489,21 @@ class PredictionsPage(QWidget):
 
         # Total Card
         tot_card = QFrame()
-        tot_card.setStyleSheet("background-color: #F0FDF4; border: 1px solid #86EFAC; border-radius: 8px; padding: 12px;")
+        tot_card.setStyleSheet(".QFrame { background-color: #F0FDF4; border: 1px solid #86EFAC; border-radius: 8px; padding: 12px; }")
         tcl = QHBoxLayout(tot_card)
         tcl.setContentsMargins(14, 10, 14, 10)
         tot_val = QLabel(f"Total proyectado mensual: <b>{total:.2f} casos estimados</b>")
         tot_val.setStyleSheet("font-size: 15px; color: #15803D; font-weight: 700;")
         tcl.addWidget(tot_val)
         tcl.addStretch()
-        note = QLabel("Modelo predictivo regional (Costa de Jalisco)")
+        note = QLabel("Costa de Jalisco")
         note.setStyleSheet("font-size: 11px; color: #166534;")
         tcl.addWidget(note)
         self.disp_content_layout.addWidget(tot_card)
 
         # Disclaimer
         disc = QLabel(
-            "⚠️ Nota institucional: Los valores semanales y mensuales corresponden a estimaciones probabilísticas "
+            "Son casos estimados por el modelo a partir del clima y del historial; "
             "obtenidas a partir de covariables climáticas y registros históricos. No representan casos confirmados de dengue."
         )
         disc.setWordWrap(True)
@@ -502,26 +523,53 @@ class PredictionsPage(QWidget):
             )
             return
 
-        semanas = [
-            float(self.spin_w1.value()),
-            float(self.spin_w2.value()),
-            float(self.spin_w3.value()),
-            float(self.spin_w4.value()),
-        ]
+        if self.current_enfermedad != "dengue":
+            QMessageBox.warning(self, "Modelo no disponible", "Por ahora el modelo solo predice dengue.")
+            return
 
+        self.btn_submit_pred.setEnabled(False)
+        self.lbl_modelo.setText("Ejecutando el modelo…")
+        self._mostrar_archivo()
+        worker = ModelWorker(self.ruta_datos)
+        worker.signals.done.connect(self._on_model_done)
+        worker.signals.failed.connect(self._on_model_failed)
+        self._model_worker = worker  # que Python no libere las señales antes de tiempo
+        QThreadPool.globalInstance().start(worker)
+
+    def _on_model_failed(self, mensaje: str) -> None:
+        self.btn_submit_pred.setEnabled(True)
+        self.lbl_modelo.setText("")
+        QMessageBox.critical(self, "No se pudo ejecutar el modelo", mensaje)
+
+    def _on_model_done(self, resultado: dict[str, Any]) -> None:
+        self.btn_submit_pred.setEnabled(True)
+        self.lbl_modelo.setText("")
+        semanas = [float(v) for v in resultado["semanas"]]
         payload = {
             "enfermedad": self.current_enfermedad,
-            "anio": int(self.spin_anio.value()),
-            "mes": int(self.spin_mes.value()),
+            "anio": int(resultado["anio"]),
+            "mes": int(resultado["mes"]),
             "semanas": semanas,
         }
+        detalle = "\n".join(
+            f"   Semana del {inicio}: {valor:.2f} casos"
+            for inicio, valor in zip(resultado.get("semanas_inicio", ["?"] * 4), semanas)
+        )
+        hoy = date.today()
+        aviso_pasado = ""
+        if (payload["anio"], payload["mes"]) < (hoy.year, hoy.month):
+            aviso_pasado = (
+                "\n\nAviso: el mes predicho ya pasó: los datos semanales no están al día. "
+                "Si la envías, la alerta (si se genera) sería de un mes pasado."
+            )
 
         resp = QMessageBox.question(
             self,
-            "Confirmar Registro de Predicción",
-            f"¿Deseas enviar la predicción de {payload['enfermedad'].upper()} para el mes {payload['mes']}/{payload['anio']} "
-            f"con un total estimado de {sum(semanas):.2f} casos?\n\n"
-            "Si la proyección supera al año anterior, el backend generará una alerta pendiente de revisión.",
+            "Resultado del modelo",
+            f"El modelo predice para {payload['enfermedad'].upper()} en {payload['mes']:02d}/{payload['anio']} "
+            f"(14 municipios de la Costa):\n\n{detalle}\n\n   Total: {sum(semanas):.2f} casos\n\n"
+            "¿Enviar esta predicción a la API? Si supera al mismo mes del año anterior, se generará una alerta "
+            f"pendiente de revisión.{aviso_pasado}",
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
             QMessageBox.StandardButton.Yes,
         )
@@ -544,9 +592,9 @@ class PredictionsPage(QWidget):
 
     def _on_pred_created(self, res: dict[str, Any]) -> None:
         alerta = res.get("alerta")
-        msg = f"✓ Predicción registrada exitosamente (Total: {res.get('total')} casos)."
+        msg = f"Predicción guardada: {res.get('total')} casos estimados."
         if alerta:
-            msg += " ⚠️ Se generó una alerta epidemiológica pendiente de revisión oficial."
+            msg += " Se generó una alerta pendiente de revisión."
         self.success_label.setText(msg)
         self.success_banner.setVisible(True)
         self.refresh_prediction()

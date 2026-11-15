@@ -17,6 +17,7 @@ Implementa:
 """
 from __future__ import annotations
 
+import shutil
 from pathlib import Path
 from typing import Any
 
@@ -41,6 +42,7 @@ from app.components.widgets import Card, MetricCard, PanelTitle
 from app.core.exceptions import ApiError, ApiRequestError
 from app.models.user import User, UserRole
 from app.services.api.client import ApiClient
+from app.services import model_runner
 from app.services.epidemiology_service import EpidemiologyService
 from app.utils.file_parser import parse_data_file
 
@@ -108,6 +110,7 @@ class DataUploadPage(QWidget):
         self.parsed_records: list[dict[str, Any]] = []
         self.validation_errors: list[str] = []
         self.selected_file_path: Path | None = None
+        self.archivo_semanal: Path | None = None  # si se cargó el CSV semanal, también alimenta al modelo
         self.is_uploading = False
 
         root = QVBoxLayout(self)
@@ -135,10 +138,12 @@ class DataUploadPage(QWidget):
         top_row = QHBoxLayout()
         title_box = QVBoxLayout()
         title_box.setSpacing(2)
-        title = QLabel("Carga Masiva de Datos Epidemiológicos y Climáticos")
+        title = QLabel("Carga de datos")
         title.setObjectName("pageTitle")
         title.setStyleSheet("font-size: 16px; font-weight: 700; color: #123B4A;")
-        sub = QLabel("Importación regional mensual en lote (CSV / Excel XLSX) · Operación atómica oficial (POST /cargas/)")
+        sub = QLabel("Sube el archivo semanal por municipio (CSV). Actualiza las estadísticas y los datos del modelo.")
+        sub.setWordWrap(True)
+        sub.setMinimumWidth(300)
         sub.setObjectName("muted")
         sub.setStyleSheet("font-size: 11px; color: #647C8C;")
         title_box.addWidget(title)
@@ -149,7 +154,7 @@ class DataUploadPage(QWidget):
 
         is_admin = self.user and self.user.role == UserRole.ADMIN
 
-        self.btn_select_file = QPushButton("📁 Seleccionar archivo (CSV / Excel)")
+        self.btn_select_file = QPushButton("Seleccionar archivo")
         self.btn_select_file.setCursor(Qt.CursorShape.PointingHandCursor)
         self.btn_select_file.setEnabled(is_admin)
         self.btn_select_file.setStyleSheet(
@@ -160,7 +165,7 @@ class DataUploadPage(QWidget):
         self.btn_select_file.clicked.connect(self._select_file)
         top_row.addWidget(self.btn_select_file)
 
-        self.btn_submit = QPushButton("⬆ Cargar datos a la API")
+        self.btn_submit = QPushButton("Cargar datos")
         self.btn_submit.setObjectName("actionButton")
         self.btn_submit.setCursor(Qt.CursorShape.PointingHandCursor)
         self.btn_submit.setEnabled(False)
@@ -171,7 +176,7 @@ class DataUploadPage(QWidget):
         layout.addLayout(top_row)
 
         if not is_admin:
-            role_notice = QLabel("🔒 Rol de Consulta: La carga e importación de información está reservada exclusivamente a Administradores.")
+            role_notice = QLabel("Solo los administradores pueden cargar datos.")
             role_notice.setStyleSheet("color: #92400E; background-color: #FEF3C7; border: 1px solid #FCD34D; border-radius: 6px; padding: 6px 10px; font-size: 11px; font-weight: 600;")
             layout.addWidget(role_notice)
 
@@ -186,10 +191,10 @@ class DataUploadPage(QWidget):
         # Loading Banner
         self.loading_bar = QFrame()
         self.loading_bar.setVisible(False)
-        self.loading_bar.setStyleSheet("background-color: #E0F2FE; border: 1px solid #BAE6FD; border-radius: 8px; padding: 8px;")
+        self.loading_bar.setStyleSheet(".QFrame { background-color: #E0F2FE; border: 1px solid #BAE6FD; border-radius: 8px; padding: 8px; }")
         l_layout = QHBoxLayout(self.loading_bar)
         l_layout.setContentsMargins(12, 6, 12, 6)
-        lbl = QLabel("⟳ Enviando lote atómico al backend DRF (POST /cargas/)...")
+        lbl = QLabel("Guardando datos…")
         lbl.setStyleSheet("color: #0369A1; font-weight: 600; font-size: 12px;")
         l_layout.addWidget(lbl)
         parent_layout.addWidget(self.loading_bar)
@@ -197,11 +202,11 @@ class DataUploadPage(QWidget):
         # Success Banner
         self.success_banner = QFrame()
         self.success_banner.setVisible(False)
-        self.success_banner.setStyleSheet("background-color: #F0FDF4; border: 1px solid #86EFAC; border-radius: 8px; padding: 10px;")
+        self.success_banner.setStyleSheet(".QFrame { background-color: #F0FDF4; border: 1px solid #86EFAC; border-radius: 8px; padding: 10px; }")
         self.s_layout = QVBoxLayout(self.success_banner)
         self.s_layout.setContentsMargins(12, 8, 12, 8)
         self.s_layout.setSpacing(4)
-        self.success_title = QLabel("✓ Carga masiva completada exitosamente.")
+        self.success_title = QLabel("Datos cargados.")
         self.success_title.setStyleSheet("color: #15803D; font-weight: 700; font-size: 13px;")
         self.success_detail = QLabel()
         self.success_detail.setStyleSheet("color: #166534; font-size: 12px;")
@@ -212,11 +217,11 @@ class DataUploadPage(QWidget):
         # Error Banner
         self.error_banner = QFrame()
         self.error_banner.setVisible(False)
-        self.error_banner.setStyleSheet("background-color: #FEF2F2; border: 1px solid #FECACA; border-radius: 8px; padding: 10px;")
+        self.error_banner.setStyleSheet(".QFrame { background-color: #FEF2F2; border: 1px solid #FECACA; border-radius: 8px; padding: 10px; }")
         self.e_layout = QVBoxLayout(self.error_banner)
         self.e_layout.setContentsMargins(12, 8, 12, 8)
         self.e_layout.setSpacing(4)
-        self.error_title = QLabel("✕ Error en la carga masiva:")
+        self.error_title = QLabel("No se pudieron cargar los datos:")
         self.error_title.setStyleSheet("color: #991B1B; font-weight: 700; font-size: 13px;")
         self.error_detail = QLabel()
         self.error_detail.setWordWrap(True)
@@ -232,7 +237,7 @@ class DataUploadPage(QWidget):
         self.val_layout.setSpacing(6)
 
         v_head = QHBoxLayout()
-        v_title = QLabel("Validación de Estructura y Reglas Institucionales")
+        v_title = QLabel("Revisión del archivo")
         v_title.setStyleSheet("font-size: 13px; font-weight: 700; color: #123B4A;")
         v_head.addWidget(v_title)
         v_head.addStretch()
@@ -241,7 +246,7 @@ class DataUploadPage(QWidget):
         v_head.addWidget(self.val_status_badge)
         self.val_layout.addLayout(v_head)
 
-        self.val_msg = QLabel("Selecciona un archivo CSV o Excel (.xlsx) con los datos mensuales de la región costera.")
+        self.val_msg = QLabel("Elige el archivo semanal por municipio (mismo formato que Dengue Clima Semanal.csv). También se acepta la plantilla mensual.")
         self.val_msg.setWordWrap(True)
         self.val_msg.setStyleSheet("font-size: 11.5px; color: #647C8C;")
         self.val_layout.addWidget(self.val_msg)
@@ -255,7 +260,7 @@ class DataUploadPage(QWidget):
         layout.setSpacing(8)
 
         p_head = QHBoxLayout()
-        p_title = QLabel("Vista Previa del Dataset (Filas Parseadas)")
+        p_title = QLabel("Vista previa")
         p_title.setStyleSheet("font-size: 14px; font-weight: 700; color: #123B4A;")
         p_head.addWidget(p_title)
         p_head.addStretch()
@@ -302,14 +307,29 @@ class DataUploadPage(QWidget):
         self.success_banner.setVisible(False)
         self.error_banner.setVisible(False)
 
+        self.archivo_semanal = None
         try:
-            records = parse_data_file(p)
+            if model_runner.es_archivo_semanal(p):
+                # mismo cálculo que generar_plantilla_mensual.py, con el entorno del modelo
+                self.file_info_lbl.setText(f"Archivo: <b>{p.name}</b> · calculando totales mensuales…")
+                self.setCursor(Qt.CursorShape.WaitCursor)
+                try:
+                    records = model_runner.resumen_mensual(p)
+                finally:
+                    self.unsetCursor()
+                self.archivo_semanal = p
+                self.file_info_lbl.setText(
+                    f"Archivo semanal: <b>{p.name}</b> ({p.stat().st_size:,} bytes) → {len(records)} meses de la Costa. "
+                    "Al cargarlo también se usará para el modelo."
+                )
+            else:
+                records = parse_data_file(p)
             self.parsed_records = records
             self._validate_and_render_preview(records)
         except Exception as ex:
             self.parsed_records = []
             self.validation_errors = [f"Error al leer el archivo: {ex}"]
-            self.val_status_badge.setText("ERROR DE LECTURA")
+            self.val_status_badge.setText("No se pudo leer")
             self.val_status_badge.setStyleSheet("background-color: #FEE2E2; color: #DC2626; font-weight: 700; font-size: 10px; padding: 2px 8px; border-radius: 4px;")
             self.val_msg.setText(f"No se pudo parsear el archivo: {ex}")
             self.val_msg.setStyleSheet("color: #DC2626; font-size: 11.5px;")
@@ -366,7 +386,7 @@ class DataUploadPage(QWidget):
 
         # Update Validation Status
         if errors:
-            self.val_status_badge.setText(f"{len(errors)} ERRORES DETECTADOS")
+            self.val_status_badge.setText(f"{len(errors)} errores")
             self.val_status_badge.setStyleSheet("background-color: #FEE2E2; color: #DC2626; font-weight: 700; font-size: 10px; padding: 2px 8px; border-radius: 4px;")
             summary_text = f"Se detectaron {len(errors)} problema(s) de validación:\n• " + "\n• ".join(errors[:5])
             if len(errors) > 5:
@@ -375,15 +395,15 @@ class DataUploadPage(QWidget):
             self.val_msg.setStyleSheet("color: #DC2626; font-size: 11.5px; font-weight: 500;")
             self.btn_submit.setEnabled(False)
         else:
-            self.val_status_badge.setText("ESTRUCTURA VÁLIDA ✓")
+            self.val_status_badge.setText("Sin errores")
             self.val_status_badge.setStyleSheet("background-color: #DCFCE7; color: #15803D; font-weight: 700; font-size: 10px; padding: 2px 8px; border-radius: 4px;")
-            self.val_msg.setText(f"✓ El archivo contiene {len(records)} fila(s) mensuales con formato, rangos y tipados correctos para la región costera.")
+            self.val_msg.setText(f"{len(records)} meses listos para cargar.")
             self.val_msg.setStyleSheet("color: #15803D; font-size: 11.5px; font-weight: 600;")
             self.btn_submit.setEnabled(self.user and self.user.role == UserRole.ADMIN)
 
         # Render Table
         self.preview_table.setRowCount(len(records))
-        self.preview_count_lbl.setText(f"{len(records)} fila(s) parseadas")
+        self.preview_count_lbl.setText(f"{len(records)} meses")
 
         for r, row in enumerate(records):
             excel_row = r + 2
@@ -436,9 +456,10 @@ class DataUploadPage(QWidget):
 
         resp = QMessageBox.question(
             self,
-            "Confirmar carga atómica a la API",
+            "Cargar datos",
             f"¿Estás seguro de que deseas enviar {len(self.parsed_records)} registro(s) mensuales al sistema?\n\n"
-            "El backend ejecutará una operación de todo o nada: si un solo registro es inválido, no se guardará ninguno.",
+            + ("El archivo semanal también quedará como los datos del modelo de predicción.\n\n" if self.archivo_semanal else "")
+            + "El backend ejecutará una operación de todo o nada: si un solo registro es inválido, no se guardará ninguno.",
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
             QMessageBox.StandardButton.Yes,
         )
@@ -479,6 +500,12 @@ class DataUploadPage(QWidget):
             f"• Registros climáticos: <b>{cl_cr}</b> creados, <b>{cl_ac}</b> actualizados.<br>"
             "La base de datos epidemiológica regional se encuentra actualizada."
         )
+        if self.archivo_semanal:
+            try:
+                shutil.copyfile(self.archivo_semanal, model_runner.DATOS_CARGADOS)
+                detail_text += "<br>• El modelo usará este archivo. Ve a <b>Predicciones</b> → <b>Ejecutar modelo</b>."
+            except OSError as error:
+                detail_text += f"<br>No se pudo guardar el archivo para el modelo: {error}"
         self.success_detail.setText(detail_text)
         self.success_banner.setVisible(True)
         self.error_banner.setVisible(False)
@@ -506,10 +533,10 @@ class DataUploadPage(QWidget):
 
             self.error_detail.setText("<br>".join(err_lines) if err_lines else "Datos del lote inválidos.")
         elif status == 401:
-            self.error_detail.setText("Sesión expirada o no autorizada (HTTP 401).")
+            self.error_detail.setText("Tu sesión expiró. Vuelve a iniciar sesión.")
             if self.api_client.on_unauthorized:
                 self.api_client.on_unauthorized()
         elif status == 403:
-            self.error_detail.setText("No tienes permiso de Administrador para cargar datos (HTTP 403).")
+            self.error_detail.setText("Solo los administradores pueden cargar datos.")
         else:
             self.error_detail.setText(f"Error al enviar datos (HTTP {status}): {err_data.get('detail', err_data)}")

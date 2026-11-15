@@ -28,6 +28,9 @@ from nucleo import cargar, REGION_COSTA          # noqa: E402
 from predecir import cargar_modelo, predecir     # noqa: E402
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+from dotenv import load_dotenv  # noqa: E402
+load_dotenv(os.path.join(os.path.dirname(RAIZ), ".env"))  # el .env único de la raíz del proyecto
 API = os.getenv("API_URL", "http://127.0.0.1:8000/api")
 API_KEY = os.getenv("FIREBASE_API_KEY")
 URL_LOGIN = os.getenv("FIREBASE_LOGIN_URL", "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword")

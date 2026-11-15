@@ -1,0 +1,1194 @@
+{
+  "info": {
+    "name": "HackaJal API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Pruebas de todos los endpoints. Correr en orden: 0 → 1 → 2."
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000/api"
+    },
+    {
+      "key": "api_key",
+      "value": "PEGA_AQUI_TU_API_KEY"
+    },
+    {
+      "key": "email",
+      "value": "dalopezmacias@gmail.com"
+    },
+    {
+      "key": "password",
+      "value": "PEGA_AQUI_TU_CONTRASEÑA"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "anio",
+      "value": ""
+    },
+    {
+      "key": "anio_prev",
+      "value": ""
+    },
+    {
+      "key": "mes",
+      "value": ""
+    },
+    {
+      "key": "alerta_id",
+      "value": ""
+    },
+    {
+      "key": "contenido_id",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "0. Login",
+      "item": [
+        {
+          "name": "Iniciar sesión en Firebase (guarda el token)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={{api_key}}",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"returnSecureToken\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 200\", () => pm.response.to.have.status(200));",
+                  "pm.collectionVariables.set(\"token\", pm.response.json().idToken);",
+                  "pm.test(\"Token guardado\", () => pm.expect(pm.collectionVariables.get(\"token\")).to.be.a(\"string\").and.not.empty);"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "1. Flujo completo",
+      "item": [
+        {
+          "name": "01 Municipios (público)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/municipios/",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Hay municipios\", () => pm.expect(pm.response.json().length).to.be.above(0));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "02 Enfermedades (público)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/enfermedades/",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Existe dengue\", () => pm.expect(pm.response.json().map(e => e.clave)).to.include(\"dengue\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "03 Yo",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/yo/"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Soy admin\", () => pm.expect(pm.response.json().rol).to.eql(\"admin\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "04 Cargar plantilla (año anterior)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/cargas/",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"anio\": {{anio_prev}},\n    \"mes\": {{mes}},\n    \"casos_dengue\": 2,\n    \"temperatura_c\": 27.0,\n    \"humedad_pct\": 65,\n    \"precipitacion_mm\": 20\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// año y mes de prueba al azar para que la colección se pueda correr varias veces sin chocar",
+                  "const anio = 2030 + Math.floor(Math.random() * 70);",
+                  "pm.collectionVariables.set(\"mes\", 1 + Math.floor(Math.random() * 12));",
+                  "pm.collectionVariables.set(\"anio\", anio);",
+                  "pm.collectionVariables.set(\"anio_prev\", anio - 1);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 201\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"Creó casos y clima\", () => { const r = pm.response.json(); pm.expect(r.casos.creados).to.eql(1); pm.expect(r.clima.creados).to.eql(1); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "05 Cargar lo mismo otra vez (actualiza)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/cargas/",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"anio\": {{anio_prev}},\n    \"mes\": {{mes}},\n    \"casos_dengue\": 2,\n    \"temperatura_c\": null,\n    \"humedad_pct\": 65,\n    \"precipitacion_mm\": 20\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 201\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"Actualizó, no duplicó\", () => { const r = pm.response.json(); pm.expect(r.casos.creados).to.eql(0); pm.expect(r.casos.actualizados).to.eql(1); pm.expect(r.clima.actualizados).to.eql(1); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "06 Guardar predicción (genera alerta)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/predicciones/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enfermedad\": \"dengue\",\n  \"anio\": {{anio}},\n  \"mes\": {{mes}},\n  \"semanas\": [\n    1.2,\n    1.96,\n    0.8,\n    0.5\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 201\", () => pm.response.to.have.status(201));",
+                  "const p = pm.response.json();",
+                  "pm.test(\"Total 4.46\", () => pm.expect(p.total).to.eql(4.46));",
+                  "pm.test(\"Alerta pendiente\", () => pm.expect(p.alerta.estado).to.eql(\"pendiente\"));",
+                  "pm.collectionVariables.set(\"alerta_id\", p.alerta.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "07 Alertas pendientes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/alertas/?estado=pendiente&enfermedad=dengue"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 200\", () => pm.response.to.have.status(200));",
+                  "const a = pm.response.json().find(x => x.id == pm.collectionVariables.get(\"alerta_id\"));",
+                  "pm.test(\"Aparece con motivo\", () => { pm.expect(a).to.exist; pm.expect(a.motivo).to.include(\"contra 2\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "08 Confirmar alerta",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/alertas/{{alerta_id}}/confirmar/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mensaje_publico\": \"Se espera un aumento de dengue en Puerto Vallarta. Elimina recipientes con agua y usa repelente.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Confirmada\", () => pm.expect(pm.response.json().estado).to.eql(\"confirmada\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "09 Confirmar otra vez (409)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/alertas/{{alerta_id}}/confirmar/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mensaje_publico\": \"x\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 409\", () => pm.response.to.have.status(409));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "10 Alertas públicas (sin token)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/alertas-publicas/",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 200\", () => pm.response.to.have.status(200));",
+                  "const a = pm.response.json().find(x => x.id == pm.collectionVariables.get(\"alerta_id\"));",
+                  "pm.test(\"Aparece la confirmada\", () => pm.expect(a).to.exist);",
+                  "pm.test(\"No expone el motivo\", () => pm.expect(a).to.not.have.property(\"motivo\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "11 Mapa",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/mapa/?enfermedad=dengue"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 200\", () => pm.response.to.have.status(200));",
+                  "const r = pm.response.json();",
+                  "pm.test(\"Trae la predicción de la región\", () => pm.expect(r.prediccion).to.not.be.null);",
+                  "pm.test(\"Trae los municipios a pintar\", () => pm.expect(r.municipios.length).to.be.above(0));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "12 Última predicción",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/predicciones/?enfermedad=dengue"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Trae 4 semanas\", () => pm.expect(pm.response.json().prediccion.semanas.length).to.eql(4));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "13 Estadísticas de dengue (año anterior)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/estadisticas/?enfermedad=dengue&anio={{anio_prev}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 200\", () => pm.response.to.have.status(200));",
+                  "const r = pm.response.json();",
+                  "pm.test(\"El mes de prueba tiene 2 casos\", () => pm.expect(r.casos_por_mes.find(c => c.mes == pm.collectionVariables.get(\"mes\")).casos).to.eql(2));",
+                  "pm.test(\"Trae clima del mes\", () => pm.expect(r.clima_por_mes.find(c => c.mes == pm.collectionVariables.get(\"mes\"))).to.exist);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "14 Estadísticas de crónicas (DM2)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/estadisticas/?enfermedad=dm2"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Trae datos de la DGE\", () => pm.expect(pm.response.json().cronicas.length).to.be.above(0));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "15 Crear artículo (borrador)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/contenido/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo\": \"articulo\",\n  \"enfermedad\": \"dengue\",\n  \"titulo\": \"Prueba Postman\",\n  \"cuerpo\": \"Texto de prueba\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 201\", () => pm.response.to.have.status(201));",
+                  "pm.collectionVariables.set(\"contenido_id\", pm.response.json().id);",
+                  "pm.test(\"Nace como borrador\", () => pm.expect(pm.response.json().publicado).to.eql(false));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "16 Borrador oculto al público",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/contenido/{{contenido_id}}/",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 404\", () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "17 Publicar artículo",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/contenido/{{contenido_id}}/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"publicado\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "18 Artículo visible al público",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/contenido/{{contenido_id}}/",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 200\", () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "19 Borrar artículo de prueba",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{base_url}}/contenido/{{contenido_id}}/"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 204\", () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "20 Enviar encuesta (sin token)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/encuesta/",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"municipio\": \"14022\",\n  \"respuestas\": {\n    \"prueba_postman\": true\n  },\n  \"consentimiento\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 201\", () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "21 Estadísticas de la encuesta",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/estadisticas/encuesta/"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Hay respuestas\", () => pm.expect(pm.response.json().total).to.be.above(0));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2. Errores",
+      "item": [
+        {
+          "name": "E01 Cargar sin token (401)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/cargas/",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"anio\": 2026,\n    \"mes\": 1,\n    \"casos_dengue\": 2,\n    \"temperatura_c\": 27.0,\n    \"humedad_pct\": 65,\n    \"precipitacion_mm\": 20\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 401\", () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E02 Mes 13 (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/cargas/",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"anio\": 2026,\n    \"mes\": 13,\n    \"casos_dengue\": 2,\n    \"temperatura_c\": 27.0,\n    \"humedad_pct\": 65,\n    \"precipitacion_mm\": 20\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"Error en la fila 0, campo mes\", () => pm.expect(pm.response.json()[\"0\"]).to.have.property(\"mes\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E03 Año fuera de rango (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/cargas/",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"anio\": 1999,\n    \"mes\": 1,\n    \"casos_dengue\": 2,\n    \"temperatura_c\": 27.0,\n    \"humedad_pct\": 65,\n    \"precipitacion_mm\": 20\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 400\", () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E04 Lista vacía (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/cargas/",
+            "body": {
+              "mode": "raw",
+              "raw": "[]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 400\", () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E05 Fila sin casos ni clima (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/cargas/",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"anio\": 2026,\n    \"mes\": 1\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 400\", () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E06 Filas repetidas (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/cargas/",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"anio\": 2026,\n    \"mes\": 1,\n    \"casos_dengue\": 2,\n    \"temperatura_c\": 27.0,\n    \"humedad_pct\": 65,\n    \"precipitacion_mm\": 20\n  },\n  {\n    \"anio\": 2026,\n    \"mes\": 1,\n    \"casos_dengue\": 2,\n    \"temperatura_c\": 27.0,\n    \"humedad_pct\": 65,\n    \"precipitacion_mm\": 20\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"Marca la segunda fila\", () => pm.expect(pm.response.json()).to.have.property(\"1\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E07 Enfermedad inexistente en la plantilla (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/cargas/",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"anio\": 2026,\n    \"mes\": 1,\n    \"casos_dengue\": 2,\n    \"temperatura_c\": 27.0,\n    \"humedad_pct\": 65,\n    \"precipitacion_mm\": 20,\n    \"casos_xyz\": 3\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 400\", () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E08 Predicción con 3 semanas (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/predicciones/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enfermedad\": \"dengue\",\n  \"anio\": 2026,\n  \"mes\": 12,\n  \"semanas\": [\n    1,\n    2,\n    3\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 400\", () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E09 Predicción negativa (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/predicciones/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enfermedad\": \"dengue\",\n  \"anio\": 2026,\n  \"mes\": 12,\n  \"semanas\": [\n    1,\n    2,\n    3,\n    -1\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 400\", () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E09b Predicción de enfermedad inexistente (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/predicciones/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enfermedad\": \"xyz\",\n  \"anio\": 2026,\n  \"mes\": 12,\n  \"semanas\": [\n    1,\n    1,\n    1,\n    1\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 400\", () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E10 Mapa sin enfermedad (400)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/mapa/"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 400\", () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E11 Estadísticas con clave inexistente (400)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/estadisticas/?enfermedad=xyz"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 400\", () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E12 Alerta inexistente (404)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "{{base_url}}/alertas/999999/descartar/"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 404\", () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E13 Estado de alerta inválido (400)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/alertas/?estado=otra"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 400\", () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E14 Encuesta sin consentimiento (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/encuesta/",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"municipio\": \"14022\",\n  \"respuestas\": {\n    \"p\": 1\n  },\n  \"consentimiento\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 400\", () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E15 Crear contenido sin token (401)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/contenido/",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo\": \"nota\",\n  \"titulo\": \"x\",\n  \"cuerpo\": \"x\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 401\", () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E16 Token falso (401)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/yo/",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "token-falso",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde 401\", () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

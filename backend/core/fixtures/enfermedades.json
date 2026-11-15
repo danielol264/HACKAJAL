@@ -1,0 +1,65 @@
+[
+  {
+    "model": "core.enfermedad",
+    "pk": 1,
+    "fields": {
+      "clave": "dengue",
+      "nombre": "Dengue",
+      "tipo": "transmisible"
+    }
+  },
+  {
+    "model": "core.enfermedad",
+    "pk": 2,
+    "fields": {
+      "clave": "zika",
+      "nombre": "Zika",
+      "tipo": "transmisible"
+    }
+  },
+  {
+    "model": "core.enfermedad",
+    "pk": 3,
+    "fields": {
+      "clave": "chikungunya",
+      "nombre": "Chikungunya",
+      "tipo": "transmisible"
+    }
+  },
+  {
+    "model": "core.enfermedad",
+    "pk": 4,
+    "fields": {
+      "clave": "dm1",
+      "nombre": "Diabetes mellitus tipo 1",
+      "tipo": "cronica"
+    }
+  },
+  {
+    "model": "core.enfermedad",
+    "pk": 5,
+    "fields": {
+      "clave": "dm2",
+      "nombre": "Diabetes mellitus tipo 2",
+      "tipo": "cronica"
+    }
+  },
+  {
+    "model": "core.enfermedad",
+    "pk": 6,
+    "fields": {
+      "clave": "has",
+      "nombre": "Hipertensión arterial",
+      "tipo": "cronica"
+    }
+  },
+  {
+    "model": "core.enfermedad",
+    "pk": 7,
+    "fields": {
+      "clave": "obesidad",
+      "nombre": "Obesidad",
+      "tipo": "cronica"
+    }
+  }
+]

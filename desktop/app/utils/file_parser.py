@@ -9,6 +9,7 @@ Supports:
 from __future__ import annotations
 
 import csv
+import re
 import zipfile
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -103,6 +104,38 @@ def parse_csv(path: Path | str) -> list[dict[str, Any]]:
     return records
 
 
+def _col_index(ref: str) -> int:
+    """'C12' -> 2. Excel omite las celdas vacías, así que la posición sale de la referencia, no del orden."""
+    n = 0
+    for ch in ref:
+        if not ch.isalpha():
+            break
+        n = n * 26 + ord(ch.upper()) - 64
+    return n - 1
+
+
+def _read_sheet(sheet_tree: Any, shared_strings: list[str]) -> list[list[str]]:
+    rows_data: list[list[str]] = []
+    for row in sheet_tree.findall(".//{*}row"):
+        row_cells: list[str] = []
+        for c in row.findall("{*}c"):
+            t = c.get("t")
+            if t == "inlineStr":
+                node = c.find(".//{*}t")
+            else:
+                node = c.find("{*}v")
+            val_text = node.text if node is not None and node.text is not None else ""
+            if t == "s" and val_text:
+                idx = int(val_text)
+                val_text = shared_strings[idx] if 0 <= idx < len(shared_strings) else ""
+            col = _col_index(c.get("r", "")) if c.get("r") else len(row_cells)
+            row_cells.extend([""] * (col + 1 - len(row_cells)))
+            row_cells[col] = val_text
+        if any(cell.strip() for cell in row_cells):
+            rows_data.append(row_cells)
+    return rows_data
+
+
 def parse_xlsx(path: Path | str) -> list[dict[str, Any]]:
     p = Path(path)
     records: list[dict[str, Any]] = []
@@ -116,33 +149,21 @@ def parse_xlsx(path: Path | str) -> list[dict[str, Any]]:
                 t = si.find(".//{*}t")
                 shared_strings.append(t.text if t is not None and t.text else "")
 
-        # 2. Read first sheet
-        sheet_file = "xl/worksheets/sheet1.xml"
-        if sheet_file not in z.namelist():
-            sheets = [n for n in z.namelist() if n.startswith("xl/worksheets/sheet") and n.endswith(".xml")]
-            sheet_file = sheets[0] if sheets else ""
-
-        if not sheet_file:
+        # 2. Usa la primera hoja cuyo encabezado tenga anio y mes (la plantilla trae "Instrucciones" antes de "Datos")
+        sheets = sorted(
+            (n for n in z.namelist() if n.startswith("xl/worksheets/sheet") and n.endswith(".xml")),
+            key=lambda n: int(re.sub(r"\D", "", n) or 0),
+        )
+        if not sheets:
             raise ValueError("No se encontró ninguna hoja de cálculo en el archivo Excel.")
 
-        sheet_tree = ET.fromstring(z.read(sheet_file))
         rows_data: list[list[str]] = []
-
-        for row in sheet_tree.findall(".//{*}row"):
-            row_cells: list[str] = []
-            for c in row.findall(".//{*}c"):
-                t = c.get("t")
-                v = c.find(".//{*}v")
-                val_text = ""
-                if v is not None and v.text is not None:
-                    if t == "s":
-                        idx = int(v.text)
-                        val_text = shared_strings[idx] if 0 <= idx < len(shared_strings) else ""
-                    else:
-                        val_text = v.text
-                row_cells.append(val_text)
-            if any(cell.strip() for cell in row_cells):
-                rows_data.append(row_cells)
+        for sheet_file in sheets:
+            rows_data = _read_sheet(ET.fromstring(z.read(sheet_file)), shared_strings)
+            if rows_data and {"anio", "mes"} <= {_normalize_key(h) for h in rows_data[0]}:
+                break
+        else:
+            rows_data = []
 
     if not rows_data:
         return []

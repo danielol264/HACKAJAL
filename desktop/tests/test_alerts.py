@@ -203,18 +203,18 @@ class AlertsSprint3Tests(unittest.TestCase):
         self.assertIsNotNone(cell_widget)
         buttons = cell_widget.findChildren(QPushButton)
         btn_texts = [b.text() for b in buttons]
-        self.assertIn("👁️", btn_texts)
-        self.assertIn("✓ Confirmar", btn_texts)
-        self.assertIn("✕ Descartar", btn_texts)
+        self.assertIn("Ver", btn_texts)
+        self.assertIn("Confirmar", btn_texts)
+        self.assertIn("Descartar", btn_texts)
 
         # Alert #2 is 'confirmada' -> Admin only sees Detalle button and "Revisada" label
         cell_widget_rev = page.table.cellWidget(1, 9)
         self.assertIsNotNone(cell_widget_rev)
         buttons_rev = cell_widget_rev.findChildren(QPushButton)
         btn_texts_rev = [b.text() for b in buttons_rev]
-        self.assertIn("👁️", btn_texts_rev)
-        self.assertNotIn("✓ Confirmar", btn_texts_rev)
-        self.assertNotIn("✕ Descartar", btn_texts_rev)
+        self.assertIn("Ver", btn_texts_rev)
+        self.assertNotIn("Confirmar", btn_texts_rev)
+        self.assertNotIn("Descartar", btn_texts_rev)
 
     def test_consulta_role_is_strictly_read_only(self) -> None:
         page = AlertsPage(user=self.consulta_user, auto_refresh=False)
@@ -226,9 +226,9 @@ class AlertsSprint3Tests(unittest.TestCase):
             self.assertIsNotNone(cell_widget)
             buttons = cell_widget.findChildren(QPushButton)
             btn_texts = [b.text() for b in buttons]
-            self.assertEqual(btn_texts, ["👁️"])
-            self.assertNotIn("✓ Confirmar", btn_texts)
-            self.assertNotIn("✕ Descartar", btn_texts)
+            self.assertEqual(btn_texts, ["Ver"])
+            self.assertNotIn("Confirmar", btn_texts)
+            self.assertNotIn("Descartar", btn_texts)
 
     # -------------------------------------------------------------------------
     # ConfirmAlertDialog Validations
@@ -281,7 +281,7 @@ class AlertsSprint3Tests(unittest.TestCase):
         page = AlertsPage(user=self.admin_user, auto_refresh=False)
         page._on_error_occurred("El mensaje es requerido", 400)
         self.assertFalse(page.error_banner.isHidden())
-        self.assertIn("HTTP 400", page.error_label.text())
+        self.assertIn("No se pudo guardar", page.error_label.text())
 
     def test_alerts_page_handles_401_unauthorized(self) -> None:
         page = AlertsPage(user=self.admin_user, auto_refresh=False)
@@ -290,20 +290,20 @@ class AlertsSprint3Tests(unittest.TestCase):
 
         page._on_error_occurred("Token expired", 401)
         self.assertFalse(page.error_banner.isHidden())
-        self.assertIn("HTTP 401", page.error_label.text())
+        self.assertIn("sesión expiró", page.error_label.text())
         self.assertTrue(unauth_called)
 
     def test_alerts_page_handles_403_forbidden(self) -> None:
         page = AlertsPage(user=self.consulta_user, auto_refresh=False)
         page._on_error_occurred("Permission denied", 403)
         self.assertFalse(page.error_banner.isHidden())
-        self.assertIn("HTTP 403", page.error_label.text())
+        self.assertIn("permiso", page.error_label.text())
 
     def test_alerts_page_handles_404_not_found(self) -> None:
         page = AlertsPage(user=self.admin_user, auto_refresh=False)
         page._on_error_occurred("Alerta no existe", 404)
         self.assertFalse(page.error_banner.isHidden())
-        self.assertIn("HTTP 404", page.error_label.text())
+        self.assertIn("ya no existe", page.error_label.text())
 
     def test_alerts_page_handles_409_conflict_with_auto_refresh(self) -> None:
         page = AlertsPage(user=self.admin_user, auto_refresh=False)
@@ -312,7 +312,7 @@ class AlertsSprint3Tests(unittest.TestCase):
 
         page._on_error_occurred("Alerta ya revisada", 409)
         self.assertFalse(page.error_banner.isHidden())
-        self.assertIn("409", page.error_label.text())
+        self.assertIn("Otra persona", page.error_label.text())
         refresh_mock.assert_called_once()
 
     # -------------------------------------------------------------------------
@@ -326,7 +326,7 @@ class AlertsSprint3Tests(unittest.TestCase):
 
         # Initially expanded
         self.assertTrue(window.sidebar_expanded)
-        self.assertEqual(window.sidebar.width(), 230)
+        self.assertEqual(window.sidebar.width(), 220)
         self.assertFalse(window.brand_label.isHidden())
 
         # Toggle to collapsed
@@ -339,7 +339,7 @@ class AlertsSprint3Tests(unittest.TestCase):
         # Toggle back to expanded
         window._toggle_sidebar()
         self.assertTrue(window.sidebar_expanded)
-        self.assertEqual(window.sidebar.width(), 230)
+        self.assertEqual(window.sidebar.width(), 220)
         self.assertFalse(window.brand_label.isHidden())
 
         window.close()

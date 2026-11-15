@@ -123,7 +123,7 @@ class StatisticsService:
         if alertas_pendientes is not None:
             count = len(alertas_pendientes)
             alertas_val = str(count)
-            alertas_note = "Requieren revisión institucional" if count > 0 else "Sin alertas pendientes"
+            alertas_note = "Por revisar" if count > 0 else "Sin alertas pendientes"
             alertas_accent = "#BD4B4B" if count > 0 else "#23658A"
         else:
             alertas_val = "Sin información disponible"

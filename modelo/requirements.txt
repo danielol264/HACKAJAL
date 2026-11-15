@@ -1,7 +1,0 @@
-scikit-learn==1.9.1
-pandas==3.0.5
-numpy==2.5.3
-joblib==1.6.0
-requests==2.34.2
-openpyxl==3.1.5
-firebase-admin  # solo para subir_predicciones_firebase.py

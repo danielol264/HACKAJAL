@@ -4,20 +4,23 @@ from collections.abc import Callable
 from pathlib import Path
 
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QResizeEvent
 from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import (
+    QApplication,
     QButtonGroup,
     QFrame,
     QHBoxLayout,
     QLabel,
     QMainWindow,
     QPushButton,
+    QSizePolicy,
     QStackedWidget,
     QVBoxLayout,
     QWidget,
 )
 
-from app.components.widgets import NavButton
+from app.components.widgets import NavButton, scrollable
 from app.models.user import User
 from app.navigation import NAVIGATION_ITEMS
 from app.pages.alerts import AlertsPage
@@ -28,10 +31,11 @@ from app.pages.data_upload import DataUploadPage
 from app.pages.map import MapPage
 from app.pages.predictions import PredictionsPage
 from app.pages.statistics import StatisticsPage
+from app.pages.users import UsersPage
 from app.permissions.permission_manager import PermissionManager
 from app.permissions.roles import Module
 from app.services.auth_service import AuthService
-from app.theme import STYLESHEET
+from app.theme import instalar_estilos
 
 
 class MainWindow(QMainWindow):
@@ -49,10 +53,12 @@ class MainWindow(QMainWindow):
         # Optimized responsive window sizes for 1366x768, 1600x900, 1920x1080
         self.setWindowTitle("HACKAJAL | Vigilancia epidemiológica")
         self.resize(1366, 768)
-        self.setMinimumSize(1024, 600)
-        self.setStyleSheet(STYLESHEET)
+        self.setMinimumSize(880, 560)
+        instalar_estilos(QApplication.instance())
+        self._sidebar_auto = False  # True si la barra se contrajo sola por falta de espacio
 
         root = QWidget()
+        root.setObjectName("appRoot")
         root_layout = QHBoxLayout(root)
         root_layout.setContentsMargins(0, 0, 0, 0)
         root_layout.setSpacing(0)
@@ -108,22 +114,31 @@ class MainWindow(QMainWindow):
             auto_refresh=False,
         )
 
+        # 8. Users Page (admin)
+        self.users_page = UsersPage(
+            user=self.user,
+            api_client=self.auth_service.api_client,
+            auto_refresh=False,
+        )
+
         # Populate stack adhering to NAVIGATION_ITEMS order
         for item in NAVIGATION_ITEMS:
             if item.module == Module.DASHBOARD:
                 self.stack.addWidget(self.dashboard_page)
             elif item.module in (Module.MAP, Module.SURVEILLANCE):
-                self.stack.addWidget(self.map_page)
+                self.stack.addWidget(scrollable(self.map_page))
             elif item.module in (Module.STATISTICS, Module.REPORTS):
                 self.stack.addWidget(self.statistics_page)
             elif item.module == Module.ALERTS:
                 self.stack.addWidget(self.alerts_page)
             elif item.module == Module.CONTENT:
-                self.stack.addWidget(self.content_page)
+                self.stack.addWidget(scrollable(self.content_page))
             elif item.module in (Module.DATA_UPLOAD, Module.CASES):
-                self.stack.addWidget(self.data_upload_page)
+                self.stack.addWidget(scrollable(self.data_upload_page))
             elif item.module == Module.PREDICTIONS:
-                self.stack.addWidget(self.predictions_page)
+                self.stack.addWidget(scrollable(self.predictions_page))
+            elif item.module == Module.USERS:
+                self.stack.addWidget(scrollable(self.users_page))
             else:
                 self.stack.addWidget(PlaceholderPage(item.label, "Módulo preparado para su integración."))
 
@@ -132,6 +147,7 @@ class MainWindow(QMainWindow):
         root_layout.addWidget(self.sidebar_widget)
 
         content = QWidget()
+        content.setMinimumWidth(0)
         content_layout = QVBoxLayout(content)
         content_layout.setContentsMargins(0, 0, 0, 0)
         content_layout.setSpacing(0)
@@ -145,7 +161,7 @@ class MainWindow(QMainWindow):
     def _build_sidebar(self) -> QFrame:
         sidebar = QFrame()
         sidebar.setObjectName("sidebar")
-        sidebar.setFixedWidth(230)
+        sidebar.setFixedWidth(220)
         self.sidebar = sidebar
 
         layout = QVBoxLayout(sidebar)
@@ -161,7 +177,7 @@ class MainWindow(QMainWindow):
 
         self.seal = QLabel()
         self.seal.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.seal.setMinimumHeight(60)
+        self.seal.setMinimumHeight(48)
         pixmap = QPixmap(str(Path(__file__).resolve().parent.parent / "resources" / "escudo_jalisco.png"))
         if not pixmap.isNull():
             self.pixmap_full = pixmap.scaled(70, 70, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
@@ -201,7 +217,7 @@ class MainWindow(QMainWindow):
         layout.addStretch()
 
         # Footer
-        self.footer_label = QLabel("Gobierno del Estado de Jalisco\nSecretaría de Salud")
+        self.footer_label = QLabel("Secretaría de Salud Jalisco")
         self.footer_label.setObjectName("brandSubtitle")
         self.footer_label.setWordWrap(True)
         layout.addWidget(self.footer_label)
@@ -212,63 +228,63 @@ class MainWindow(QMainWindow):
         """Compact header optimizing space (54px height)."""
         bar = QFrame()
         bar.setObjectName("topbar")
-        bar.setFixedHeight(54)
+        bar.setFixedHeight(52)
 
         layout = QHBoxLayout(bar)
         layout.setContentsMargins(14, 6, 18, 6)
         layout.setSpacing(12)
 
-        # Toggle Sidebar Button
         self.btn_toggle_sidebar = QPushButton("☰")
-        self.btn_toggle_sidebar.setToolTip("Colapsar / expandir barra lateral")
-        self.btn_toggle_sidebar.setFixedSize(36, 36)
-        self.btn_toggle_sidebar.setStyleSheet("""
-            QPushButton {
-                background-color: #EAF0F5;
-                color: #123B4A;
-                border: 1px solid #D9E3EA;
-                border-radius: 6px;
-                font-size: 16px;
-                font-weight: bold;
-            }
-            QPushButton:hover {
-                background-color: #DDE6ED;
-            }
-        """)
+        self.btn_toggle_sidebar.setToolTip("Mostrar u ocultar el menú")
+        self.btn_toggle_sidebar.setFixedSize(34, 34)
+        self.btn_toggle_sidebar.setStyleSheet("QPushButton { padding: 0; font-size: 15px; }")
         self.btn_toggle_sidebar.setCursor(Qt.CursorShape.PointingHandCursor)
-        self.btn_toggle_sidebar.clicked.connect(self._toggle_sidebar)
+        self.btn_toggle_sidebar.clicked.connect(self._toggle_sidebar_manual)
         layout.addWidget(self.btn_toggle_sidebar)
 
-        # Platform Title
-        platform = QLabel("Sistema estatal de vigilancia epidemiológica · Región Costera")
-        platform.setStyleSheet("font-size: 14px; font-weight: 700; color: #123B4A;")
-        layout.addWidget(platform)
+        platform = QLabel("Vigilancia epidemiológica · Región Costa de Jalisco")
+        platform.setStyleSheet("font-size: 14px; font-weight: 600; color: #123B4A;")
+        # Ignored: el texto se recorta en ventanas angostas en vez de empujar los botones fuera de la pantalla
+        platform.setSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred)
+        layout.addWidget(platform, 1)
 
-        layout.addStretch()
-
-        # User Info Pill
-        user_label = QLabel(f"{self.user.nombre} · {self.user.organizacion} · {self.user.role.value.upper()}")
-        user_label.setObjectName("muted")
-        user_label.setStyleSheet("font-size: 11.5px; color: #475569;")
+        rol = "Administrador" if self.user.role.value == "admin" else "Consulta"
+        user_label = QLabel(f"<b>{self.user.nombre}</b> · {rol}")
+        user_label.setToolTip(self.user.organizacion)
+        user_label.setStyleSheet("font-size: 12px; color: #475569;")
         layout.addWidget(user_label)
-        layout.addSpacing(6)
 
-        # Logout Button
         logout = QPushButton("Cerrar sesión")
-        logout.setObjectName("navButton")
-        logout.setStyleSheet("QPushButton { color: #123B4A; background: #EAF0F5; padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 11.5px; } QPushButton:hover { background: #DDE6ED; }")
         logout.setCursor(Qt.CursorShape.PointingHandCursor)
         logout.clicked.connect(self._logout)
         layout.addWidget(logout)
 
         return bar
 
+    def _toggle_sidebar_manual(self) -> None:
+        self._sidebar_auto = False
+        self._toggle_sidebar()
+
+    def resizeEvent(self, event: QResizeEvent) -> None:  # noqa: N802
+        """En ventanas angostas el menú se contrae solo y se vuelve a abrir al agrandarla."""
+        super().resizeEvent(event)
+        angosta = event.size().width() < 1180
+        if angosta == getattr(self, "_era_angosta", None):
+            return  # solo actúa al cruzar el límite; respeta si el usuario lo abrió a mano
+        self._era_angosta = angosta
+        if angosta and self.sidebar_expanded:
+            self._sidebar_auto = True
+            self._toggle_sidebar()
+        elif not angosta and not self.sidebar_expanded and self._sidebar_auto:
+            self._sidebar_auto = False
+            self._toggle_sidebar()
+
     def _toggle_sidebar(self) -> None:
-        """Collapse or expand the sidebar smoothly."""
+        """Contrae o expande la barra lateral."""
         self.sidebar_expanded = not self.sidebar_expanded
 
         if self.sidebar_expanded:
-            self.sidebar.setFixedWidth(230)
+            self.sidebar.setFixedWidth(220)
             self.brand_label.setVisible(True)
             self.subtitle_label.setVisible(True)
             self.footer_label.setVisible(True)
@@ -299,6 +315,8 @@ class MainWindow(QMainWindow):
             self.content_page.refresh_content()
         elif item.module == Module.PREDICTIONS:
             self.predictions_page.refresh_prediction()
+        elif item.module == Module.USERS:
+            self.users_page.refresh_users()
 
     def _apply_permissions(self) -> None:
         for index, item in enumerate(NAVIGATION_ITEMS):

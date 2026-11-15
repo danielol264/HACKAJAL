@@ -31,17 +31,8 @@ Archivo `resultados/predicciones_costa.json` (también `.csv`). Cada elemento de
 - Los umbrales de cada municipio están en `resultados/umbrales_alerta.csv` (`umbral_medio`, `umbral_alto`).
 - El modelo orienta, no diagnostica: la app debe decirlo.
 
-## 3. Cómo guardarlas en Firebase (Cloud Firestore)
-Está listo `codigo/subir_predicciones_firebase.py`:
-```
-pip install firebase-admin
-python codigo\subir_predicciones_firebase.py resultados --simular
-python codigo\subir_predicciones_firebase.py resultados --credenciales C:\ruta\llave.json
-```
-- Crea la colección `predicciones` (id: `067_2026-11-01_dengue`, así no se duplica al volver a correrlo) y la colección `umbrales_alerta` (id: la clave del municipio).
-- **No se ha probado contra un Firebase real**: no tenemos las llaves. El modo `--simular` sí se probó y muestra lo que escribiría.
-- Las llaves de Firebase nunca se suben a GitHub ni a Drive.
-- Si prefieren otra estructura de colecciones, es cambiar ese archivo; dime cuál.
+## 3. Firebase (Cloud Firestore)
+Ya no se usa: el proyecto guarda las predicciones en la API de Django (PostgreSQL), así que se eliminó `subir_predicciones_firebase.py`. Firebase solo se usa para iniciar sesión.
 
 ## 4. Cómo probar la API (según el contrato)
 Con `pruebas/probar_contrato_api.py` se hacen 41 pruebas de los endpoints de `docs/API_ESCRITORIO.md`: casos correctos, permisos (401 y 403), municipio o enfermedad inexistente y datos vacíos o inválidos. Ejemplo:

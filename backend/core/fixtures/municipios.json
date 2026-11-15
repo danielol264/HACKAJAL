@@ -1,0 +1,156 @@
+[
+  {
+    "model": "core.municipio",
+    "fields": {
+      "clave_inegi": "14021",
+      "nombre": "Casimiro Castillo",
+      "region": "Costa Sur",
+      "latitud": 19.60295,
+      "longitud": -104.47016
+    },
+    "pk": 1
+  },
+  {
+    "model": "core.municipio",
+    "fields": {
+      "clave_inegi": "14022",
+      "nombre": "Cihuatlán",
+      "region": "Costa Sur",
+      "latitud": 19.27735,
+      "longitud": -104.61502
+    },
+    "pk": 2
+  },
+  {
+    "model": "core.municipio",
+    "fields": {
+      "clave_inegi": "14027",
+      "nombre": "Cuautitlán de García Barragán",
+      "region": "Costa Sur",
+      "latitud": 19.43563,
+      "longitud": -104.31105
+    },
+    "pk": 3
+  },
+  {
+    "model": "core.municipio",
+    "fields": {
+      "clave_inegi": "14043",
+      "nombre": "La Huerta",
+      "region": "Costa Sur",
+      "latitud": 19.51463,
+      "longitud": -104.86316
+    },
+    "pk": 4
+  },
+  {
+    "model": "core.municipio",
+    "fields": {
+      "clave_inegi": "14068",
+      "nombre": "Villa Purificación",
+      "region": "Costa Sur",
+      "latitud": 19.80719,
+      "longitud": -104.72284
+    },
+    "pk": 5
+  },
+  {
+    "model": "core.municipio",
+    "fields": {
+      "clave_inegi": "14100",
+      "nombre": "Tomatlán",
+      "region": "Costa Sur",
+      "latitud": 19.97952,
+      "longitud": -105.16488
+    },
+    "pk": 6
+  },
+  {
+    "model": "core.municipio",
+    "fields": {
+      "clave_inegi": "14012",
+      "nombre": "Atenguillo",
+      "region": "Costa-Sierra Occidental",
+      "latitud": 20.33673,
+      "longitud": -104.55067
+    },
+    "pk": 7
+  },
+  {
+    "model": "core.municipio",
+    "fields": {
+      "clave_inegi": "14020",
+      "nombre": "Cabo Corrientes",
+      "region": "Costa-Sierra Occidental",
+      "latitud": 20.34239,
+      "longitud": -105.40664
+    },
+    "pk": 8
+  },
+  {
+    "model": "core.municipio",
+    "fields": {
+      "clave_inegi": "14038",
+      "nombre": "Guachinango",
+      "region": "Costa-Sierra Occidental",
+      "latitud": 20.67891,
+      "longitud": -104.42156
+    },
+    "pk": 9
+  },
+  {
+    "model": "core.municipio",
+    "fields": {
+      "clave_inegi": "14058",
+      "nombre": "Mascota",
+      "region": "Costa-Sierra Occidental",
+      "latitud": 20.57895,
+      "longitud": -104.81406
+    },
+    "pk": 10
+  },
+  {
+    "model": "core.municipio",
+    "fields": {
+      "clave_inegi": "14062",
+      "nombre": "Mixtlán",
+      "region": "Costa-Sierra Occidental",
+      "latitud": 20.50891,
+      "longitud": -104.45292
+    },
+    "pk": 11
+  },
+  {
+    "model": "core.municipio",
+    "fields": {
+      "clave_inegi": "14067",
+      "nombre": "Puerto Vallarta",
+      "region": "Costa-Sierra Occidental",
+      "latitud": 20.69779,
+      "longitud": -105.14921
+    },
+    "pk": 12
+  },
+  {
+    "model": "core.municipio",
+    "fields": {
+      "clave_inegi": "14080",
+      "nombre": "San Sebastián del Oeste",
+      "region": "Costa-Sierra Occidental",
+      "latitud": 20.85245,
+      "longitud": -104.82612
+    },
+    "pk": 13
+  },
+  {
+    "model": "core.municipio",
+    "fields": {
+      "clave_inegi": "14084",
+      "nombre": "Talpa de Allende",
+      "region": "Costa-Sierra Occidental",
+      "latitud": 20.29944,
+      "longitud": -104.95348
+    },
+    "pk": 14
+  }
+]

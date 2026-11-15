@@ -1,7 +1,34 @@
-export const Demo=()=> <div className="demo"><b>i</b><span><strong>Vista demostrativa.</strong> Las cifras e indicadores son ilustrativos y no representan datos epidemiológicos reales.</span></div>;
-export function BackButton({onClick}){return <button className="back-button" onClick={onClick} aria-label="Regresar al apartado anterior"><span aria-hidden="true">←</span> Regresar</button>}
-export function Title({eyebrow,title,text}){return <div className="title"><span>{eyebrow}</span><h1>{title}</h1><p>{text}</p></div>}
-export function Stat({icon,label,value,text}){return <article className="stat"><i>{icon}</i><div><span>{label}</span><strong>{value}</strong><small>{text}</small></div></article>}
-export function Card({icon,title,text,action,onClick}){return <article className="card"><i>{icon}</i><h3>{title}</h3><p>{text}</p>{action&&<button onClick={onClick}>{action} →</button>}</article>}
-export function AlertCard({alert}){return <article className="alert-card"><div><RiskBadge level={alert.level} label={alert.level==='high'?'Importancia alta':alert.level==='moderate'?'Importancia moderada':'Importancia baja'}/><h2>{alert.title}</h2><p>{alert.text}</p></div><aside><b>{alert.municipality}</b><small>{alert.date}</small></aside></article>}
-export function Chart({title,sub,bar=false}){return <article className="chart"><div><h3>{title}</h3><small>{sub||'Visualización demostrativa'}</small></div>{bar?<div className="bars">{[45,68,37,54].map((v,i)=><span key={i}><i style={{height:v+'%'}}/><b>{['Dengue','Diabetes','Hipertensión','Obesidad'][i]}</b></span>)}</div>:<div className="line"><svg viewBox="0 0 600 180" preserveAspectRatio="none"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#0a7a7d" stopOpacity=".25"/><stop offset="1" stopColor="#0a7a7d" stopOpacity="0"/></linearGradient></defs><path d="M0 143 C45 136 70 108 110 122 S170 83 208 99 S260 126 300 77 S355 68 395 86 S445 50 480 63 S545 25 600 40V180H0Z" fill="url(#g)"/><path d="M0 143 C45 136 70 108 110 122 S170 83 208 99 S260 126 300 77 S355 68 395 86 S445 50 480 63 S545 25 600 40" fill="none" stroke="#0a7a7d" strokeWidth="4"/></svg><div>Ene <span>Mar</span><span>May</span><span>Jul</span><span>Sep</span><span>Nov</span></div></div>}</article>}
+export function BackButton({ onClick }) {
+  return <button className="back-button" onClick={onClick} aria-label="Regresar a la página anterior"><span aria-hidden="true">←</span> Regresar</button>;
+}
+
+export function Title({ title, text }) {
+  return <div className="title"><h1>{title}</h1>{text && <p>{text}</p>}</div>;
+}
+
+export function Card({ title, text, action, onClick }) {
+  return (
+    <article className="card">
+      <h3>{title}</h3>
+      <p>{text}</p>
+      {action && <button onClick={onClick}>{action} →</button>}
+    </article>
+  );
+}
+
+export function AlertCard({ alert }) {
+  return (
+    <article className="alert-card">
+      <div>
+        <RiskBadge level={alert.level} label="Alerta confirmada" />
+        <h2>{alert.title}</h2>
+        <p>{alert.text}</p>
+      </div>
+      <aside><b>{alert.municipality}</b><small>{alert.date}</small></aside>
+    </article>
+  );
+}
+
+export function RiskBadge({ level, label }) {
+  return <span className={`risk-badge ${level}`}>{label}</span>;
+}

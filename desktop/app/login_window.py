@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 from PySide6.QtCore import Qt, Signal
-from PySide6.QtWidgets import QFrame, QHBoxLayout, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget
+from pathlib import Path
+
+from PySide6.QtGui import QPixmap
+from PySide6.QtWidgets import QApplication, QFrame, QHBoxLayout, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget
 
 from app.core.exceptions import ApiError, ApiNotConfiguredError, ApiRequestError
 from app.models.user import User
 from app.services.auth_service import AuthService
-from app.theme import STYLESHEET
+from app.theme import instalar_estilos
 
 
 class LoginWindow(QWidget):
@@ -17,36 +20,42 @@ class LoginWindow(QWidget):
         super().__init__()
         self.auth_service = auth_service
         self.setWindowTitle("HACKAJAL | Iniciar sesión")
-        self.setMinimumSize(930, 610)
+        self.setMinimumSize(760, 520)
         self.resize(960, 640)
-        self.setStyleSheet(STYLESHEET)
+        self.setObjectName("loginForm")
+        instalar_estilos(QApplication.instance())
         root = QHBoxLayout(self); root.setContentsMargins(0, 0, 0, 0); root.setSpacing(0)
-        identity = QFrame(); identity.setObjectName("sidebar"); identity.setMinimumWidth(400)
-        identity_layout = QVBoxLayout(identity); identity_layout.setContentsMargins(52, 58, 52, 58)
+        identity = QFrame(); identity.setObjectName("sidebar"); identity.setMinimumWidth(300)
+        identity_layout = QVBoxLayout(identity); identity_layout.setContentsMargins(44, 48, 44, 48)
         identity_layout.addStretch()
-        name = QLabel("HACKAJAL"); name.setObjectName("brand")
+        escudo = QLabel()
+        imagen = QPixmap(str(Path(__file__).resolve().parent.parent / "resources" / "escudo_jalisco.png"))
+        if not imagen.isNull():
+            escudo.setPixmap(imagen.scaled(64, 64, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
+        identity_layout.addWidget(escudo); identity_layout.addSpacing(16)
+        name = QLabel("Secretaría de Salud Jalisco"); name.setObjectName("brand")
         title = QLabel("Vigilancia epidemiológica\nde la región costera de Jalisco")
-        title.setStyleSheet("color: white; font-size: 25px; font-weight: 600;")
-        subtitle = QLabel("Acceso institucional para organizaciones de salud.")
+        title.setStyleSheet("color: white; font-size: 24px; font-weight: 600;")
+        subtitle = QLabel("Sistema para el personal de salud: predicción de dengue, alertas y publicación de avisos.")
         subtitle.setObjectName("brandSubtitle"); subtitle.setWordWrap(True)
         identity_layout.addWidget(name); identity_layout.addSpacing(12); identity_layout.addWidget(title); identity_layout.addSpacing(12); identity_layout.addWidget(subtitle)
         identity_layout.addStretch()
-        disclaimer = QLabel("La autenticación se valida con Firebase Authentication.")
+        disclaimer = QLabel("HackaJal 2026")
         disclaimer.setObjectName("brandSubtitle"); disclaimer.setWordWrap(True); identity_layout.addWidget(disclaimer)
         root.addWidget(identity, 4)
-        form_area = QWidget(); form_layout = QVBoxLayout(form_area); form_layout.setContentsMargins(76, 70, 76, 70)
+        form_area = QWidget(); form_layout = QVBoxLayout(form_area); form_layout.setContentsMargins(56, 48, 56, 48)
         form_layout.addStretch()
         heading = QLabel("Iniciar sesión"); heading.setObjectName("pageTitle")
-        description = QLabel("Usa las credenciales proporcionadas por tu organización."); description.setObjectName("muted")
+        description = QLabel("Entra con el correo y la contraseña que te dio el administrador."); description.setObjectName("muted")
         self.email = QLineEdit(); self.email.setPlaceholderText("Correo electrónico"); self.email.setClearButtonEnabled(True)
         self.password = QLineEdit(); self.password.setPlaceholderText("Contraseña"); self.password.setEchoMode(QLineEdit.EchoMode.Password)
         self.error = QLabel(); self.error.setWordWrap(True); self.error.setStyleSheet("color: #A13B3B; min-height: 24px;")
-        self.submit_button = QPushButton("Iniciar sesión"); self.submit_button.setStyleSheet("QPushButton { background: #123B4A; color: white; border: 0; border-radius: 7px; padding: 11px; font-weight: 600; } QPushButton:hover { background: #1B4E81; }")
+        self.submit_button = QPushButton("Iniciar sesión"); self.submit_button.setObjectName("actionButton"); self.submit_button.setStyleSheet("QPushButton { padding: 10px; }")
         self.submit_button.clicked.connect(self._submit)
         self.password.returnPressed.connect(self._submit)
-        form_layout.addWidget(heading); form_layout.addWidget(description); form_layout.addSpacing(24); form_layout.addWidget(QLabel("Correo institucional")); form_layout.addWidget(self.email); form_layout.addSpacing(12); form_layout.addWidget(QLabel("Contraseña")); form_layout.addWidget(self.password); form_layout.addWidget(self.error); form_layout.addWidget(self.submit_button)
+        form_layout.addWidget(heading); form_layout.addWidget(description); form_layout.addSpacing(24); form_layout.addWidget(QLabel("Correo")); form_layout.addWidget(self.email); form_layout.addSpacing(12); form_layout.addWidget(QLabel("Contraseña")); form_layout.addWidget(self.password); form_layout.addWidget(self.error); form_layout.addWidget(self.submit_button)
         form_layout.addSpacing(16)
-        notice = QLabel("No almacenes tu contraseña en este equipo. Si tu cuenta no tiene acceso, contacta al administrador.")
+        notice = QLabel("¿No puedes entrar? Pide al administrador que revise tu cuenta.")
         notice.setObjectName("muted"); notice.setWordWrap(True); form_layout.addWidget(notice)
         form_layout.addStretch()
         root.addWidget(form_area, 6)

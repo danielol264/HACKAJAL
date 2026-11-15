@@ -1,8 +1,18 @@
 """Reusable UI components for HACKAJAL PySide6 interface."""
 from __future__ import annotations
 
-from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QFrame, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget
+from PySide6.QtCore import QEvent, QObject, Qt
+from PySide6.QtWidgets import (
+    QFrame,
+    QGridLayout,
+    QHBoxLayout,
+    QLabel,
+    QPushButton,
+    QScrollArea,
+    QSplitter,
+    QVBoxLayout,
+    QWidget,
+)
 
 
 class NavButton(QPushButton):
@@ -61,7 +71,7 @@ class WeeklyCard(QFrame):
     def __init__(self, week_title: str, value_text: str, subtitle: str = "Casos estimados") -> None:
         super().__init__()
         self.setStyleSheet("""
-            QFrame {
+            .WeeklyCard {
                 background-color: #F8FAFC;
                 border: 1px solid #E2E8F0;
                 border-radius: 8px;
@@ -120,13 +130,9 @@ class EmptyStateWidget(QWidget):
         layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.setSpacing(6)
 
-        icon_label = QLabel(icon)
-        icon_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        icon_label.setStyleSheet("font-size: 28px;")
-
         title_label = QLabel(title)
         title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        title_label.setStyleSheet("font-size: 14px; font-weight: 700; color: #1E293B;")
+        title_label.setStyleSheet("font-size: 13px; font-weight: 600; color: #123B4A;")
 
         desc_label = QLabel(description)
         desc_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -134,6 +140,73 @@ class EmptyStateWidget(QWidget):
         desc_label.setStyleSheet("font-size: 12px; color: #64748B;")
         desc_label.setWordWrap(True)
 
-        layout.addWidget(icon_label)
         layout.addWidget(title_label)
         layout.addWidget(desc_label)
+
+
+# ---------- Ajuste automático al tamaño de la ventana ----------
+
+class GridReflow(QObject):
+    """Reacomoda un QGridLayout en 1..max_cols columnas según el ancho disponible de `host`.
+
+    Las tarjetas conservan su orden (fila, columna) original; si la ventana se hace angosta
+    bajan a la siguiente fila en lugar de aplastarse o cortarse.
+    """
+
+    def __init__(self, host: QWidget, grid: QGridLayout, min_width: int, max_cols: int) -> None:
+        super().__init__(host)
+        self.host, self.grid, self.min_width, self.max_cols = host, grid, min_width, max_cols
+        host.installEventFilter(self)
+
+    def eventFilter(self, obj: QObject, event: QEvent) -> bool:  # noqa: N802
+        if event.type() == QEvent.Type.Resize:
+            self.apply()
+        return False
+
+    def apply(self) -> None:
+        posiciones = []
+        for i in range(self.grid.count()):
+            widget = self.grid.itemAt(i).widget()
+            if widget is not None:
+                fila, col, _, _ = self.grid.getItemPosition(i)
+                posiciones.append(((fila, col), widget))
+        if not posiciones:
+            return
+        widgets = [w for _, w in sorted(posiciones, key=lambda p: p[0])]
+        ancho = max(self.host.width(), 1)
+        cols = max(1, min(self.max_cols, len(widgets), ancho // self.min_width))
+        actuales = [tuple(self.grid.getItemPosition(self.grid.indexOf(w))[:2]) for w in widgets]
+        deseadas = [(i // cols, i % cols) for i in range(len(widgets))]
+        if actuales != deseadas:
+            for w in widgets:
+                self.grid.removeWidget(w)
+            for i, w in enumerate(widgets):
+                self.grid.addWidget(w, i // cols, i % cols)
+        for c in range(max(self.max_cols, cols)):
+            self.grid.setColumnStretch(c, 1 if c < cols else 0)
+
+
+class SplitterReflow(QObject):
+    """Pone un QSplitter en vertical cuando `host` es más angosto que `breakpoint`."""
+
+    def __init__(self, host: QWidget, splitter: QSplitter, breakpoint: int) -> None:
+        super().__init__(host)
+        self.host, self.splitter, self.breakpoint = host, splitter, breakpoint
+        host.installEventFilter(self)
+
+    def eventFilter(self, obj: QObject, event: QEvent) -> bool:  # noqa: N802
+        if event.type() == QEvent.Type.Resize:
+            vertical = self.host.width() < self.breakpoint
+            orientacion = Qt.Orientation.Vertical if vertical else Qt.Orientation.Horizontal
+            if self.splitter.orientation() != orientacion:
+                self.splitter.setOrientation(orientacion)
+        return False
+
+
+def scrollable(page: QWidget) -> QScrollArea:
+    """Envuelve una pantalla en un área con desplazamiento vertical y horizontal."""
+    area = QScrollArea()
+    area.setWidgetResizable(True)
+    area.setFrameShape(QFrame.Shape.NoFrame)
+    area.setWidget(page)
+    return area

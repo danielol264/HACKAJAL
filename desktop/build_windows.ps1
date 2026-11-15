@@ -14,7 +14,7 @@ if (-not (Test-Path -LiteralPath $python)) {
 
 Push-Location $projectRoot
 try {
-    & $python -m pip install -r (Join-Path $desktopRoot "requirements-build.txt")
+    & $python -m pip install -r (Join-Path $projectRoot "requirements.txt") "pyinstaller>=6.0,<7"
     if ($LASTEXITCODE -ne 0) { throw "No se pudieron instalar las dependencias de compilación." }
 
     $arguments = @(
@@ -55,7 +55,7 @@ try {
     if (-not (Test-Path -LiteralPath $destResources)) {
         Copy-Item -Path (Join-Path $desktopRoot "resources") -Destination $destResources -Recurse -Force
     }
-    $exampleEnv = Join-Path $desktopRoot ".env.example"
+    $exampleEnv = Join-Path $projectRoot ".env.example"
     if (Test-Path -LiteralPath $exampleEnv) {
         Copy-Item -Path $exampleEnv -Destination (Join-Path $targetDist ".env.example") -Force
     }

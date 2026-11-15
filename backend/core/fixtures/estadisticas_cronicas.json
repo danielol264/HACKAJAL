@@ -1,0 +1,1712 @@
+[
+  {
+    "model": "core.estadisticacronica",
+    "pk": 1,
+    "fields": {
+      "enfermedad": 4,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "<1",
+      "institucion": "total",
+      "valor": 1.47,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 2,
+    "fields": {
+      "enfermedad": 4,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "1-4",
+      "institucion": "total",
+      "valor": 5.05,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 3,
+    "fields": {
+      "enfermedad": 4,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "5-9",
+      "institucion": "total",
+      "valor": 9.16,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 4,
+    "fields": {
+      "enfermedad": 4,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "10-14",
+      "institucion": "total",
+      "valor": 20.99,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 5,
+    "fields": {
+      "enfermedad": 4,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "15-19",
+      "institucion": "total",
+      "valor": 18.95,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 6,
+    "fields": {
+      "enfermedad": 4,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "20-24",
+      "institucion": "total",
+      "valor": 15.21,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 7,
+    "fields": {
+      "enfermedad": 4,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "total",
+      "valor": 14.03,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 8,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "10-14",
+      "institucion": "total",
+      "valor": 7.18,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 9,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "15-19",
+      "institucion": "total",
+      "valor": 17.36,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 10,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "20-24",
+      "institucion": "total",
+      "valor": 49.91,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 11,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "25-44",
+      "institucion": "total",
+      "valor": 249.28,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 12,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "45-49",
+      "institucion": "total",
+      "valor": 832.0,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 13,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "50-59",
+      "institucion": "total",
+      "valor": 1115.49,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 14,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "60-64",
+      "institucion": "total",
+      "valor": 1519.1,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 15,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "65 y +",
+      "institucion": "total",
+      "valor": 1303.95,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 16,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "total",
+      "valor": 496.65,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 17,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "15-19",
+      "institucion": "total",
+      "valor": 23.32,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 18,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "20-24",
+      "institucion": "total",
+      "valor": 113.02,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 19,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "25-44",
+      "institucion": "total",
+      "valor": 360.59,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 20,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "45-49",
+      "institucion": "total",
+      "valor": 1068.34,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 21,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "50-59",
+      "institucion": "total",
+      "valor": 1234.08,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 22,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "60-64",
+      "institucion": "total",
+      "valor": 1810.89,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 23,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "65 y +",
+      "institucion": "total",
+      "valor": 1734.98,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 24,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "total",
+      "valor": 702.15,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 25,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "<1",
+      "institucion": "total",
+      "valor": 49.15,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 26,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "1-4",
+      "institucion": "total",
+      "valor": 70.22,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 27,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "5-9",
+      "institucion": "total",
+      "valor": 192.32,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 28,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "10-14",
+      "institucion": "total",
+      "valor": 327.49,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 29,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "15-19",
+      "institucion": "total",
+      "valor": 282.26,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 30,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "20-24",
+      "institucion": "total",
+      "valor": 588.59,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 31,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "25-44",
+      "institucion": "total",
+      "valor": 823.77,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 32,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "45-49",
+      "institucion": "total",
+      "valor": 1246.27,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 33,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "50-59",
+      "institucion": "total",
+      "valor": 1199.38,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 34,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "60-64",
+      "institucion": "total",
+      "valor": 1150.1,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 35,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "65 y +",
+      "institucion": "total",
+      "valor": 741.99,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 36,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "incidencia",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "total",
+      "valor": 676.34,
+      "unidad": "tasa_100k",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 37,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "SSA",
+      "valor": 23918,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 38,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "IMSS Ord.",
+      "valor": 30420,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 39,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "ISSSTE",
+      "valor": 1523,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 40,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "IMSS Bienest.",
+      "valor": 0,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 41,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "DIF",
+      "valor": 61,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 42,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "PEMEX",
+      "valor": 5,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 43,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "SEDENA",
+      "valor": 101,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 44,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "SEMAR",
+      "valor": 235,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 45,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "OTRAS",
+      "valor": 3954,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 46,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "SSA",
+      "valor": 18083,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 47,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "IMSS Ord.",
+      "valor": 16265,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 48,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "ISSSTE",
+      "valor": 3256,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 49,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "IMSS Bienest.",
+      "valor": 0,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 50,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "DIF",
+      "valor": 15,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 51,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "PEMEX",
+      "valor": 3,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 52,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "SEDENA",
+      "valor": 283,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 53,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "SEMAR",
+      "valor": 68,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 54,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "OTRAS",
+      "valor": 9527,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 55,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "SSA",
+      "valor": 16562,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 56,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "IMSS Ord.",
+      "valor": 12068,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 57,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "ISSSTE",
+      "valor": 2933,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 58,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "IMSS Bienest.",
+      "valor": 0,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 59,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "DIF",
+      "valor": 20,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 60,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "PEMEX",
+      "valor": 4,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 61,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "SEDENA",
+      "valor": 184,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 62,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "SEMAR",
+      "valor": 80,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 63,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "OTRAS",
+      "valor": 5414,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 64,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "<1",
+      "institucion": "total",
+      "valor": 67,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 65,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "1-4",
+      "institucion": "total",
+      "valor": 389,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 66,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "5-9",
+      "institucion": "total",
+      "valor": 1365,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 67,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "10-14",
+      "institucion": "total",
+      "valor": 2418,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 68,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "15-19",
+      "institucion": "total",
+      "valor": 2130,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 69,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "20-24",
+      "institucion": "total",
+      "valor": 4411,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 70,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "25-44",
+      "institucion": "total",
+      "valor": 22306,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 71,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "45-49",
+      "institucion": "total",
+      "valor": 6486,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 72,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "50-59",
+      "institucion": "total",
+      "valor": 10852,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 73,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "60-64",
+      "institucion": "total",
+      "valor": 3977,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 74,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "65 y +",
+      "institucion": "total",
+      "valor": 5803,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 75,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "Ign.",
+      "institucion": "total",
+      "valor": 13,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 76,
+    "fields": {
+      "enfermedad": 7,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "total",
+      "valor": 60217,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 77,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "15-19",
+      "institucion": "total",
+      "valor": 176,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 78,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "20-24",
+      "institucion": "total",
+      "valor": 847,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 79,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "25-44",
+      "institucion": "total",
+      "valor": 9764,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 80,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "45-49",
+      "institucion": "total",
+      "valor": 5560,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 81,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "50-59",
+      "institucion": "total",
+      "valor": 11166,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 82,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "60-64",
+      "institucion": "total",
+      "valor": 6262,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 83,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "65 y +",
+      "institucion": "total",
+      "valor": 13569,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 84,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "Ign.",
+      "institucion": "total",
+      "valor": 156,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 85,
+    "fields": {
+      "enfermedad": 6,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "total",
+      "valor": 47500,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 86,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "10-14",
+      "institucion": "total",
+      "valor": 53,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 87,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "15-19",
+      "institucion": "total",
+      "valor": 131,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 88,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "20-24",
+      "institucion": "total",
+      "valor": 374,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 89,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "25-44",
+      "institucion": "total",
+      "valor": 6750,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 90,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "45-49",
+      "institucion": "total",
+      "valor": 4330,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 91,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "50-59",
+      "institucion": "total",
+      "valor": 10093,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 92,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "60-64",
+      "institucion": "total",
+      "valor": 5253,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 93,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "65 y +",
+      "institucion": "total",
+      "valor": 10198,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 94,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "Ign.",
+      "institucion": "total",
+      "valor": 83,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  },
+  {
+    "model": "core.estadisticacronica",
+    "pk": 95,
+    "fields": {
+      "enfermedad": 5,
+      "indicador": "casos_nuevos",
+      "ambito": "estado",
+      "municipio": null,
+      "region": "",
+      "anio": 2025,
+      "sexo": "total",
+      "grupo_edad": "total",
+      "institucion": "total",
+      "valor": 37265,
+      "unidad": "casos",
+      "fuente": "SUIVE/DGE Anuario de Morbilidad 2025"
+    }
+  }
+]   

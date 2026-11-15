@@ -73,7 +73,7 @@ class ContentPageTests(unittest.TestCase):
             cell = page.table.cellWidget(row, 7)
             buttons = cell.findChildren(type(page.btn_refresh))
             self.assertEqual(len(buttons), 1)
-            self.assertEqual(buttons[0].text(), "👁️")
+            self.assertEqual(buttons[0].text(), "Ver")
 
     def test_form_validation_rejects_empty_fields_and_over_200_chars(self) -> None:
         dialog = ContentFormDialog()

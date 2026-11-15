@@ -29,7 +29,7 @@ class ArchitectureTests(unittest.TestCase):
         self.assertFalse(permissions.can_access_module(consulta, Module.SETTINGS))
 
     def test_navigation_is_centrally_declared(self) -> None:
-        self.assertEqual(len(NAVIGATION_ITEMS), 7)
+        self.assertEqual(len(NAVIGATION_ITEMS), 8)  # 7 módulos + Usuarios (solo admin)
         self.assertEqual(NAVIGATION_ITEMS[0].module, Module.DASHBOARD)
 
     def test_dashboard_data_is_provided_by_service(self) -> None:

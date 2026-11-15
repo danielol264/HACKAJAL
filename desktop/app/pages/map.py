@@ -11,11 +11,13 @@ Implementado con:
 from __future__ import annotations
 
 import json
+import tempfile
 from pathlib import Path
 from typing import Any
 
 import folium
 from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, QUrl, Signal
+from PySide6.QtWebEngineCore import QWebEngineSettings
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWidgets import (
     QComboBox,
@@ -31,7 +33,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from app.components.widgets import AlertBadge, Card, EmptyStateWidget, MetricCard, PanelTitle
+from app.components.widgets import AlertBadge, Card, EmptyStateWidget, MetricCard, PanelTitle, SplitterReflow
 from app.core.exceptions import ApiError, ApiRequestError
 from app.models.user import User
 from app.services.api.client import ApiClient
@@ -135,6 +137,8 @@ class MapPage(QWidget):
         map_layout = QVBoxLayout(self.map_container)
         map_layout.setContentsMargins(0, 0, 0, 0)
         self.web_view = QWebEngineView()
+        # el mapa se abre desde un archivo local y necesita Leaflet y los mosaicos de internet
+        self.web_view.settings().setAttribute(QWebEngineSettings.WebAttribute.LocalContentCanAccessRemoteUrls, True)
         self.web_view.setMinimumHeight(450)
         map_layout.addWidget(self.web_view)
         splitter.addWidget(self.map_container)
@@ -158,13 +162,13 @@ class MapPage(QWidget):
         scroll.setWidget(self.context_content)
         self.context_layout.addWidget(scroll)
 
-        self.context_card.setMinimumWidth(320)
-        self.context_card.setMaximumWidth(400)
+        self.context_card.setMinimumWidth(280)
         splitter.addWidget(self.context_card)
 
         splitter.setStretchFactor(0, 7)
         splitter.setStretchFactor(1, 3)
         root.addWidget(splitter, 1)
+        SplitterReflow(self, splitter, 1000)  # en ventanas angostas, el panel bajo el mapa
 
         # Initial Empty Context
         self._render_empty_context()
@@ -180,10 +184,12 @@ class MapPage(QWidget):
 
         title_box = QVBoxLayout()
         title_box.setSpacing(2)
-        title = QLabel("Mapa Epidemiológico Regional")
+        title = QLabel("Mapa")
         title.setObjectName("pageTitle")
         title.setStyleSheet("font-size: 16px; font-weight: 700; color: #123B4A;")
-        sub = QLabel("Vigilancia espacial · Región Costera de Jalisco (14 municipios monitoreados)")
+        sub = QLabel("Nivel de riesgo de los 14 municipios de la Costa")
+        sub.setWordWrap(True)
+        sub.setMinimumWidth(300)
         sub.setObjectName("muted")
         sub.setStyleSheet("font-size: 11px; color: #647C8C;")
         title_box.addWidget(title)
@@ -213,10 +219,10 @@ class MapPage(QWidget):
         # Loading Indicator
         self.loading_bar = QFrame()
         self.loading_bar.setVisible(False)
-        self.loading_bar.setStyleSheet("background-color: #E0F2FE; border: 1px solid #BAE6FD; border-radius: 8px; padding: 6px;")
+        self.loading_bar.setStyleSheet(".QFrame { background-color: #E0F2FE; border: 1px solid #BAE6FD; border-radius: 8px; padding: 6px; }")
         l_layout = QHBoxLayout(self.loading_bar)
         l_layout.setContentsMargins(12, 6, 12, 6)
-        self.loading_label = QLabel("⟳ Obteniendo estado epidemiológico y renderizando mapa...")
+        self.loading_label = QLabel("Cargando mapa…")
         self.loading_label.setStyleSheet("color: #0369A1; font-weight: 600; font-size: 12px;")
         l_layout.addWidget(self.loading_label)
         parent_layout.addWidget(self.loading_bar)
@@ -224,7 +230,7 @@ class MapPage(QWidget):
         # Error Banner
         self.error_banner = QFrame()
         self.error_banner.setVisible(False)
-        self.error_banner.setStyleSheet("background-color: #FEF2F2; border: 1px solid #FECACA; border-radius: 8px; padding: 6px;")
+        self.error_banner.setStyleSheet(".QFrame { background-color: #FEF2F2; border: 1px solid #FECACA; border-radius: 8px; padding: 6px; }")
         e_layout = QHBoxLayout(self.error_banner)
         e_layout.setContentsMargins(12, 6, 12, 6)
         self.error_label = QLabel()
@@ -267,11 +273,11 @@ class MapPage(QWidget):
     def _on_error_occurred(self, message: str, status: int) -> None:
         self.error_banner.setVisible(True)
         if status == 401:
-            self.error_label.setText("Sesión expirada o no autorizada (HTTP 401).")
+            self.error_label.setText("Tu sesión expiró. Vuelve a iniciar sesión.")
             if self.api_client.on_unauthorized:
                 self.api_client.on_unauthorized()
         elif status == 403:
-            self.error_label.setText("No tienes permiso para consultar el mapa (HTTP 403).")
+            self.error_label.setText("Tu usuario no tiene permiso para ver el mapa.")
         else:
             self.error_label.setText(f"Error al cargar mapa: {message}")
 
@@ -420,8 +426,10 @@ class MapPage(QWidget):
         m.get_root().html.add_child(folium.Element(legend_html))
 
         # Render to QWebEngineView
-        html = m.get_root().render()
-        self.web_view.setHtml(html)
+        # setHtml no carga páginas de más de 2 MB (el GeoJSON pesa ~2.4 MB): se guarda en un archivo y se abre por URL
+        ruta = Path(tempfile.gettempdir()) / "hackajal_mapa.html"
+        m.save(str(ruta))
+        self.web_view.setUrl(QUrl.fromLocalFile(str(ruta)))
 
     # -------------------------------------------------------------------------
     # Contextual Panel
@@ -453,13 +461,13 @@ class MapPage(QWidget):
 
         # 1. Regional Alert Status Card
         alert_box = QFrame()
-        alert_box.setStyleSheet("background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px;")
+        alert_box.setStyleSheet(".QFrame { background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px; }")
         ab_layout = QVBoxLayout(alert_box)
         ab_layout.setContentsMargins(10, 8, 10, 8)
         ab_layout.setSpacing(6)
 
         ab_header = QHBoxLayout()
-        ab_title = QLabel("Estado Epidemiológico")
+        ab_title = QLabel("Situación actual")
         ab_title.setStyleSheet("font-size: 13px; font-weight: 700; color: #123B4A;")
         ab_header.addWidget(ab_title)
         ab_header.addStretch()
@@ -467,13 +475,13 @@ class MapPage(QWidget):
         if alerta:
             ab_header.addWidget(AlertBadge(alerta.get("estado", "pendiente")))
         else:
-            no_alert = QLabel("SIN ALERTA")
+            no_alert = QLabel("Sin alerta")
             no_alert.setStyleSheet("background-color: #DCFCE7; color: #15803D; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px;")
             ab_header.addWidget(no_alert)
         ab_layout.addLayout(ab_header)
 
         ab_desc = QLabel(
-            "Toda la región costera (14 municipios) comparte un mismo nivel de vigilancia institucional."
+            "Los 14 municipios de la Costa se vigilan como una sola región."
         )
         ab_desc.setWordWrap(True)
         ab_desc.setStyleSheet("font-size: 11px; color: #647C8C;")
@@ -482,11 +490,11 @@ class MapPage(QWidget):
 
         # 2. Inter-annual comparison
         comp_box = QFrame()
-        comp_box.setStyleSheet("background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px;")
+        comp_box.setStyleSheet(".QFrame { background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px; }")
         cb_layout = QVBoxLayout(comp_box)
         cb_layout.setContentsMargins(10, 8, 10, 8)
         cb_layout.setSpacing(4)
-        cb_lbl = QLabel("Casos mismo periodo año anterior:")
+        cb_lbl = QLabel("Mismo mes del año anterior:")
         cb_lbl.setStyleSheet("font-size: 11px; font-weight: 600; color: #647C8C;")
         ant_text = f"{casos_ant} casos" if casos_ant is not None else "Sin dato para comparar"
         cb_val = QLabel(ant_text)
@@ -498,12 +506,12 @@ class MapPage(QWidget):
         # 3. Model Prediction Panel
         if prediccion:
             pred_box = QFrame()
-            pred_box.setStyleSheet("background-color: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 10px;")
+            pred_box.setStyleSheet(".QFrame { background-color: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 10px; }")
             pb_layout = QVBoxLayout(pred_box)
             pb_layout.setContentsMargins(10, 8, 10, 8)
             pb_layout.setSpacing(6)
 
-            pb_title = QLabel(f"Predicción: Mes {prediccion.get('mes')}/{prediccion.get('anio')}")
+            pb_title = QLabel(f"Predicción {prediccion.get('mes')}/{prediccion.get('anio')}")
             pb_title.setStyleSheet("font-size: 13px; font-weight: 700; color: #15803D;")
             pb_layout.addWidget(pb_title)
 
@@ -524,7 +532,7 @@ class MapPage(QWidget):
                 pb_layout.addLayout(w_grid)
 
             if prediccion.get("creado_por"):
-                creator_lbl = QLabel(f"Generado por: {prediccion.get('creado_por')}")
+                creator_lbl = QLabel(f"Por {prediccion.get('creado_por')}")
                 creator_lbl.setStyleSheet("font-size: 10.5px; color: #15803D; font-style: italic;")
                 pb_layout.addWidget(creator_lbl)
 
@@ -539,19 +547,19 @@ class MapPage(QWidget):
 
         # 4. Monitored Municipalities List
         mun_box = QFrame()
-        mun_box.setStyleSheet("background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px;")
+        mun_box.setStyleSheet(".QFrame { background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 10px; }")
         mb_layout = QVBoxLayout(mun_box)
         mb_layout.setContentsMargins(10, 8, 10, 8)
         mb_layout.setSpacing(6)
 
-        mb_title = QLabel("14 Municipios Monitoreados:")
+        mb_title = QLabel("Municipios de la región")
         mb_title.setStyleSheet("font-size: 12px; font-weight: 700; color: #123B4A;")
         mb_layout.addWidget(mb_title)
 
         municipios = data.get("municipios") or []
         for mun in municipios:
             m_row = QHBoxLayout()
-            m_name = QLabel(f"• {mun.get('nombre')}")
+            m_name = QLabel(f"{mun.get('nombre')}")
             m_name.setStyleSheet("font-size: 11px; color: #334155;")
             m_reg = QLabel(mun.get("region", ""))
             m_reg.setStyleSheet("font-size: 10px; color: #94A3B8;")

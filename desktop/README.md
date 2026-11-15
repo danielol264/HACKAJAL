@@ -8,8 +8,7 @@ Por defecto, la aplicación opera en **modo MOCK**, permitiendo desarrollar y pr
 
 1. Iniciar el servicio Mock API independiente (opcional, si no está corriendo `main.py` lo levantará en segundo plano):
    ```powershell
-   python run_mock_api.py
-   # o bien: python desktop/run_mock_server.py
+   python desktop/run_mock_server.py
    ```
 2. Iniciar la aplicación de escritorio:
    ```powershell

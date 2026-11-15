@@ -1,6 +1,0 @@
-__pycache__/
-*.pyc
-.env
-*.json.key
-*credenciales*.json
-llave*.json

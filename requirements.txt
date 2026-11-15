@@ -1,2 +1,31 @@
-# Dependencias principales para HACKAJAL
--r desktop/requirements.txt
+# Dependencias de Python de TODO el proyecto (un solo entorno virtual en la raíz).
+#   python -m venv .venv
+#   .\.venv\Scripts\Activate.ps1
+#   pip install -r requirements.txt
+
+# ---------- Backend (Django) ----------
+django>=5.1
+djangorestframework>=3.16
+django-cors-headers>=4.4
+psycopg[binary]>=3.2
+python-dotenv>=1.0
+google-auth>=2.30
+
+# ---------- App de escritorio ----------
+PySide6>=6.8
+PySide6-WebEngine>=6.8
+folium>=0.18
+matplotlib>=3.9
+
+# ---------- Modelo (versiones fijas: el modelo .joblib se entrenó con ellas) ----------
+scikit-learn==1.9.1
+pandas==3.0.5
+numpy==2.5.3
+joblib==1.6.0
+openpyxl==3.1.5
+
+# ---------- Compartida ----------
+requests==2.34.2
+
+# ---------- Pruebas ----------
+pytest>=8.0

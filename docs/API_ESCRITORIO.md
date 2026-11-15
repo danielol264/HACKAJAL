@@ -268,6 +268,7 @@ Filas del CSV/plantilla: **una fila por mes de toda la región**.
 | `precipitacion_mm` | 0 o más, o `null` |
 
 - **Todo o nada:** si una fila falla, no se guarda ninguna.
+- Una fila que solo trae `anio` y `mes` (sin casos ni clima) es un error: `400` con `"La fila no trae casos ni clima."`. Quita esas filas antes de enviar.
 - Si el mes ya existía, se actualiza.
 - No repetir el mismo año y mes en un envío.
 - **Respuesta `201`:** `{ "casos": { "creados": 2, "actualizados": 0 }, "clima": { "creados": 1, "actualizados": 0 } }`

@@ -244,11 +244,11 @@ def _():
     c2, t2 = llamar("GET", "/estadisticas/?enfermedad=dengue&anio=2098", token=ADMIN)
     meses = [x.get("mes") for x in (js(t2) or {}).get("casos_por_mes", [])]
     return (7 not in meses), "La fila buena se guardó aunque otra falló (no es todo o nada)"
-@prueba("E10", "datos vacíos", "POST /cargas/ con celdas vacías (null) en todo menos año y mes -> 201", True)
+@prueba("E10", "datos vacíos", "POST /cargas/ con fila sin casos ni clima (solo año y mes) -> 400 con mensaje", True)
 @con_admin
 def _():
     c, t = llamar("POST", "/cargas/", [{"anio": 2099, "mes": 8, "casos_dengue": None, "temperatura_c": None, "humedad_pct": None, "precipitacion_mm": None}], ADMIN)
-    return codigo_en(c, t, (201,))
+    return codigo_en(c, t, (400,))
 @prueba("E11", "datos vacíos", "POST /cargas/ con JSON mal formado -> 400, no error del servidor", True)
 @con_admin
 def _():

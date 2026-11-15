@@ -32,7 +32,7 @@ from PySide6.QtWidgets import (
 )
 
 from app.components.chart import ClimateEvolutionChart, EpidemiologicalTrendChart, MunicipalDistributionChart
-from app.components.widgets import Card, EmptyStateWidget, MetricCard, PanelTitle, WeeklyCard
+from app.components.widgets import Card, EmptyStateWidget, GridReflow, MetricCard, PanelTitle, WeeklyCard
 from app.core.exceptions import ApiError, ApiRequestError
 from app.models.user import User
 from app.services.api.client import ApiClient
@@ -160,7 +160,7 @@ class StatisticsPage(QWidget):
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
         scroll.setFrameShape(QFrame.Shape.NoFrame)
-        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
 
         self.container = QWidget()
         self.content_layout = QVBoxLayout(self.container)
@@ -185,6 +185,10 @@ class StatisticsPage(QWidget):
         # 6. Chronic Diseases Section (Table + Filter)
         self._build_chronic_section()
 
+        GridReflow(self, self.metrics_grid, 220, 4)
+        GridReflow(self, self.charts_row, 560, 2)
+        GridReflow(self, self.pred_survey_row, 520, 2)
+
         scroll.setWidget(self.container)
         root.addWidget(scroll)
 
@@ -200,10 +204,12 @@ class StatisticsPage(QWidget):
         top_row = QHBoxLayout()
         title_box = QVBoxLayout()
         title_box.setSpacing(2)
-        title = QLabel("Reportes y Estadísticas Epidemiológicas")
+        title = QLabel("Estadísticas")
         title.setObjectName("pageTitle")
         title.setStyleSheet("font-size: 16px; font-weight: 700; color: #123B4A;")
-        sub = QLabel("Análisis temporal, meteorológico, enfermedades crónicas y encuestas territoriales")
+        sub = QLabel("Casos, clima, enfermedades crónicas y encuestas")
+        sub.setWordWrap(True)
+        sub.setMinimumWidth(300)
         sub.setObjectName("muted")
         sub.setStyleSheet("font-size: 11px; color: #647C8C;")
         title_box.addWidget(title)
@@ -211,7 +217,7 @@ class StatisticsPage(QWidget):
         top_row.addLayout(title_box)
 
         top_row.addStretch()
-        self.btn_refresh = QPushButton("↻ Actualizar estadísticas")
+        self.btn_refresh = QPushButton("Actualizar")
         self.btn_refresh.setObjectName("refreshButton")
         self.btn_refresh.setCursor(Qt.CursorShape.PointingHandCursor)
         self.btn_refresh.clicked.connect(self.refresh_statistics)
@@ -241,7 +247,7 @@ class StatisticsPage(QWidget):
 
         # Municipio (Strictly for chronic diseases per contract)
         filter_bar.addSpacing(6)
-        self.lbl_municipio = QLabel("Municipio (Solo crónicas):")
+        self.lbl_municipio = QLabel("Municipio (crónicas):")
         filter_bar.addWidget(self.lbl_municipio)
         self.combo_mun = QComboBox()
         self.combo_mun.addItem("Todos los municipios / Estatal", "")
@@ -255,17 +261,17 @@ class StatisticsPage(QWidget):
     def _build_banners(self) -> None:
         self.loading_bar = QFrame()
         self.loading_bar.setVisible(False)
-        self.loading_bar.setStyleSheet("background-color: #E0F2FE; border: 1px solid #BAE6FD; border-radius: 8px; padding: 6px;")
+        self.loading_bar.setStyleSheet(".QFrame { background-color: #E0F2FE; border: 1px solid #BAE6FD; border-radius: 8px; padding: 6px; }")
         l_layout = QHBoxLayout(self.loading_bar)
         l_layout.setContentsMargins(12, 6, 12, 6)
-        lbl = QLabel("⟳ Consultando estadísticas epidemiológicas desde la API...")
+        lbl = QLabel("Cargando estadísticas…")
         lbl.setStyleSheet("color: #0369A1; font-weight: 600; font-size: 12px;")
         l_layout.addWidget(lbl)
         self.content_layout.addWidget(self.loading_bar)
 
         self.error_banner = QFrame()
         self.error_banner.setVisible(False)
-        self.error_banner.setStyleSheet("background-color: #FEF2F2; border: 1px solid #FECACA; border-radius: 8px; padding: 6px;")
+        self.error_banner.setStyleSheet(".QFrame { background-color: #FEF2F2; border: 1px solid #FECACA; border-radius: 8px; padding: 6px; }")
         e_layout = QHBoxLayout(self.error_banner)
         e_layout.setContentsMargins(12, 6, 12, 6)
         self.error_label = QLabel()
@@ -304,7 +310,7 @@ class StatisticsPage(QWidget):
         self.card_trend = Card()
         self.trend_layout = QVBoxLayout(self.card_trend)
         self.trend_layout.setContentsMargins(14, 12, 14, 12)
-        self.trend_layout.addWidget(PanelTitle("Evolución mensual de casos", "Casos registrados por mes · Sin ceros inventados"))
+        self.trend_layout.addWidget(PanelTitle("Evolución mensual de casos", "Casos registrados por mes"))
         self.trend_canvas_box = QWidget()
         self.trend_canvas_layout = QVBoxLayout(self.trend_canvas_box)
         self.trend_canvas_layout.setContentsMargins(0, 6, 0, 0)
@@ -314,7 +320,7 @@ class StatisticsPage(QWidget):
         self.card_climate = Card()
         self.climate_layout = QVBoxLayout(self.card_climate)
         self.climate_layout.setContentsMargins(14, 12, 14, 12)
-        self.climate_layout.addWidget(PanelTitle("Variables climáticas", "Temperatura (°C), Humedad (%) y Lluvia (mm)"))
+        self.climate_layout.addWidget(PanelTitle("Variables climáticas", "Temperatura, humedad y lluvia por mes"))
         self.climate_canvas_box = QWidget()
         self.climate_canvas_layout = QVBoxLayout(self.climate_canvas_box)
         self.climate_canvas_layout.setContentsMargins(0, 6, 0, 0)
@@ -338,9 +344,9 @@ class StatisticsPage(QWidget):
         self.pred_box_layout.setSpacing(8)
 
         p_header = QHBoxLayout()
-        p_title = QLabel("Proyección Epidemiológica")
+        p_title = QLabel("Predicción")
         p_title.setStyleSheet("font-size: 14px; font-weight: 700; color: #123B4A;")
-        p_badge = QLabel("MODELO PREDICTIVO (CASOS ESTIMADOS)")
+        p_badge = QLabel("Estimado")
         p_badge.setObjectName("predictionBadge")
         p_header.addWidget(p_title)
         p_header.addStretch()
@@ -357,7 +363,7 @@ class StatisticsPage(QWidget):
         self.survey_box_layout = QVBoxLayout(self.card_survey)
         self.survey_box_layout.setContentsMargins(14, 12, 14, 12)
         self.survey_box_layout.setSpacing(8)
-        self.survey_box_layout.addWidget(PanelTitle("Encuestas Territoriales", "Participación comunitaria por municipio"))
+        self.survey_box_layout.addWidget(PanelTitle("Encuestas", "Respuestas por municipio"))
 
         self.survey_container = QWidget()
         self.survey_layout = QVBoxLayout(self.survey_container)
@@ -378,9 +384,9 @@ class StatisticsPage(QWidget):
         self.chronic_layout.setSpacing(10)
 
         ch_header = QHBoxLayout()
-        ch_title = QLabel("Enfermedades Crónicas (Morbilidad y Tasa)")
+        ch_title = QLabel("Enfermedades crónicas")
         ch_title.setStyleSheet("font-size: 14px; font-weight: 700; color: #123B4A;")
-        ch_sub = QLabel("Datos SUIVE / DGE Anuario de Morbilidad · Filtrable por municipio")
+        ch_sub = QLabel("Fuente: Dirección General de Epidemiología")
         ch_sub.setStyleSheet("font-size: 11px; color: #647C8C;")
         ch_header.addWidget(ch_title)
         ch_header.addSpacing(10)
@@ -456,11 +462,11 @@ class StatisticsPage(QWidget):
     def _on_error_occurred(self, message: str, status: int) -> None:
         self.error_banner.setVisible(True)
         if status == 401:
-            self.error_label.setText("Sesión expirada o no autorizada (HTTP 401).")
+            self.error_label.setText("Tu sesión expiró. Vuelve a iniciar sesión.")
             if self.api_client.on_unauthorized:
                 self.api_client.on_unauthorized()
         elif status == 403:
-            self.error_label.setText("No tienes permiso para consultar estadísticas (HTTP 403).")
+            self.error_label.setText("Tu usuario no tiene permiso para ver estadísticas.")
         else:
             self.error_label.setText(f"Error al cargar estadísticas: {message}")
 
@@ -580,7 +586,7 @@ class StatisticsPage(QWidget):
         anio = pred.get("anio", self.current_year)
         autor = pred.get("creado_por", "Sistema")
 
-        info_lbl = QLabel(f"Proyección estimada para Mes {mes}/{anio} · Autor: {autor}")
+        info_lbl = QLabel(f"Predicción para {mes}/{anio} · {autor}")
         info_lbl.setStyleSheet("font-size: 11px; color: #647C8C; margin-bottom: 4px;")
         self.pred_layout.addWidget(info_lbl)
 
@@ -593,7 +599,7 @@ class StatisticsPage(QWidget):
 
         # Total summary
         tot_card = QFrame()
-        tot_card.setStyleSheet("background-color: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 6px; padding: 6px 12px;")
+        tot_card.setStyleSheet(".QFrame { background-color: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 6px; padding: 6px 12px; }")
         tl = QHBoxLayout(tot_card)
         tl.setContentsMargins(8, 4, 8, 4)
         tl_txt = QLabel(f"Total estimado mensual: <b>{total:.2f} casos</b>")
@@ -621,7 +627,7 @@ class StatisticsPage(QWidget):
             )
             return
 
-        tot_lbl = QLabel(f"Total de respuestas recibidas: <b>{total:,}</b>")
+        tot_lbl = QLabel(f"Respuestas recibidas: <b>{total:,}</b>")
         tot_lbl.setStyleSheet("font-size: 13px; color: #123B4A; margin-bottom: 4px;")
         self.survey_layout.addWidget(tot_lbl)
 

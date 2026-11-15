@@ -38,7 +38,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from app.components.widgets import Card, EmptyStateWidget, MetricCard, PanelTitle
+from app.components.widgets import Card, EmptyStateWidget, GridReflow, MetricCard, PanelTitle
 from app.core.exceptions import ApiError, ApiRequestError
 from app.models.user import User, UserRole
 from app.services.api.client import ApiClient
@@ -150,7 +150,7 @@ class ContentDetailDialog(QDialog):
         super().__init__(parent)
         self.setWindowTitle(f"Contenido #{item.get('id')} · {item.get('titulo')}")
         self.setMinimumSize(600, 480)
-        self.setStyleSheet("background-color: #FFFFFF; font-family: 'Segoe UI', Arial;")
+        self.setStyleSheet("QDialog { background-color: #FFFFFF; }")
 
         layout = QVBoxLayout(self)
         layout.setContentsMargins(22, 20, 22, 20)
@@ -159,7 +159,7 @@ class ContentDetailDialog(QDialog):
         # Header Badge Row
         h_row = QHBoxLayout()
         pub = item.get("publicado", False)
-        status_badge = QLabel("PUBLICADO EN PORTAL" if pub else "BORRADOR INTERNO")
+        status_badge = QLabel("Publicado" if pub else "BORRADOR INTERNO")
         status_badge.setStyleSheet(
             "background-color: #DCFCE7; color: #15803D; font-weight: 700; font-size: 10px; padding: 3px 8px; border-radius: 4px;"
             if pub else
@@ -190,7 +190,7 @@ class ContentDetailDialog(QDialog):
 
         # Body Scroll Area
         body_box = QFrame()
-        body_box.setStyleSheet("background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px;")
+        body_box.setStyleSheet(".QFrame { background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px; }")
         b_layout = QVBoxLayout(body_box)
         b_lbl = QLabel(item.get("cuerpo", "Sin contenido"))
         b_lbl.setWordWrap(True)
@@ -202,7 +202,7 @@ class ContentDetailDialog(QDialog):
         if item.get("url_fuente") or item.get("imagen_url"):
             url_box = QVBoxLayout()
             if item.get("url_fuente"):
-                f_lbl = QLabel(f"Fuente oficial: <a href='{item.get('url_fuente')}'>{item.get('url_fuente')}</a>")
+                f_lbl = QLabel(f"Fuente: <a href='{item.get('url_fuente')}'>{item.get('url_fuente')}</a>")
                 f_lbl.setOpenExternalLinks(True)
                 f_lbl.setStyleSheet("font-size: 11px; color: #028090;")
                 url_box.addWidget(f_lbl)
@@ -235,14 +235,14 @@ class ContentFormDialog(QDialog):
 
         self.setWindowTitle("Editar Contenido" if self.is_edit else "Nuevo Contenido Informativo")
         self.setMinimumSize(580, 520)
-        self.setStyleSheet("background-color: #FFFFFF; font-family: 'Segoe UI', Arial;")
+        self.setStyleSheet("QDialog { background-color: #FFFFFF; }")
 
         layout = QVBoxLayout(self)
         layout.setContentsMargins(22, 20, 22, 20)
         layout.setSpacing(10)
 
         # Title
-        header_lbl = QLabel("Editar Artículo / Nota" if self.is_edit else "Crear Artículo o Nota para el Portal")
+        header_lbl = QLabel("Editar contenido" if self.is_edit else "Crear Artículo o Nota para el Portal")
         header_lbl.setStyleSheet("font-size: 16px; font-weight: 700; color: #123B4A;")
         layout.addWidget(header_lbl)
 
@@ -251,23 +251,24 @@ class ContentFormDialog(QDialog):
         row1 = QHBoxLayout()
         row1.addWidget(QLabel("Tipo de contenido *: "))
         self.combo_tipo = QComboBox()
-        self.combo_tipo.addItem("Artículo institucional", "articulo")
+        self.combo_tipo.addItem("Artículo", "articulo")
         self.combo_tipo.addItem("Medida de prevención", "prevencion")
-        self.combo_tipo.addItem("Nota informativa / Comunicado", "nota")
+        self.combo_tipo.addItem("Aviso", "nota")
         row1.addWidget(self.combo_tipo)
 
         row1.addSpacing(12)
         row1.addWidget(QLabel("Enfermedad: "))
         self.combo_enf = QComboBox()
         self.combo_enf.addItem("General / Sin asignar", "")
-        self.combo_enf.addItem("Dengue", "dengue")
-        self.combo_enf.addItem("Diabetes Mellitus Tipo 2", "dm2")
+        # mismas claves que backend/core/fixtures/enfermedades.json
+        for nombre, clave in (("Dengue", "dengue"), ("Zika", "zika"), ("Chikungunya", "chikungunya"), ("Diabetes mellitus tipo 1", "dm1"), ("Diabetes mellitus tipo 2", "dm2"), ("Hipertensión arterial", "has"), ("Obesidad", "obesidad")):
+            self.combo_enf.addItem(nombre, clave)
         row1.addWidget(self.combo_enf)
         layout.addLayout(row1)
 
         # Titulo with live counter
         t_header = QHBoxLayout()
-        t_header.addWidget(QLabel("Título oficial *:"))
+        t_header.addWidget(QLabel("Título"))
         t_header.addStretch()
         self.t_counter = QLabel("0 / 200 caracteres")
         self.t_counter.setStyleSheet("font-size: 11px; color: #647C8C;")
@@ -282,7 +283,7 @@ class ContentFormDialog(QDialog):
         # Cuerpo
         layout.addWidget(QLabel("Cuerpo / Contenido *: "))
         self.edit_cuerpo = QTextEdit()
-        self.edit_cuerpo.setPlaceholderText("Redacta aquí el texto oficial del artículo o recomendación preventiva...")
+        self.edit_cuerpo.setPlaceholderText("Texto que verá la población")
         layout.addWidget(self.edit_cuerpo)
 
         # URLs
@@ -322,7 +323,7 @@ class ContentFormDialog(QDialog):
         btn_cancel.clicked.connect(self.reject)
         btn_cancel.setStyleSheet("background-color: #EAF0F5; color: #123B4A; border-radius: 6px; padding: 8px 16px; font-weight: 600;")
 
-        self.btn_save = QPushButton("Guardar Cambios" if self.is_edit else "Crear Contenido")
+        self.btn_save = QPushButton("Guardar cambios" if self.is_edit else "Crear Contenido")
         self.btn_save.clicked.connect(self._on_save)
         self.btn_save.setStyleSheet("background-color: #123B4A; color: white; border-radius: 6px; padding: 8px 20px; font-weight: 700;")
         btn_row.addWidget(btn_cancel)
@@ -462,10 +463,12 @@ class ContentPage(QWidget):
         top_row = QHBoxLayout()
         title_box = QVBoxLayout()
         title_box.setSpacing(2)
-        title = QLabel("Gestión de Artículos y Notas Informativas")
+        title = QLabel("Artículos y avisos")
         title.setObjectName("pageTitle")
         title.setStyleSheet("font-size: 16px; font-weight: 700; color: #123B4A;")
-        sub = QLabel("Publicación y difusión ciudadana para el portal de salud de Jalisco")
+        sub = QLabel("Lo que publiques aquí aparece en el portal web")
+        sub.setWordWrap(True)
+        sub.setMinimumWidth(300)
         sub.setObjectName("muted")
         sub.setStyleSheet("font-size: 11px; color: #647C8C;")
         title_box.addWidget(title)
@@ -476,14 +479,14 @@ class ContentPage(QWidget):
 
         # Admin Creation Button
         if self.user and self.user.role == UserRole.ADMIN:
-            btn_create = QPushButton("＋ Redactar contenido")
+            btn_create = QPushButton("Nuevo contenido")
             btn_create.setObjectName("actionButton")
             btn_create.setCursor(Qt.CursorShape.PointingHandCursor)
             btn_create.setStyleSheet("background-color: #123B4A; color: white; padding: 7px 16px; border-radius: 6px; font-weight: 700;")
             btn_create.clicked.connect(self._open_create_dialog)
             top_row.addWidget(btn_create)
 
-        self.btn_refresh = QPushButton("↻ Actualizar")
+        self.btn_refresh = QPushButton("Actualizar")
         self.btn_refresh.setCursor(Qt.CursorShape.PointingHandCursor)
         self.btn_refresh.clicked.connect(self.refresh_content)
         top_row.addWidget(self.btn_refresh)
@@ -508,8 +511,9 @@ class ContentPage(QWidget):
         filter_bar.addWidget(QLabel("Enfermedad:"))
         self.combo_enf = QComboBox()
         self.combo_enf.addItem("Todas las enfermedades", "")
-        self.combo_enf.addItem("Dengue", "dengue")
-        self.combo_enf.addItem("Diabetes Mellitus Tipo 2", "dm2")
+        # mismas claves que backend/core/fixtures/enfermedades.json
+        for nombre, clave in (("Dengue", "dengue"), ("Zika", "zika"), ("Chikungunya", "chikungunya"), ("Diabetes mellitus tipo 1", "dm1"), ("Diabetes mellitus tipo 2", "dm2"), ("Hipertensión arterial", "has"), ("Obesidad", "obesidad")):
+            self.combo_enf.addItem(nombre, clave)
         self.combo_enf.currentIndexChanged.connect(self._on_filter_changed)
         filter_bar.addWidget(self.combo_enf)
 
@@ -518,8 +522,8 @@ class ContentPage(QWidget):
         filter_bar.addWidget(QLabel("Estado:"))
         self.combo_pub = QComboBox()
         self.combo_pub.addItem("Todos", "all")
-        self.combo_pub.addItem("Publicados en portal", "published")
-        self.combo_pub.addItem("Borradores internos", "draft")
+        self.combo_pub.addItem("Publicados", "published")
+        self.combo_pub.addItem("Borradores", "draft")
         self.combo_pub.currentIndexChanged.connect(self._render_table)
         filter_bar.addWidget(self.combo_pub)
 
@@ -539,17 +543,17 @@ class ContentPage(QWidget):
     def _build_banners(self, parent_layout: QVBoxLayout) -> None:
         self.loading_bar = QFrame()
         self.loading_bar.setVisible(False)
-        self.loading_bar.setStyleSheet("background-color: #E0F2FE; border: 1px solid #BAE6FD; border-radius: 8px; padding: 6px;")
+        self.loading_bar.setStyleSheet(".QFrame { background-color: #E0F2FE; border: 1px solid #BAE6FD; border-radius: 8px; padding: 6px; }")
         l_layout = QHBoxLayout(self.loading_bar)
         l_layout.setContentsMargins(12, 6, 12, 6)
-        lbl = QLabel("⟳ Conectando con la API de contenidos...")
+        lbl = QLabel("Cargando contenidos…")
         lbl.setStyleSheet("color: #0369A1; font-weight: 600; font-size: 12px;")
         l_layout.addWidget(lbl)
         parent_layout.addWidget(self.loading_bar)
 
         self.error_banner = QFrame()
         self.error_banner.setVisible(False)
-        self.error_banner.setStyleSheet("background-color: #FEF2F2; border: 1px solid #FECACA; border-radius: 8px; padding: 6px;")
+        self.error_banner.setStyleSheet(".QFrame { background-color: #FEF2F2; border: 1px solid #FECACA; border-radius: 8px; padding: 6px; }")
         e_layout = QHBoxLayout(self.error_banner)
         e_layout.setContentsMargins(12, 6, 12, 6)
         self.error_label = QLabel()
@@ -564,7 +568,7 @@ class ContentPage(QWidget):
 
         self.success_banner = QFrame()
         self.success_banner.setVisible(False)
-        self.success_banner.setStyleSheet("background-color: #F0FDF4; border: 1px solid #86EFAC; border-radius: 8px; padding: 6px;")
+        self.success_banner.setStyleSheet(".QFrame { background-color: #F0FDF4; border: 1px solid #86EFAC; border-radius: 8px; padding: 6px; }")
         s_layout = QHBoxLayout(self.success_banner)
         s_layout.setContentsMargins(12, 6, 12, 6)
         self.success_label = QLabel()
@@ -579,12 +583,13 @@ class ContentPage(QWidget):
         grid.setSpacing(10)
 
         self.card_total = MetricCard("Total de contenidos", "0", "Artículos, notas y prevenciones", "#123B4A")
-        self.card_publicados = MetricCard("Publicados", "0", "Visibles en el portal ciudadano", "#15803D")
+        self.card_publicados = MetricCard("Publicados", "0", "Visibles en el portal web", "#15803D")
         self.card_borradores = MetricCard("Borradores", "0", "En edición interna", "#C47A27")
 
         grid.addWidget(self.card_total, 0, 0)
         grid.addWidget(self.card_publicados, 0, 1)
         grid.addWidget(self.card_borradores, 0, 2)
+        GridReflow(self, grid, 200, 3)
         return container
 
     def _build_table_card(self) -> QWidget:
@@ -594,7 +599,7 @@ class ContentPage(QWidget):
         layout.setSpacing(8)
 
         t_head = QHBoxLayout()
-        t_title = QLabel("Listado de Contenidos")
+        t_title = QLabel("Contenidos")
         t_title.setStyleSheet("font-size: 14px; font-weight: 700; color: #123B4A;")
         t_head.addWidget(t_title)
         t_head.addStretch()
@@ -614,6 +619,9 @@ class ContentPage(QWidget):
         self.table.setAlternatingRowColors(True)
         self.table.doubleClicked.connect(self._on_table_double_clicked)
         self.table.setMinimumHeight(300)
+        # filas altas para que quepan los botones; selección clara
+        self.table.verticalHeader().setDefaultSectionSize(46)
+        self.table.setStyleSheet("QTableWidget::item:selected { background-color: #DCEBF2; color: #123B4A; }")
 
         header = self.table.horizontalHeader()
         header.setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
@@ -622,8 +630,11 @@ class ContentPage(QWidget):
         header.setSectionResizeMode(3, QHeaderView.ResizeMode.Stretch)
         header.setSectionResizeMode(4, QHeaderView.ResizeMode.ResizeToContents)
         header.setSectionResizeMode(5, QHeaderView.ResizeMode.ResizeToContents)
-        header.setSectionResizeMode(6, QHeaderView.ResizeMode.ResizeToContents)
-        header.setSectionResizeMode(7, QHeaderView.ResizeMode.ResizeToContents)
+        # columnas con widgets: ResizeToContents no los mide
+        header.setSectionResizeMode(6, QHeaderView.ResizeMode.Fixed)
+        self.table.setColumnWidth(6, 120)
+        header.setSectionResizeMode(7, QHeaderView.ResizeMode.Fixed)
+        self.table.setColumnWidth(7, 340)
 
         layout.addWidget(self.table)
         return card
@@ -660,15 +671,15 @@ class ContentPage(QWidget):
     def _on_error_occurred(self, message: str, status: int) -> None:
         self.error_banner.setVisible(True)
         if status == 400:
-            self.error_label.setText(f"Solicitud incorrecta (HTTP 400): {message}")
+            self.error_label.setText(f"No se pudo guardar: {message}")
         elif status == 401:
-            self.error_label.setText("Sesión expirada o no autorizada (HTTP 401).")
+            self.error_label.setText("Tu sesión expiró. Vuelve a iniciar sesión.")
             if self.api_client.on_unauthorized:
                 self.api_client.on_unauthorized()
         elif status == 403:
-            self.error_label.setText("No tienes permiso para esta acción (HTTP 403).")
+            self.error_label.setText("Tu usuario no tiene permiso para esta acción.")
         elif status == 404:
-            self.error_label.setText("Contenido no encontrado (HTTP 404). Se actualizó la lista.")
+            self.error_label.setText("Ese contenido ya no existe. Se actualizó la lista.")
             self.refresh_content()
         else:
             self.error_label.setText(f"Error de comunicación con la API: {message}")
@@ -764,6 +775,7 @@ class ContentPage(QWidget):
 
             # Estado Badge
             badge_widget = QWidget()
+            badge_widget.setStyleSheet(".QWidget { background: transparent; }")
             bw_layout = QHBoxLayout(badge_widget)
             bw_layout.setContentsMargins(4, 2, 4, 2)
             bw_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -773,18 +785,21 @@ class ContentPage(QWidget):
                 if publicado else
                 "background-color: #FEF3C7; color: #92400E; font-weight: 700; font-size: 10px; padding: 2px 8px; border-radius: 4px;"
             )
+            badge_lbl.setMinimumWidth(96)
+            badge_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
             bw_layout.addWidget(badge_lbl)
             self.table.setCellWidget(r, 6, badge_widget)
 
             # Actions
             act_widget = QWidget()
+            act_widget.setStyleSheet(".QWidget { background: transparent; }")
             act_layout = QHBoxLayout(act_widget)
             act_layout.setContentsMargins(4, 2, 4, 2)
             act_layout.setSpacing(6)
             act_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
             # Ver detalle button
-            btn_view = QPushButton("👁️")
+            btn_view = QPushButton("Ver")
             btn_view.setToolTip("Ver detalle del contenido")
             btn_view.setCursor(Qt.CursorShape.PointingHandCursor)
             btn_view.setStyleSheet("background-color: #EAF0F5; border: 1px solid #CBD5E1; border-radius: 4px; padding: 3px 6px; font-size: 11px;")
@@ -802,10 +817,11 @@ class ContentPage(QWidget):
                     "background-color: #028090; color: white; border: none; border-radius: 4px; padding: 3px 7px; font-size: 10.5px; font-weight: 600;"
                 )
                 btn_pub.clicked.connect(lambda _, it=item: self._toggle_publish(it))
+                btn_pub.setMinimumWidth(100)
                 act_layout.addWidget(btn_pub)
 
                 # Edit button
-                btn_edit = QPushButton("✎")
+                btn_edit = QPushButton("Editar")
                 btn_edit.setToolTip("Editar contenido")
                 btn_edit.setCursor(Qt.CursorShape.PointingHandCursor)
                 btn_edit.setStyleSheet("background-color: #EAF0F5; border: 1px solid #CBD5E1; border-radius: 4px; padding: 3px 6px; font-size: 11px;")
@@ -813,7 +829,7 @@ class ContentPage(QWidget):
                 act_layout.addWidget(btn_edit)
 
                 # Delete button
-                btn_del = QPushButton("🗑️")
+                btn_del = QPushButton("Eliminar")
                 btn_del.setToolTip("Eliminar contenido")
                 btn_del.setCursor(Qt.CursorShape.PointingHandCursor)
                 btn_del.setStyleSheet("background-color: #FEE2E2; border: 1px solid #FCA5A5; color: #DC2626; border-radius: 4px; padding: 3px 6px; font-size: 11px;")
@@ -897,10 +913,10 @@ class ContentPage(QWidget):
 
     def _on_action_success(self, action_name: str, res: dict[str, Any]) -> None:
         if action_name == "create":
-            self.success_label.setText(f"✓ Contenido #{res.get('id')} creado exitosamente.")
+            self.success_label.setText(f"Contenido #{res.get('id')} creado.")
         elif action_name == "patch":
-            self.success_label.setText(f"✓ Contenido #{res.get('id')} actualizado exitosamente.")
+            self.success_label.setText(f"Contenido #{res.get('id')} actualizado.")
         elif action_name == "delete":
-            self.success_label.setText(f"✓ Contenido #{res.get('id')} eliminado exitosamente.")
+            self.success_label.setText(f"Contenido #{res.get('id')} eliminado.")
         self.success_banner.setVisible(True)
         self.refresh_content()
